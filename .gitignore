@@ -1,0 +1,4 @@
+.idea/
+*.pyc
+Pipfile.lock
+db.sqlite3
