@@ -29,7 +29,7 @@ class Task(models.Model):
         OTHER = "OTHER", "Sonstiges?"
         __empty__ = "Bitte Wert auswählen"
 
-    name = models.CharField(choices=TaskName, max_length=5)
+    name = models.CharField(choices=TaskName.choices, max_length=5)
 
 
 class Branch(models.Model):
@@ -72,7 +72,7 @@ class Branch(models.Model):
         # FIXME: branchenunabhängig option
         __empty__ = "Bitte Wert auswählen"
 
-    name = models.CharField(choices=BranchName, max_length=3)
+    name = models.CharField(choices=BranchName.choices, max_length=3)
 
 
 class DataAnalysisProcess(models.Model):
@@ -88,7 +88,7 @@ class DataAnalysisProcess(models.Model):
         PC = "PC", "KI-basierte Prozesssteuerung"  # AI-based process control
         __empty__ = "Bitte Wert auswählen"
 
-    name = models.CharField(choices=DAProcessName, max_length=2)
+    name = models.CharField(choices=DAProcessName.choices, max_length=2)
 
 
 class Component(models.Model):
@@ -121,6 +121,7 @@ class Component(models.Model):
             "Status der Komponente in Bezug auf Ihre Einsetzbarkeit durch die Angabe"
             " eines Technischen Reifegrades (Technology Readiness Level)."
         ),
+        choices=TRL.choices,
     )
     description = models.TextField(
         "Kurzbeschreibung", help_text="Kurze Beschreibung der Komponente"
@@ -184,27 +185,29 @@ class ApplicationProfile(models.Model):
         Branch,
         verbose_name="Branche (erprobt)",
         help_text="Branche(n) für die die Komponente bereits erfolgreich erprobt wurde; belegte Anwendung",
+        related_name="branch_proven_for",
     )
     branch_applicable = models.ManyToManyField(
         Branch,
         verbose_name="Branche (anwendbar)",
         help_text="Branche, in denen die Komponenten anwendbar ist",
+        related_name="branch_applicable_for",
     )
     corporate_division = models.CharField(
         "Unternehmensbereich",
-        choices=CorporateDivision,
+        choices=CorporateDivision.choices,
         help_text="Bereich des produzierenden Unternehmens, für den die Komponenten entwickelt wurde",
         max_length=2,
     )  # FIXME: Mehrfachauswahl?
     hierarchy_level = models.CharField(
         "Hierarchie-Ebene",
-        choices=HierarchyLevel,
+        choices=HierarchyLevel.choices,
         help_text="Automatisierebene, für die die KI-Komponente gedacht ist",
         max_length=2,
     )  # FIXME: Mehrfachauswahl?
     process = models.CharField(
         "Prozess",
-        choices=Process,
+        choices=Process.choices,
         help_text="Prozess der durch die KI-Komponente unterstützt wird",
         max_length=5,
     )  # FIXME: Mehrfachauswahl?
@@ -221,6 +224,7 @@ class Use(models.Model):
             "es sollte auf jeden Fall eine Kategorie ausgesucht werden (Wert);"
             " dies Auswahl kann über KPI-Verfeinerung noch verfeinert werden;"
         ),
+        max_length=1000,
     )  # TODO: Hierarchy
     scenarios = models.TextField(
         "Szenarien / Use cases",
@@ -235,6 +239,7 @@ class Requirements(models.Model):
     protocols = models.CharField(
         "Protokolle/Schnittstellen",
         help_text="Schnittstellen und/oder Protokolle, die von der Kompomente unterstützt werden",
+        max_length=1000,
     )
     it_environment = models.CharField(
         "IT Umgebung/Software",
@@ -242,14 +247,17 @@ class Requirements(models.Model):
             "Anforderungen an die IT-Umgebung (inkl. IT Hardware) und an weitere Software/Bibliotheken"
             ", die für den Betrieb der Komponente notwendig sind"
         ),
+        max_length=1000,
     )
     hardware_requirements = models.CharField(
         "Spezielle Hardware",
         help_text="Spezielle Hardware, welche für den Betrieb der Komponente notwendig ist (z.B. Kamera, Roboter)",
+        max_length=1000,
     )
     devices = models.CharField(
         "Maschinen/Steuerungen",
         help_text="Maschinen und IoT Devices, mit denen die Komponente kompatibel ist",
+        max_length=1000,
     )
 
 
@@ -264,14 +272,16 @@ class TechnicalSpecification(models.Model):
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
 
     ai_method = models.CharField(
-        "KI-Methode", help_text="Angabe der verwendeten KI-Methode (z.B. Deep Learning)"
+        "KI-Methode",
+        help_text="Angabe der verwendeten KI-Methode (z.B. Deep Learning)",
+        max_length=1000,
     )  # FIXME: multivalue? textfield?
     data_analysis_process = models.ManyToManyField(
         DataAnalysisProcess,
         verbose_name="Datenanalyse-Prozess",
         help_text="Unterstützte Phasen des Datenanalyse-Prozesses (z.B. Data Cleaning)",
     )  # FIXME: "einzelne Schritte des Prozesses erklären"?
-    realtime_processing = models.CharField(
+    realtime_processing = models.IntegerField(
         "Echtzeitverarbeitung",
         help_text="Klassifizierung der Komponente in Bezug auf ihre Echtzeitfähigkeit",
         choices=Realtime.choices,
@@ -279,10 +289,12 @@ class TechnicalSpecification(models.Model):
     data_formats = models.CharField(
         "Datenformate",
         help_text="Datenformate, die von der KI-Komponente verarbeitet werden können und Datenformat der Ergebnisse",
+        max_length=1000,
     )
     licenses = models.CharField(
         "Lizenzen",
         help_text="Welche Lizenzen bringt die Komponente mit, insbesondere Open Source Lizenzen",
+        max_length=1000,
     )  # FIXME: multivalue? # TODO: choices
 
     # FIXME: planed for later
@@ -294,11 +306,13 @@ class Source(models.Model):
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
 
     developer = models.CharField(
-        "Hersteller", help_text="Entwickler und/oder Hersteller der Komponente"
+        "Hersteller",
+        help_text="Entwickler und/oder Hersteller der Komponente",
+        max_length=1000,
     )
     contact = models.TextField(
-        "Kontakt", help_text="Möglichkeit zum Hersteller Kontakt aufzunehmen"
+        "Kontakt", help_text="Möglichkeit zum Hersteller Kontakt aufzunehmen",
     )
     additional_info = models.TextField(
-        "Zusatzinformationen", help_text="Zusatzinformation zur Komponente"
+        "Zusatzinformationen", help_text="Zusatzinformation zur Komponente",
     )
