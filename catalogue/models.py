@@ -29,59 +29,86 @@ class Task(models.Model):
         OTHER = "OTHER", "Sonstiges?"
         __empty__ = "Bitte Wert auswählen"
 
-    name = models.CharField("Task", choices=TaskName.choices, max_length=5,
-                            help_text=("Art der Aufgabe, der die beschriebene KI-Komponente zugeordnet werden kann"
-                                       " (z.B. Predictive Maintenance, Qualitätsprüfung))"))
-    component = models.ForeignKey(
-        "Component",
-        on_delete=models.CASCADE
+    name = models.CharField(
+        "Task",
+        choices=TaskName.choices,
+        max_length=5,
+        help_text=(
+            "Art der Aufgabe, der die beschriebene KI-Komponente zugeordnet werden kann"
+            " (z.B. Predictive Maintenance, Qualitätsprüfung))"
+        ),
+    )
+    component = models.ForeignKey("Component", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.get_name_display()
+
+
+class BranchName(models.TextChoices):
+    C10 = "C10", "Herstellung von Nahrungs- und Futtermitteln (C.10)"
+    C11 = "C11", "Getränkeherstellung (C.11)"
+    C12 = "C12", "Tabakverarbeitung (C.12)"
+    C13 = "C13", "Herstellung von Textilien (C.13)"
+    C14 = "C14", "Herstellung von Bekleidung (C.14)"
+    C15 = "C15", "Herstellung von Leder, Lederwaren und Schuhen (C.15)"
+    C16 = (
+        "C16",
+        "Herstellung von Holz-, Flecht-, Korb- und Korkwaren (ohne Möbel) (C.16)",
+    )
+    C17 = "C17", "Herstellung von Papier, Pappe und Waren daraus (C.17)"
+    C18 = (
+        "C18",
+        "Herstellung von Druckerzeugnissen; Vervielfältigung von bespielten Ton-, Bild und Datenträgern (C.18)",
+    )
+    C19 = "C19", "Kokerei und Mineralölverarbeitung (C.19)"
+    C20 = "C20", "Herstellung von chemischen Erzeugnissen (C.20)"
+    C21 = "C21", "Herstellung von pharmazeutischen Erzeugnissen (C.21)"
+    C22 = "C22", "Herstellung von Gummi- und Kunststoffwaren (C.22)"
+    C23 = (
+        "C23",
+        "Herstellung von Glas und Glaswaren, Keramik, Verarbeitung von Steinen und Erden (C.23)",
+    )
+    C24 = "C24", "Metallerzeugung und –bearbeitung (C.24)"
+    C25 = "C25", "Herstellung von Metallerzeugnissen (C.25)"
+    C26 = (
+        "C26",
+        "Herstellung von Datenverarbeitungsgeräten, elektronischen und optischen Erzeugnissen (C.26)",
+    )
+    C27 = "C27", "Herstellung von elektrischen Ausrüstungen (C.27)"
+    C28 = "C28", "Maschinenbau (C.28)"
+    C29 = "C29", "Herstellung von Kraftwagen und Kraftwagenteilen (C.29)"
+    C30 = "C30", "Sonstiger Fahrzeugbau (C.30)"
+    C31 = "C31", "Herstellung von Möbeln (C.31)"
+    C32 = "C32", "Herstellung von sonstigen Waren (C.32)"
+    # FIXME: branchenunabhängig option
+    __empty__ = "Bitte Wert auswählen"
+
+
+class BranchProven(models.Model):
+    application_profile = models.ForeignKey(
+        "ApplicationProfile", on_delete=models.CASCADE
+    )
+    name = models.CharField(
+        "Branche (erprobt)",
+        help_text="Branche(n) für die die Komponente bereits erfolgreich erprobt wurde; belegte Anwendung",
+        choices=BranchName.choices,
+        max_length=3,
     )
 
     def __str__(self):
         return self.get_name_display()
 
 
-class Branch(models.Model):
-    class BranchName(models.TextChoices):
-        C10 = "C10", "Herstellung von Nahrungs- und Futtermitteln (C.10)"
-        C11 = "C11", "Getränkeherstellung (C.11)"
-        C12 = "C12", "Tabakverarbeitung (C.12)"
-        C13 = "C13", "Herstellung von Textilien (C.13)"
-        C14 = "C14", "Herstellung von Bekleidung (C.14)"
-        C15 = "C15", "Herstellung von Leder, Lederwaren und Schuhen (C.15)"
-        C16 = (
-            "C16",
-            "Herstellung von Holz-, Flecht-, Korb- und Korkwaren (ohne Möbel) (C.16)",
-        )
-        C17 = "C17", "Herstellung von Papier, Pappe und Waren daraus (C.17)"
-        C18 = (
-            "C18",
-            "Herstellung von Druckerzeugnissen; Vervielfältigung von bespielten Ton-, Bild und Datenträgern (C.18)",
-        )
-        C19 = "C19", "Kokerei und Mineralölverarbeitung (C.19)"
-        C20 = "C20", "Herstellung von chemischen Erzeugnissen (C.20)"
-        C21 = "C21", "Herstellung von pharmazeutischen Erzeugnissen (C.21)"
-        C22 = "C22", "Herstellung von Gummi- und Kunststoffwaren (C.22)"
-        C23 = (
-            "C23",
-            "Herstellung von Glas und Glaswaren, Keramik, Verarbeitung von Steinen und Erden (C.23)",
-        )
-        C24 = "C24", "Metallerzeugung und –bearbeitung (C.24)"
-        C25 = "C25", "Herstellung von Metallerzeugnissen (C.25)"
-        C26 = (
-            "C26",
-            "Herstellung von Datenverarbeitungsgeräten, elektronischen und optischen Erzeugnissen (C.26)",
-        )
-        C27 = "C27", "Herstellung von elektrischen Ausrüstungen (C.27)"
-        C28 = "C28", "Maschinenbau (C.28)"
-        C29 = "C29", "Herstellung von Kraftwagen und Kraftwagenteilen (C.29)"
-        C30 = "C30", "Sonstiger Fahrzeugbau (C.30)"
-        C31 = "C31", "Herstellung von Möbeln (C.31)"
-        C32 = "C32", "Herstellung von sonstigen Waren (C.32)"
-        # FIXME: branchenunabhängig option
-        __empty__ = "Bitte Wert auswählen"
-
-    name = models.CharField(choices=BranchName.choices, max_length=3)
+class BranchApplicable(models.Model):
+    application_profile = models.ForeignKey(
+        "ApplicationProfile", on_delete=models.CASCADE
+    )
+    name = models.CharField(
+        "Branche (anwendbar)",
+        help_text="Branche, in denen die Komponenten anwendbar ist",
+        choices=BranchName.choices,
+        max_length=3,
+    )
 
     def __str__(self):
         return self.get_name_display()
@@ -137,6 +164,10 @@ class Component(models.Model):
 
 
 class ApplicationProfile(models.Model):
+    class Meta:
+        verbose_name = ""
+        verbose_name_plural = "Anwendungsprofil"
+
     class CorporateDivision(models.TextChoices):
         CS = "CS", "Kundendienst / Inbetriebnahme"  # Customer Service / Commissioning
         CD = "DD", "Konstruktion / Entwicklung"  # Construction / Development
@@ -188,18 +219,6 @@ class ApplicationProfile(models.Model):
 
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
 
-    branch_proven = models.ManyToManyField(
-        Branch,
-        verbose_name="Branche (erprobt)",
-        help_text="Branche(n) für die die Komponente bereits erfolgreich erprobt wurde; belegte Anwendung",
-        related_name="branch_proven_for",
-    )
-    branch_applicable = models.ManyToManyField(
-        Branch,
-        verbose_name="Branche (anwendbar)",
-        help_text="Branche, in denen die Komponenten anwendbar ist",
-        related_name="branch_applicable_for",
-    )
     corporate_division = models.CharField(
         "Unternehmensbereich",
         choices=CorporateDivision.choices,

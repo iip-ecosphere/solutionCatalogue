@@ -19,4 +19,6 @@ from django.urls import include, path
 urlpatterns = [
     path("", include("catalogue.urls")),
     path("admin/", admin.site.urls),
+    path('_nested_admin/', include('nested_admin.urls')),
+    path('grappelli/', include('grappelli.urls')),
 ]
