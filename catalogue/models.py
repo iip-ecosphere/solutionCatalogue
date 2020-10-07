@@ -29,7 +29,16 @@ class Task(models.Model):
         OTHER = "OTHER", "Sonstiges?"
         __empty__ = "Bitte Wert auswählen"
 
-    name = models.CharField(choices=TaskName.choices, max_length=5)
+    name = models.CharField("Task", choices=TaskName.choices, max_length=5,
+                            help_text=("Art der Aufgabe, der die beschriebene KI-Komponente zugeordnet werden kann"
+                                       " (z.B. Predictive Maintenance, Qualitätsprüfung))"))
+    component = models.ForeignKey(
+        "Component",
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.get_name_display()
 
 
 class Branch(models.Model):
@@ -74,6 +83,9 @@ class Branch(models.Model):
 
     name = models.CharField(choices=BranchName.choices, max_length=3)
 
+    def __str__(self):
+        return self.get_name_display()
+
 
 class DataAnalysisProcess(models.Model):
     class DAProcessName(models.TextChoices):
@@ -89,6 +101,9 @@ class DataAnalysisProcess(models.Model):
         __empty__ = "Bitte Wert auswählen"
 
     name = models.CharField(choices=DAProcessName.choices, max_length=2)
+
+    def __str__(self):
+        return self.get_name_display()
 
 
 class Component(models.Model):
@@ -106,14 +121,6 @@ class Component(models.Model):
 
     name = models.CharField(
         "Name", max_length=200, help_text="Bezeichnung der Komponente", blank=False
-    )
-    task = models.ManyToManyField(
-        Task,
-        verbose_name="Task",
-        help_text=(
-            "Art der Aufgabe, der die beschriebene KI-Komponente zugeordnet werden kann"
-            " (z.B. Predictive Maintenance, Qualitätsprüfung)"
-        ),
     )
     trl = models.IntegerField(
         "TRL",
