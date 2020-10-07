@@ -2,6 +2,10 @@ from django.db import models
 
 
 class Task(models.Model):
+    class Meta:
+        verbose_name = "Task"
+        verbose_name_plural = "Tasks"
+
     class TaskName(models.TextChoices):
         PMCM = "PMCM", "Predictive Maintenance/Condition Monitoring"
         QCM = (
@@ -30,7 +34,6 @@ class Task(models.Model):
         __empty__ = "Bitte Wert auswählen"
 
     name = models.CharField(
-        "Task",
         choices=TaskName.choices,
         max_length=5,
         help_text=(
@@ -38,7 +41,7 @@ class Task(models.Model):
             " (z.B. Predictive Maintenance, Qualitätsprüfung))"
         ),
     )
-    component = models.ForeignKey("Component", on_delete=models.CASCADE)
+    base_data = models.ForeignKey("BaseData", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.get_name_display()
@@ -85,11 +88,13 @@ class BranchName(models.TextChoices):
 
 
 class BranchProven(models.Model):
+    class Meta:
+        verbose_name = "Branche (erprobt)"
+
     application_profile = models.ForeignKey(
         "ApplicationProfile", on_delete=models.CASCADE
     )
     name = models.CharField(
-        "Branche (erprobt)",
         help_text="Branche(n) für die die Komponente bereits erfolgreich erprobt wurde; belegte Anwendung",
         choices=BranchName.choices,
         max_length=3,
@@ -100,11 +105,13 @@ class BranchProven(models.Model):
 
 
 class BranchApplicable(models.Model):
+    class Meta:
+        verbose_name = "Branche (anwendbar)"
+
     application_profile = models.ForeignKey(
         "ApplicationProfile", on_delete=models.CASCADE
     )
     name = models.CharField(
-        "Branche (anwendbar)",
         help_text="Branche, in denen die Komponenten anwendbar ist",
         choices=BranchName.choices,
         max_length=3,
@@ -115,6 +122,9 @@ class BranchApplicable(models.Model):
 
 
 class DataAnalysisProcess(models.Model):
+    class Meta:
+        verbose_name = "Datenanalyse-Prozess"
+
     class DAProcessName(models.TextChoices):
         DA = "DA", "Datenerfassung"  # Data acquisition
         DC = "DC", "Data-Cleaning/Pre-processing"
@@ -127,13 +137,27 @@ class DataAnalysisProcess(models.Model):
         PC = "PC", "KI-basierte Prozesssteuerung"  # AI-based process control
         __empty__ = "Bitte Wert auswählen"
 
-    name = models.CharField(choices=DAProcessName.choices, max_length=2)
+    technical_specification = models.ForeignKey(
+        "TechnicalSpecification", on_delete=models.CASCADE
+    )
+    name = models.CharField(
+        choices=DAProcessName.choices,
+        max_length=2,
+        help_text="Unterstützte Phasen des Datenanalyse-Prozesses (z.B. Data Cleaning)",
+    )
+    # FIXME: "einzelne Schritte des Prozesses erklären"?
 
     def __str__(self):
         return self.get_name_display()
 
 
 class Component(models.Model):
+    class Meta:
+        verbose_name = "KI Komponente"
+        verbose_name_plural = "KI Komponenten"
+
+
+class BaseData(models.Model):
     class TRL(models.IntegerChoices):
         TRL1 = 1, "TRL 1 - Grundprinzipien beobachtet"
         TRL2 = 2, "TRL 2 - Technologiekonzept formuliert"
@@ -146,6 +170,7 @@ class Component(models.Model):
         TRL9 = 9, "TRL 9 - System funktioniert in operationeller Umgebung"
         __empty__ = "Bitte Wert auswählen"
 
+    component = models.OneToOneField(Component, on_delete=models.CASCADE)
     name = models.CharField(
         "Name", max_length=200, help_text="Bezeichnung der Komponente", blank=False
     )
@@ -160,14 +185,9 @@ class Component(models.Model):
     description = models.TextField(
         "Kurzbeschreibung", help_text="Kurze Beschreibung der Komponente"
     )
-    # TODO: ForeignKeys
 
 
 class ApplicationProfile(models.Model):
-    class Meta:
-        verbose_name = ""
-        verbose_name_plural = "Anwendungsprofil"
-
     class CorporateDivision(models.TextChoices):
         CS = "CS", "Kundendienst / Inbetriebnahme"  # Customer Service / Commissioning
         CD = "DD", "Konstruktion / Entwicklung"  # Construction / Development
@@ -302,11 +322,6 @@ class TechnicalSpecification(models.Model):
         help_text="Angabe der verwendeten KI-Methode (z.B. Deep Learning)",
         max_length=1000,
     )  # FIXME: multivalue? textfield?
-    data_analysis_process = models.ManyToManyField(
-        DataAnalysisProcess,
-        verbose_name="Datenanalyse-Prozess",
-        help_text="Unterstützte Phasen des Datenanalyse-Prozesses (z.B. Data Cleaning)",
-    )  # FIXME: "einzelne Schritte des Prozesses erklären"?
     realtime_processing = models.IntegerField(
         "Echtzeitverarbeitung",
         help_text="Klassifizierung der Komponente in Bezug auf ihre Echtzeitfähigkeit",
