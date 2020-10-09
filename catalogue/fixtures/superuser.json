@@ -8,5 +8,15 @@
             "is_staff": true,
             "is_active": true
         }
+    },
+    { "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "user",
+            "password": "pbkdf2_sha256$216000$2baU0OYpxQB8$0oB/ObBKs//iwaHObCTHdQl6sb8xoyfTGIOSthZLZuY=",
+            "is_superuser": false,
+            "is_staff": true,
+            "is_active": true
+        }
     }
 ]

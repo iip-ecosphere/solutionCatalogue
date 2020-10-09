@@ -11,6 +11,7 @@ django = ">=3.1,<4.0"
 django-nested-admin = "*"
 django-grappelli = "*"
 django-debug-toolbar = "*"
+django-crum = "*"
 
 [requires]
 python_version = "3"

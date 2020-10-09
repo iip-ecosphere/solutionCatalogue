@@ -14,10 +14,10 @@ from .models import (
     Source,
 )
 
-import nested_admin
+from nested_admin import nested
 
 
-class SourceInline(nested_admin.NestedStackedInline):
+class SourceInline(nested.NestedStackedInline):
     model = Source
     verbose_name = ""
     verbose_name_plural = "Quelle"
@@ -25,8 +25,8 @@ class SourceInline(nested_admin.NestedStackedInline):
     can_delete = False
 
 
-class TechnicalSpecificationInline(nested_admin.NestedStackedInline):
-    class DAProcessInline(nested_admin.NestedStackedInline):
+class TechnicalSpecificationInline(nested.NestedStackedInline):
+    class DAProcessInline(nested.NestedStackedInline):
         model = DataAnalysisProcess
         extra = 0
         min_num = 1
@@ -40,7 +40,7 @@ class TechnicalSpecificationInline(nested_admin.NestedStackedInline):
     can_delete = False
 
 
-class RequirementsInline(nested_admin.NestedStackedInline):
+class RequirementsInline(nested.NestedStackedInline):
     model = Requirements
     verbose_name = ""
     verbose_name_plural = "Vorraussetzungen"
@@ -48,7 +48,7 @@ class RequirementsInline(nested_admin.NestedStackedInline):
     can_delete = False
 
 
-class UseInline(nested_admin.NestedStackedInline):
+class UseInline(nested.NestedStackedInline):
     model = Use
     verbose_name = ""
     verbose_name_plural = "Nutzen"
@@ -56,14 +56,14 @@ class UseInline(nested_admin.NestedStackedInline):
     can_delete = False
 
 
-class ApplicationProfileInline(nested_admin.NestedStackedInline):
-    class BranchProvenInline(nested_admin.NestedStackedInline):
+class ApplicationProfileInline(nested.NestedStackedInline):
+    class BranchProvenInline(nested.NestedStackedInline):
         model = BranchProven
         extra = 0
         min_num = 1
         inline_classes = ("grp-open",)
 
-    class BranchApplicableInline(nested_admin.NestedStackedInline):
+    class BranchApplicableInline(nested.NestedStackedInline):
         model = BranchApplicable
         extra = 0
         min_num = 1
@@ -77,8 +77,8 @@ class ApplicationProfileInline(nested_admin.NestedStackedInline):
     can_delete = False
 
 
-class BaseDataInline(nested_admin.NestedStackedInline):
-    class TaskInline(nested_admin.NestedStackedInline):
+class BaseDataInline(nested.NestedStackedInline):
+    class TaskInline(nested.NestedStackedInline):
         model = Task
         extra = 0
         min_num = 1
@@ -93,7 +93,17 @@ class BaseDataInline(nested_admin.NestedStackedInline):
 
 
 @admin.register(Component)
-class ComponentAdmin(nested_admin.NestedModelAdmin):
+class ComponentAdmin(nested.NestedModelAdmin):
+    exclude = ("created_by",)
+    list_display = (
+        "id",
+        "basedata_name",
+        "published",
+        "created",
+        "created_by",
+        "lastmodified_at",
+    )
+    # list_editable = ("published",)
     inlines = [
         BaseDataInline,
         ApplicationProfileInline,
@@ -102,6 +112,16 @@ class ComponentAdmin(nested_admin.NestedModelAdmin):
         TechnicalSpecificationInline,
         SourceInline,
     ]
+
+    def queryset(self, request):
+        if request.user.is_superuser:
+            return Component.objects.all()
+        return Component.objects.filter(author=request.user)
+
+    def basedata_name(self, obj):
+        return obj.basedata.name
+
+    basedata_name.short_description = "Name"
 
 
 # admin.site.register(Task)
