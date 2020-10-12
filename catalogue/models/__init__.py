@@ -11,6 +11,7 @@ from .choices import (
     Process,
     Realtime,
 )
+from .users import *
 
 
 class Component(models.Model):
