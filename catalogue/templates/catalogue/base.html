@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'catalogue/mvp.css' %}">
+</head>
+<body>
+<header>
+  <nav>
+    <a href="{% url 'catalogue:index' %}"><img alt="IIP Ecosphere" src="{% static 'Logo_IIP-Ecosphere.svg' %}"
+                                               height="70"></a>
+    <ul>
+      <li><a href="{% url 'catalogue:index' %}">Index</a></li>
+      <li><a href="{% url 'admin:index' %}">Admin</a></li>
+    </ul>
+  </nav>
+  {% block header %}{% endblock %}
+</header>
+{% block body %}{% endblock %}
+</body>
+</html>

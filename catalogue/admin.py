@@ -23,7 +23,6 @@ from nested_admin import nested
 class SourceInline(nested.NestedStackedInline):
     model = Source
     verbose_name = ""
-    verbose_name_plural = "Quelle"
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
 
@@ -37,7 +36,6 @@ class TechnicalSpecificationInline(nested.NestedStackedInline):
 
     model = TechnicalSpecification
     verbose_name = ""
-    verbose_name_plural = "Technische Spezifikation"
     inlines = [DAProcessInline]
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
@@ -46,7 +44,6 @@ class TechnicalSpecificationInline(nested.NestedStackedInline):
 class RequirementsInline(nested.NestedStackedInline):
     model = Requirements
     verbose_name = ""
-    verbose_name_plural = "Vorraussetzungen"
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
 
@@ -54,7 +51,6 @@ class RequirementsInline(nested.NestedStackedInline):
 class UseInline(nested.NestedStackedInline):
     model = Use
     verbose_name = ""
-    verbose_name_plural = "Nutzen"
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
 
@@ -74,7 +70,6 @@ class ApplicationProfileInline(nested.NestedStackedInline):
 
     model = ApplicationProfile
     verbose_name = ""
-    verbose_name_plural = "Anwendungsprofil"
     inlines = [BranchProvenInline, BranchApplicableInline]
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
@@ -91,7 +86,6 @@ class BaseDataInline(nested.NestedStackedInline):
     extra = 0
     min_num = 1
     verbose_name = ""
-    verbose_name_plural = "Grunddaten"
     inlines = [TaskInline]
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
@@ -145,13 +139,13 @@ class ComponentAdmin(nested.NestedModelAdmin):
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
-    verbose_name_plural = 'Profil'
-    fk_name = 'user'
+    verbose_name_plural = "Profil"
+    fk_name = "user"
     inline_classes = ("grp-collapse grp-open",)
 
 
 class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, )
+    inlines = (ProfileInline,)
 
     def get_inline_instances(self, request, obj=None):
         if not obj:
@@ -161,11 +155,19 @@ class CustomUserAdmin(UserAdmin):
     def get_queryset(self, request):
         if request.user.is_superuser:
             return User.objects.all()
-        return User.objects.filter(groups__name__in=['Autoren'])
+        return User.objects.filter(groups__name__in=["Autoren"])
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
-            return ["username", "date_joined", "last_login", "is_superuser", "is_staff", "user_permissions", "groups"]
+            return [
+                "username",
+                "date_joined",
+                "last_login",
+                "is_superuser",
+                "is_staff",
+                "user_permissions",
+                "groups",
+            ]
         return []
 
 
