@@ -11,7 +11,7 @@ from .choices import (
     Process,
     Realtime,
 )
-from .users import *
+from .users import Profile
 
 
 class Component(models.Model):
@@ -30,7 +30,7 @@ class Component(models.Model):
 class BaseData(models.Model):
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
     name = models.CharField(
-        "Name", max_length=200, help_text="Bezeichnung der Komponente", blank=False
+        "Name", max_length=200, help_text="Bezeichnung der Komponente", blank=False, unique=True
     )
     trl = models.IntegerField(
         "TRL",
@@ -61,6 +61,7 @@ class Task(models.Model):
             "Art der Aufgabe, der die beschriebene KI-Komponente zugeordnet werden kann"
             " (z.B. Predictive Maintenance, Qualitätsprüfung))"
         ),
+        blank=True
     )
 
     def __str__(self):
@@ -102,6 +103,7 @@ class BranchProven(models.Model):
         help_text="Branche(n) für die die Komponente bereits erfolgreich erprobt wurde; belegte Anwendung",
         choices=BranchName.choices,
         max_length=3,
+        blank=True
     )
 
     def __str__(self):
@@ -119,6 +121,7 @@ class BranchApplicable(models.Model):
         help_text="Branche, in denen die Komponenten anwendbar ist",
         choices=BranchName.choices,
         max_length=3,
+        blank=True
     )
 
     def __str__(self):
@@ -214,6 +217,7 @@ class DataAnalysisProcess(models.Model):
         choices=DAProcessName.choices,
         max_length=2,
         help_text="Unterstützte Phasen des Datenanalyse-Prozesses (z.B. Data Cleaning)",
+        blank=True
     )
 
     # FIXME: "einzelne Schritte des Prozesses erklären"?

@@ -88,6 +88,8 @@ class BaseDataInline(nested.NestedStackedInline):
         inline_classes = ("grp-open",)
 
     model = BaseData
+    extra = 0
+    min_num = 1
     verbose_name = ""
     verbose_name_plural = "Grunddaten"
     inlines = [TaskInline]
