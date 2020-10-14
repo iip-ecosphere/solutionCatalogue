@@ -125,3 +125,7 @@ GRAPPELLI_ADMIN_TITLE = "AI Solutions Catalogue"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+LOGIN_REDIRECT_URL = "/admin/"
+LOGOUT_REDIRECT_URL = "/account/login/"
+LOGIN_URL = "/account/login/"

@@ -1,0 +1,14 @@
+{% extends "catalogue/base.html" %}
+{% block title %}Reset{% endblock %}
+{% block header %}<h1>Passwort Wiederherstellung</h1>{% endblock %}
+{% block body %}
+  <main>
+    <section>
+      <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Resetlink anfordern</button>
+      </form>
+    </section>
+  </main>
+{% endblock %}
