@@ -115,6 +115,8 @@ class ComponentAdmin(nested.NestedModelAdmin):
     def get_queryset(self, request):
         if request.user.is_superuser:
             return Component.objects.all()
+        if request.user.groups.filter(name="Moderatoren").exists():
+            return Component.objects.all()
         return Component.objects.filter(created_by=request.user)
 
     def basedata_name(self, obj):
