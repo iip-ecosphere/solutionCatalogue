@@ -1,7 +1,7 @@
 from django.db import models
 
 from . import Component
-from ..choices import Realtime, DAProcessName, LicenseChoices
+from ..choices import RealtimeChoices, DAProcessChoices, LicenseChoices
 
 
 class TechnicalSpecification(models.Model):
@@ -14,7 +14,7 @@ class TechnicalSpecification(models.Model):
     realtime_processing = models.IntegerField(
         "Echtzeitverarbeitung",
         help_text="Klassifizierung der Komponente in Bezug auf ihre Echtzeitfähigkeit",
-        choices=Realtime.choices,
+        choices=RealtimeChoices.choices,
     )
     data_formats = models.CharField(
         "Datenformate",
@@ -58,7 +58,7 @@ class DataAnalysisProcess(models.Model):
         TechnicalSpecification, on_delete=models.CASCADE
     )
     name = models.CharField(
-        choices=DAProcessName.choices,
+        choices=DAProcessChoices.choices,
         max_length=2,
         help_text="Unterstützte Phasen des Datenanalyse-Prozesses (z.B. Data Cleaning)",
         blank=True,

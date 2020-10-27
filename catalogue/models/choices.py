@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class TaskName(models.TextChoices):
+class TaskChoices(models.TextChoices):
     PMCM = "PMCM", "Predictive Maintenance/Condition Monitoring"
     QCM = (
         "QCM",
@@ -29,7 +29,7 @@ class TaskName(models.TextChoices):
     __empty__ = "Bitte Wert auswählen"
 
 
-class BranchName(models.TextChoices):
+class BranchChoices(models.TextChoices):
     C10 = "C10", "Herstellung von Nahrungs- und Futtermitteln (C.10)"
     C11 = "C11", "Getränkeherstellung (C.11)"
     C12 = "C12", "Tabakverarbeitung (C.12)"
@@ -71,7 +71,7 @@ class BranchName(models.TextChoices):
     __empty__ = "Bitte Wert auswählen"
 
 
-class DAProcessName(models.TextChoices):
+class DAProcessChoices(models.TextChoices):
     DA = "DA", "Datenerfassung"  # Data acquisition
     DC = "DC", "Data-Cleaning/Pre-processing"
     DI = "DI", "Datenintegration"  # Data integration
@@ -84,7 +84,7 @@ class DAProcessName(models.TextChoices):
     __empty__ = "Bitte Wert auswählen"
 
 
-class TRL(models.IntegerChoices):
+class TRLChoices(models.IntegerChoices):
     TRL1 = 1, "TRL 1 - Grundprinzipien beobachtet"
     TRL2 = 2, "TRL 2 - Technologiekonzept formuliert"
     TRL3 = 3, "TRL 3 - Experimenteller Nachweis des Konzepts"
@@ -97,7 +97,7 @@ class TRL(models.IntegerChoices):
     __empty__ = "Bitte Wert auswählen"
 
 
-class CorporateDivisionName(models.TextChoices):
+class CorporateDivisionChoices(models.TextChoices):
     CS = "CS", "Kundendienst / Inbetriebnahme"  # Customer Service / Commissioning
     CD = "DD", "Konstruktion / Entwicklung"  # Construction / Development
     PA = "PA", "Produktion / Montage"  # Production/assembly
@@ -111,7 +111,7 @@ class CorporateDivisionName(models.TextChoices):
     __empty__ = "Bitte Wert auswählen"
 
 
-class HierarchyLevelName(models.TextChoices):
+class HierarchyLevelChoices(models.TextChoices):
     IP = "IP", "Intelligentes Produkt (product)"
     FD = "FD", "Feldebene/Sensoren/Aktoren (field device)"
     CD = "CD", "Regelung & Steuerung (control device)"
@@ -122,7 +122,7 @@ class HierarchyLevelName(models.TextChoices):
     __empty__ = "Bitte Wert auswählen"
 
 
-class ProcessName(models.TextChoices):
+class ProcessChoices(models.TextChoices):
     PD = "PD", "Produktionsentwicklung"  # Production development
     PA = (
         "PA",
@@ -149,7 +149,7 @@ class ProcessName(models.TextChoices):
     __empty__ = "Bitte Wert auswählen"
 
 
-class Realtime(models.IntegerChoices):
+class RealtimeChoices(models.IntegerChoices):
     RT0 = 0, "Keine Echtzeit"
     RT1 = 1, "Weiche Echtzeit"
     RT2 = 2, "Harte Echtzeit"

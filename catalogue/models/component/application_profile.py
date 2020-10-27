@@ -1,7 +1,7 @@
 from django.db import models
 
 from . import Component
-from ..choices import CorporateDivisionName, HierarchyLevelName, ProcessName, BranchName
+from ..choices import CorporateDivisionChoices, HierarchyLevelChoices, ProcessChoices, BranchChoices
 
 
 class ApplicationProfile(models.Model):
@@ -26,7 +26,7 @@ class CorporateDivision(models.Model):
     )
     name = models.CharField(
         help_text="Bereich des produzierenden Unternehmens, für den die Komponenten entwickelt wurde",
-        choices=CorporateDivisionName.choices,
+        choices=CorporateDivisionChoices.choices,
         max_length=2,
         blank=True,
     )
@@ -44,7 +44,7 @@ class HierarchyLevel(models.Model):
         ApplicationProfile, on_delete=models.CASCADE
     )
     name = models.CharField(
-        choices=HierarchyLevelName.choices,
+        choices=HierarchyLevelChoices.choices,
         help_text="Automatisierebene, für die die KI-Komponente gedacht ist",
         max_length=2,
         blank=True,
@@ -63,7 +63,7 @@ class Process(models.Model):
         ApplicationProfile, on_delete=models.CASCADE
     )
     name = models.CharField(
-        choices=ProcessName.choices,
+        choices=ProcessChoices.choices,
         help_text="Prozess der durch die KI-Komponente unterstützt wird",
         max_length=5,
         blank=True,
@@ -83,7 +83,7 @@ class BranchProven(models.Model):
     )
     name = models.CharField(
         help_text="Branche(n) für die die Komponente bereits erfolgreich erprobt wurde; belegte Anwendung",
-        choices=BranchName.choices,
+        choices=BranchChoices.choices,
         max_length=3,
         blank=True,
     )
@@ -102,7 +102,7 @@ class BranchApplicable(models.Model):
     )
     name = models.CharField(
         help_text="Branche, in denen die Komponenten anwendbar ist",
-        choices=BranchName.choices,
+        choices=BranchChoices.choices,
         max_length=3,
         blank=True,
     )

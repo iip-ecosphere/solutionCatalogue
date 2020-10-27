@@ -1,7 +1,7 @@
 from django.db import models
 
 from . import Component
-from ..choices import TRL, TaskName
+from ..choices import TRLChoices, TaskChoices
 
 
 class BaseData(models.Model):
@@ -23,7 +23,7 @@ class BaseData(models.Model):
             "Status der Komponente in Bezug auf Ihre Einsetzbarkeit durch die Angabe"
             " eines Technischen Reifegrades (Technology Readiness Level)."
         ),
-        choices=TRL.choices,
+        choices=TRLChoices.choices,
     )
     description = models.TextField(
         "Kurzbeschreibung", help_text="Kurze Beschreibung der Komponente"
@@ -40,7 +40,7 @@ class Task(models.Model):
 
     base_data = models.ForeignKey(BaseData, on_delete=models.CASCADE)
     name = models.CharField(
-        choices=TaskName.choices,
+        choices=TaskChoices.choices,
         max_length=5,
         help_text=(
             "Art der Aufgabe, der die beschriebene KI-Komponente zugeordnet werden kann"
