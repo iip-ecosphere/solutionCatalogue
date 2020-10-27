@@ -1,0 +1,15 @@
+from crum import get_current_user
+from django.db import models
+
+
+class Component(models.Model):
+    class Meta:
+        verbose_name = "KI Komponente"
+        verbose_name_plural = "KI Komponenten"
+
+    created = models.DateTimeField("Erstellt", auto_now_add=True)
+    created_by = models.ForeignKey(
+        "auth.User", default=get_current_user, on_delete=models.CASCADE
+    )
+    lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
+    published = models.BooleanField("Veröffentlicht", default=False)
