@@ -214,7 +214,6 @@ class Requirements(models.Model):
 
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
 
-    # FIXME: multiple inputs? max_length?
     protocols = models.CharField(
         "Protokolle/Schnittstellen",
         help_text="Schnittstellen und/oder Protokolle, die von der Kompomente unterstützt werden",
@@ -250,12 +249,6 @@ class TechnicalSpecification(models.Model):
 
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
 
-    ai_method = models.CharField(
-        "KI-Methode",
-        help_text="Angabe der verwendeten KI-Methode (z.B. Deep Learning)",
-        max_length=1000,
-        blank=True,
-    )  # FIXME: multivalue? textfield?
     realtime_processing = models.IntegerField(
         "Echtzeitverarbeitung",
         help_text="Klassifizierung der Komponente in Bezug auf ihre Echtzeitfähigkeit",
@@ -277,6 +270,24 @@ class TechnicalSpecification(models.Model):
     # FIXME: planed for later
     # machine_readable_spec = models.CharField("Maschinenlesbare Spezifikation",
     # help_text="Beschreibung der Schnittstellen in maschinenlesbarer Form, um automatische Integration zu unterstützen")
+
+    def __str__(self):
+        return ""
+
+
+class AIMethod(models.Model):
+    class Meta:
+        verbose_name = "KI-Methode"
+        verbose_name_plural = verbose_name
+
+    technical_specification = models.ForeignKey(
+        TechnicalSpecification, on_delete=models.CASCADE
+    )
+    name = models.CharField(
+        help_text="Angabe der verwendeten KI-Methode (z.B. Deep Learning)",
+        max_length=1000,
+        blank=True,
+    )
 
     def __str__(self):
         return ""

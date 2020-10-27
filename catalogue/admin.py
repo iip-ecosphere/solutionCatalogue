@@ -17,6 +17,7 @@ from .models import (
     CorporateDivision,
     HierarchyLevel,
     Process,
+    AIMethod,
 )
 from .models.users import Profile
 
@@ -31,6 +32,12 @@ class SourceInline(nested.NestedStackedInline):
 
 
 class TechnicalSpecificationInline(nested.NestedStackedInline):
+    class AIMethodInline(nested.NestedStackedInline):
+        model = AIMethod
+        extra = 0
+        min_num = 1
+        inline_classes = ("grp-open",)
+
     class DAProcessInline(nested.NestedStackedInline):
         model = DataAnalysisProcess
         extra = 0
@@ -39,7 +46,7 @@ class TechnicalSpecificationInline(nested.NestedStackedInline):
 
     model = TechnicalSpecification
     verbose_name = ""
-    inlines = [DAProcessInline]
+    inlines = [AIMethodInline, DAProcessInline]
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
 
