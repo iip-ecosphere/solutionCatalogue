@@ -6,9 +6,9 @@ from .choices import (
     BranchName,
     DAProcessName,
     TRL,
-    CorporateDivision,
-    HierarchyLevel,
-    Process,
+    CorporateDivisionName,
+    HierarchyLevelName,
+    ProcessName,
     Realtime,
 )
 from .users import Profile
@@ -53,7 +53,7 @@ class BaseData(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return ""
 
 
 class Task(models.Model):
@@ -73,7 +73,7 @@ class Task(models.Model):
     )
 
     def __str__(self):
-        return self.get_name_display()
+        return ""
 
 
 class ApplicationProfile(models.Model):
@@ -82,26 +82,67 @@ class ApplicationProfile(models.Model):
         verbose_name_plural = verbose_name
 
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
+    product = models.TextField("Produkt", help_text="Hergestelltes Produkt")
 
-    corporate_division = models.CharField(
-        "Unternehmensbereich",
-        choices=CorporateDivision.choices,
+    def __str__(self):
+        return ""
+
+
+class CorporateDivision(models.Model):
+    class Meta:
+        verbose_name = "Unternehmensbereich"
+        verbose_name_plural = verbose_name
+
+    application_profile = models.ForeignKey(
+        ApplicationProfile, on_delete=models.CASCADE
+    )
+    name = models.CharField(
         help_text="Bereich des produzierenden Unternehmens, für den die Komponenten entwickelt wurde",
+        choices=CorporateDivisionName.choices,
         max_length=2,
-    )  # FIXME: Mehrfachauswahl?
-    hierarchy_level = models.CharField(
-        "Hierarchie-Ebene",
-        choices=HierarchyLevel.choices,
+        blank=True,
+    )
+
+    def __str__(self):
+        return ""
+
+
+class HierarchyLevel(models.Model):
+    class Meta:
+        verbose_name = "Hierarchie-Ebene"
+        verbose_name_plural = verbose_name
+
+    application_profile = models.ForeignKey(
+        ApplicationProfile, on_delete=models.CASCADE
+    )
+    name = models.CharField(
+        choices=HierarchyLevelName.choices,
         help_text="Automatisierebene, für die die KI-Komponente gedacht ist",
         max_length=2,
-    )  # FIXME: Mehrfachauswahl?
-    process = models.CharField(
-        "Prozess",
-        choices=Process.choices,
+        blank=True,
+    )
+
+    def __str__(self):
+        return ""
+
+
+class Process(models.Model):
+    class Meta:
+        verbose_name = "Prozess"
+        verbose_name_plural = verbose_name
+
+    application_profile = models.ForeignKey(
+        ApplicationProfile, on_delete=models.CASCADE
+    )
+    name = models.CharField(
+        choices=ProcessName.choices,
         help_text="Prozess der durch die KI-Komponente unterstützt wird",
         max_length=5,
-    )  # FIXME: Mehrfachauswahl?
-    product = models.TextField("Produkt", help_text="Hergestelltes Produkt")
+        blank=True,
+    )
+
+    def __str__(self):
+        return ""
 
 
 class BranchProven(models.Model):
@@ -120,7 +161,7 @@ class BranchProven(models.Model):
     )
 
     def __str__(self):
-        return self.get_name_display()
+        return ""
 
 
 class BranchApplicable(models.Model):
@@ -139,7 +180,7 @@ class BranchApplicable(models.Model):
     )
 
     def __str__(self):
-        return self.get_name_display()
+        return ""
 
 
 class Use(models.Model):
@@ -161,6 +202,9 @@ class Use(models.Model):
         "Szenarien / Use cases",
         help_text="Beschreibung von Szenarien, in denen die Komponente bereits erfolgreich eingesetzt wurde",
     )
+
+    def __str__(self):
+        return ""
 
 
 class Requirements(models.Model):
@@ -194,6 +238,9 @@ class Requirements(models.Model):
         help_text="Maschinen und IoT Devices, mit denen die Komponente kompatibel ist",
         max_length=1000,
     )
+
+    def __str__(self):
+        return ""
 
 
 class TechnicalSpecification(models.Model):
@@ -231,6 +278,9 @@ class TechnicalSpecification(models.Model):
     # machine_readable_spec = models.CharField("Maschinenlesbare Spezifikation",
     # help_text="Beschreibung der Schnittstellen in maschinenlesbarer Form, um automatische Integration zu unterstützen")
 
+    def __str__(self):
+        return ""
+
 
 class DataAnalysisProcess(models.Model):
     class Meta:
@@ -250,7 +300,7 @@ class DataAnalysisProcess(models.Model):
     # FIXME: "einzelne Schritte des Prozesses erklären"?
 
     def __str__(self):
-        return self.get_name_display()
+        return ""
 
 
 class Source(models.Model):
@@ -273,3 +323,6 @@ class Source(models.Model):
     additional_info = models.TextField(
         "Zusatzinformationen", help_text="Zusatzinformation zur Komponente", blank=True
     )
+
+    def __str__(self):
+        return ""

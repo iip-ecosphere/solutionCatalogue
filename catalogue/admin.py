@@ -14,6 +14,9 @@ from .models import (
     TechnicalSpecification,
     DataAnalysisProcess,
     Source,
+    CorporateDivision,
+    HierarchyLevel,
+    Process,
 )
 from .models.users import Profile
 
@@ -68,9 +71,33 @@ class ApplicationProfileInline(nested.NestedStackedInline):
         min_num = 1
         inline_classes = ("grp-open",)
 
+    class CorporateDivisionInline(nested.NestedStackedInline):
+        model = CorporateDivision
+        extra = 0
+        min_num = 1
+        inline_classes = ("grp-open",)
+
+    class HierarchyLevelInline(nested.NestedStackedInline):
+        model = HierarchyLevel
+        extra = 0
+        min_num = 1
+        inline_classes = ("grp-open",)
+
+    class ProcessInline(nested.NestedStackedInline):
+        model = Process
+        extra = 0
+        min_num = 1
+        inline_classes = ("grp-open",)
+
     model = ApplicationProfile
     verbose_name = ""
-    inlines = [BranchProvenInline, BranchApplicableInline]
+    inlines = [
+        BranchProvenInline,
+        BranchApplicableInline,
+        CorporateDivisionInline,
+        HierarchyLevelInline,
+        ProcessInline,
+    ]
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
 

@@ -65,7 +65,9 @@ class BranchName(models.TextChoices):
     C30 = "C30", "Sonstiger Fahrzeugbau (C.30)"
     C31 = "C31", "Herstellung von Möbeln (C.31)"
     C32 = "C32", "Herstellung von sonstigen Waren (C.32)"
-    # FIXME: branchenunabhängig option
+
+    ALL = "ALL", "Keine / Branchenunabhängig"
+
     __empty__ = "Bitte Wert auswählen"
 
 
@@ -95,7 +97,7 @@ class TRL(models.IntegerChoices):
     __empty__ = "Bitte Wert auswählen"
 
 
-class CorporateDivision(models.TextChoices):
+class CorporateDivisionName(models.TextChoices):
     CS = "CS", "Kundendienst / Inbetriebnahme"  # Customer Service / Commissioning
     CD = "DD", "Konstruktion / Entwicklung"  # Construction / Development
     PA = "PA", "Produktion / Montage"  # Production/assembly
@@ -109,7 +111,7 @@ class CorporateDivision(models.TextChoices):
     __empty__ = "Bitte Wert auswählen"
 
 
-class HierarchyLevel(models.TextChoices):
+class HierarchyLevelName(models.TextChoices):
     IP = "IP", "Intelligentes Produkt (product)"
     FD = "FD", "Feldebene/Sensoren/Aktoren (field device)"
     CD = "CD", "Regelung & Steuerung (control device)"
@@ -120,7 +122,7 @@ class HierarchyLevel(models.TextChoices):
     __empty__ = "Bitte Wert auswählen"
 
 
-class Process(models.TextChoices):
+class ProcessName(models.TextChoices):
     PD = "PD", "Produktionsentwicklung"  # Production development
     PA = (
         "PA",
