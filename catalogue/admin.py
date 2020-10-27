@@ -18,6 +18,7 @@ from .models import (
     HierarchyLevel,
     Process,
     AIMethod,
+    Licenses
 )
 from .models.users import Profile
 
@@ -44,9 +45,15 @@ class TechnicalSpecificationInline(nested.NestedStackedInline):
         min_num = 1
         inline_classes = ("grp-open",)
 
+    class LicensesInline(nested.NestedStackedInline):
+        model = Licenses
+        extra = 0
+        min_num = 1
+        inline_classes = ("grp-open",)
+
     model = TechnicalSpecification
     verbose_name = ""
-    inlines = [AIMethodInline, DAProcessInline]
+    inlines = [LicensesInline, AIMethodInline, DAProcessInline]
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
 

@@ -155,3 +155,11 @@ class Realtime(models.IntegerChoices):
     RT2 = 2, "Harte Echtzeit"
     RT3 = 3, "Feste Echtzeit"
     __empty__ = "Bitte Wert auswählen"
+
+
+class LicenseChoices(models.TextChoices):
+    FW = "FW", "Freeware"
+    OSCL = "OSCL", "Open Source / copy left"
+    OS = "OS", "Open Source / no copy left"
+    PRO = "PRO", "Proprietär"
+    __empty__ = "Bitte Wert auswählen"

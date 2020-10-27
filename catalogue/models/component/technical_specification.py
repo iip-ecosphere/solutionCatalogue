@@ -1,7 +1,7 @@
 from django.db import models
 
 from . import Component
-from ..choices import Realtime, DAProcessName
+from ..choices import Realtime, DAProcessName, LicenseChoices
 
 
 class TechnicalSpecification(models.Model):
@@ -22,12 +22,6 @@ class TechnicalSpecification(models.Model):
         max_length=1000,
         blank=True,
     )
-    licenses = models.CharField(
-        "Lizenzen",
-        help_text="Welche Lizenzen bringt die Komponente mit, insbesondere Open Source Lizenzen",
-        max_length=1000,
-        blank=True,
-    )  # FIXME: multivalue? # TODO: choices
 
     # FIXME: planed for later
     # machine_readable_spec = models.CharField("Maschinenlesbare Spezifikation",
@@ -70,7 +64,32 @@ class DataAnalysisProcess(models.Model):
         blank=True,
     )
 
-    # FIXME: "einzelne Schritte des Prozesses erklären"?
+    # FIXME: "einzelne Schritte des Prozesses erklären"
+
+    def __str__(self):
+        return ""
+
+
+class Licenses(models.Model):
+    class Meta:
+        verbose_name = "Lizenz"
+        verbose_name_plural = "Lizenzen"
+
+    technical_specification = models.ForeignKey(
+        TechnicalSpecification, on_delete=models.CASCADE
+    )
+    type = models.CharField(
+        "Typ",
+        choices=LicenseChoices.choices,
+        max_length=4,
+        help_text="Welche Lizenzen bringt die Komponente mit, insbesondere Open Source Lizenzen",
+        blank=True,
+    )
+    name = models.CharField(
+        help_text="Genaue Angabe der Lizenz",
+        max_length=1000,
+        blank=True,
+    )
 
     def __str__(self):
         return ""
