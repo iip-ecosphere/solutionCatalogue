@@ -18,7 +18,8 @@ from .models import (
     HierarchyLevel,
     Process,
     AIMethod,
-    Licenses
+    Licenses,
+    KPI,
 )
 from .models.users import Profile
 
@@ -66,8 +67,15 @@ class RequirementsInline(nested.NestedStackedInline):
 
 
 class UseInline(nested.NestedStackedInline):
+    class KPIInline(nested.NestedStackedInline):
+        model = KPI
+        extra = 0
+        min_num = 1
+        inline_classes = ("grp-open",)
+
     model = Use
     verbose_name = ""
+    inlines = [KPIInline]
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
 

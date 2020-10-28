@@ -86,9 +86,7 @@ class Licenses(models.Model):
         blank=True,
     )
     name = models.CharField(
-        help_text="Genaue Angabe der Lizenz",
-        max_length=1000,
-        blank=True,
+        help_text="Genaue Angabe der Lizenz", max_length=1000, blank=True,
     )
 
     def __str__(self):

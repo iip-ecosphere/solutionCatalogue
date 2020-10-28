@@ -1,7 +1,12 @@
 from django.db import models
 
 from . import Component
-from ..choices import CorporateDivisionChoices, HierarchyLevelChoices, ProcessChoices, BranchChoices
+from ..choices import (
+    CorporateDivisionChoices,
+    HierarchyLevelChoices,
+    ProcessChoices,
+    BranchChoices,
+)
 
 
 class ApplicationProfile(models.Model):
