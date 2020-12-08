@@ -12,6 +12,7 @@ django-nested-admin = "*"
 django-grappelli = "*"
 django-debug-toolbar = "*"
 django-crum = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3"
