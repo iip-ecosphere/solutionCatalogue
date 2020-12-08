@@ -19,62 +19,70 @@
         {% endfor %}
       </ul>
     </article>
-    <hr>
-    <article>
-      <h2>{{ component.applicationprofile | verbose_name }}</h2>
-      {% list_fields component.applicationprofile as ap %}
-      {% for field, val in ap %}
-        <label>{{ field }}:</label>
-        <p>{{ val }}</p>
-      {% endfor %}
-      <label>Branche (anwendbar):</label>
-      <ul>
-        {% for b in component.applicationprofile.branchapplicable_set.all %}
-          <li>{{ b.get_name_display }}</li>
+    {% if component.applicationprofile %}
+      <hr>
+      <article>
+        <h2>{{ component.applicationprofile | verbose_name }}</h2>
+        {% list_fields component.applicationprofile as ap %}
+        {% for field, val in ap %}
+          <label>{{ field }}:</label>
+          <p>{{ val }}</p>
         {% endfor %}
-      </ul>
-      <label>Branche (erprobt):</label>
-      <ul>
-        {% for b in component.applicationprofile.branchproven_set.all %}
-          <li>{{ b.get_name_display }}</li>
+        <label>Branche (anwendbar):</label>
+        <ul>
+          {% for b in component.applicationprofile.branchapplicable_set.all %}
+            <li>{{ b.get_name_display }}</li>
+          {% endfor %}
+        </ul>
+        <label>Branche (erprobt):</label>
+        <ul>
+          {% for b in component.applicationprofile.branchproven_set.all %}
+            <li>{{ b.get_name_display }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endif %}
+    {% if component.use %}
+      <hr>
+      <article>
+        <h2>{{ component.use | verbose_name }}</h2>
+        {% list_fields component.use as ap %}
+        {% for field, val in ap %}
+          <label>{{ field }}:</label>
+          <p>{{ val }}</p>
         {% endfor %}
-      </ul>
-    </article>
-    <hr>
-    <article>
-      <h2>{{ component.use | verbose_name }}</h2>
-      {% list_fields component.use as ap %}
-      {% for field, val in ap %}
-        <label>{{ field }}:</label>
-        <p>{{ val }}</p>
-      {% endfor %}
-    </article>
-    <hr>
-    <article>
-      <h2>{{ component.requirements | verbose_name }}</h2>
-      {% list_fields component.requirements as ap %}
-      {% for field, val in ap %}
-        <label>{{ field }}:</label>
-        <p>{{ val }}</p>
-      {% endfor %}
-    </article>
-    <hr>
-    <article>
-      <h2>{{ component.technicalspecification | verbose_name }}</h2>
-      {% list_fields component.technicalspecification as ap %}
-      {% for field, val in ap %}
-        <label>{{ field }}:</label>
-        <p>{{ val }}</p>
-      {% endfor %}
-    </article>
-    <hr>
-    <article>
-      <h2>{{ component.source | verbose_name }}</h2>
-      {% list_fields component.source as ap %}
-      {% for field, val in ap %}
-        <label>{{ field }}:</label>
-        <p>{{ val }}</p>
-      {% endfor %}
-    </article>
+      </article>
+      <hr>
+      <article>
+        <h2>{{ component.requirements | verbose_name }}</h2>
+        {% list_fields component.requirements as ap %}
+        {% for field, val in ap %}
+          <label>{{ field }}:</label>
+          <p>{{ val }}</p>
+        {% endfor %}
+      </article>
+    {% endif %}
+    {% if component.technicalspecification %}
+      <hr>
+      <article>
+        <h2>{{ component.technicalspecification | verbose_name }}</h2>
+        {% list_fields component.technicalspecification as ap %}
+        {% for field, val in ap %}
+          <label>{{ field }}:</label>
+          <p>{{ val }}</p>
+        {% endfor %}
+      </article>
+    {% endif %}
+    {% if component.source %}
+      <hr>
+      <article>
+        <h2>{{ component.source | verbose_name }}</h2>
+        {% list_fields component.source as ap %}
+        {% for field, val in ap %}
+          <label>{{ field }}:</label>
+          <p>{{ val }}</p>
+        {% endfor %}
+      </article>
+    {% endif %}
   </main>
 {% endblock %}
