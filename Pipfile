@@ -13,6 +13,7 @@ django-grappelli = "*"
 django-debug-toolbar = "*"
 django-crum = "*"
 django-filter = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3"
