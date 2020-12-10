@@ -5,7 +5,17 @@
   <main>
     <section>
       <form method="get">
-        {{ filter.form.as_p }}
+        {% with filter.form as form %}
+          {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+          {% endfor %}
+          {% for field in form.visible_fields %}
+            <p>
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+            </p>
+          {% endfor %}
+        {% endwith %}
         <input type="submit"/>
       </form>
     </section>
