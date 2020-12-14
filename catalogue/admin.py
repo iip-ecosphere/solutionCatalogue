@@ -23,6 +23,7 @@ from .models import (
     KPI,
 )
 from .models.users import Profile
+from .models.messages import Inquiry
 
 from nested_admin import nested
 
@@ -173,6 +174,18 @@ class ComponentAdmin(nested.NestedModelAdmin):
         return obj.basedata.name
 
     basedata_name.short_description = "Name"
+
+
+@admin.register(Inquiry)
+class InquiryAdmin(admin.ModelAdmin):
+    list_display = ("id", "recipient", "component", "name", "mail")
+    # exclude = ("recipient",)
+    # readonly_fields = ("component", "name", "mail", 'message',)
+
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            return Inquiry.objects.all()
+        return Inquiry.objects.filter(recipient=request.user)
 
 
 # @admin.register(User)
