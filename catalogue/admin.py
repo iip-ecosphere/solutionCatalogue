@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
 
 from .models import (
     BaseData,
@@ -195,7 +196,19 @@ class ProfileInline(admin.StackedInline):
     inline_classes = ("grp-collapse grp-open",)
 
 
+def groups(self):
+    r = sorted([f"<a title='{x}'>{x}</a>" for x in self.groups.all()])
+    if self.user_permissions.count():
+        r += ["+"]
+    return mark_safe("<nobr>{}</nobr>".format(", ".join(r)))
+
+
+groups.allow_tags = True
+groups.short_description = "Gruppen"
+
+
 class CustomUserAdmin(UserAdmin):
+    list_display = ["username", "email", "first_name", "last_name", "is_active", groups]
     inlines = (ProfileInline,)
 
     def get_inline_instances(self, request, obj=None):
