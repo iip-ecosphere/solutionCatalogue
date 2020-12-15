@@ -84,5 +84,14 @@
         {% endfor %}
       </article>
     {% endif %}
+    <hr>
+    <section>
+      <header><h2>Kontaktanfrage</h2></header>
+      <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Senden</button>
+      </form>
+    </section>
   </main>
 {% endblock %}

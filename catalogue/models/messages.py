@@ -20,5 +20,7 @@ class Inquiry(models.Model):
     )
     created = models.DateTimeField("Erstellt", auto_now_add=True)
     name = models.CharField("Name", max_length=50)
-    mail = models.CharField("E-Mail-Adresse", max_length=50)
-    message = models.TextField("Nachricht", help_text="Ihre Nachricht an den Anbieter")
+    mail = models.EmailField("E-Mail-Adresse")
+    message = models.TextField(
+        "Nachricht", help_text="Ihre Nachricht an den Anbieter", max_length=2000
+    )
