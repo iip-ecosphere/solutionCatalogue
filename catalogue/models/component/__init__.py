@@ -13,3 +13,5 @@ class Component(models.Model):
     )
     lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
     published = models.BooleanField("Veröffentlicht", default=False)
+
+    # TODO: __str__()

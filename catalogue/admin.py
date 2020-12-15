@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
+from django.utils.text import Truncator
 
 from .models import (
     BaseData,
@@ -26,6 +27,18 @@ from .models.users import Profile
 from .models.messages import Inquiry
 
 from nested_admin import nested
+
+
+def is_admin(request):
+    return request.user.is_superuser
+
+
+def is_mod(request):
+    return request.user.groups.filter(name="Moderatoren").exists()
+
+
+def is_admin_or_mod(request):
+    return is_admin(request) or is_mod(request)
 
 
 class SourceInline(nested.NestedStackedInline):
@@ -164,9 +177,7 @@ class ComponentAdmin(nested.NestedModelAdmin):
     ]
 
     def get_queryset(self, request):
-        if request.user.is_superuser:
-            return Component.objects.all()
-        if request.user.groups.filter(name="Moderatoren").exists():
+        if is_admin_or_mod(request):
             return Component.objects.all()
         return Component.objects.filter(created_by=request.user)
 
@@ -178,14 +189,35 @@ class ComponentAdmin(nested.NestedModelAdmin):
 
 @admin.register(Inquiry)
 class InquiryAdmin(admin.ModelAdmin):
-    list_display = ("id", "recipient", "component", "name", "mail")
-    # exclude = ("recipient",)
-    # readonly_fields = ("component", "name", "mail", 'message',)
+    list_display = (
+        "created",
+        "recipient",
+        "component",
+        "name",
+        "mail",
+        "message_short",
+    )
 
     def get_queryset(self, request):
-        if request.user.is_superuser:
+        if is_admin_or_mod(request):
             return Inquiry.objects.all()
         return Inquiry.objects.filter(recipient=request.user)
+
+    def get_readonly_fields(self, request, obj=None):
+        if is_admin_or_mod(request):
+            return ()
+        return (
+            "created",
+            "component",
+            "name",
+            "mail",
+            "message",
+        )
+
+    def message_short(self, obj):
+        return Truncator(obj.message).chars(40)
+
+    message_short.short_description = "Nachricht"
 
 
 # @admin.register(User)
@@ -209,20 +241,25 @@ class ProfileInline(admin.StackedInline):
     inline_classes = ("grp-collapse grp-open",)
 
 
-def groups(self):
-    r = sorted([f"<a title='{x}'>{x}</a>" for x in self.groups.all()])
-    if self.user_permissions.count():
-        r += ["+"]
-    return mark_safe("<nobr>{}</nobr>".format(", ".join(r)))
-
-
-groups.allow_tags = True
-groups.short_description = "Gruppen"
-
-
 class CustomUserAdmin(UserAdmin):
-    list_display = ["username", "email", "first_name", "last_name", "is_active", groups]
+    list_display = [
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+        "is_active",
+        "get_groups",
+    ]
     inlines = (ProfileInline,)
+
+    def get_groups(self, obj):
+        r = sorted([f"<a title='{x}'>{x}</a>" for x in obj.groups.all()])
+        if obj.user_permissions.count():
+            r += ["+"]
+        return mark_safe("<nobr>{}</nobr>".format(", ".join(r)))
+
+    get_groups.allow_tags = True
+    get_groups.short_description = "Gruppen"
 
     def get_inline_instances(self, request, obj=None):
         if not obj:
@@ -230,7 +267,7 @@ class CustomUserAdmin(UserAdmin):
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
     def get_queryset(self, request):
-        if request.user.is_superuser:
+        if is_admin(request):
             return User.objects.all()
         return User.objects.filter(groups__name__in=["Autoren"])
 
