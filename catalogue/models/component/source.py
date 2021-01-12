@@ -10,7 +10,7 @@ class Source(models.Model):
 
     component = models.OneToOneField(Component, on_delete=models.CASCADE)
 
-    developer = models.CharField(
+    manufacturer = models.CharField(
         "Hersteller",
         help_text="Entwickler und/oder Hersteller der Komponente",
         max_length=1000,

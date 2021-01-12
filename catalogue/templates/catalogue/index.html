@@ -1,28 +1,15 @@
 {% extends "catalogue/base.html" %}
+{% load verbose_name %}
 {% block title %}Catalogue Index{% endblock %}
 {% block header %}<h1>Komponenten Übersicht</h1>{% endblock %}
 {% block body %}
   <main>
     <section>
-      {% if components %}
-        {% for c in components %}
-          <aside>
-            <h2><a href="{% url 'catalogue:detail' c.id %}">{{ c.basedata.name }}</a></h2>
-            <sup>{{ c.basedata.get_trl_display }}</sup>
-            <p>{{ c.basedata.description }}</p>
-            {% if c.basedata.task_set %}
-              <h3>Tasks:</h3>
-              <ul>
-                {% for t in c.basedata.task_set.all %}
-                  <li>{{ t.get_name_display }}</li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-          </aside>
-        {% endfor %}
-      {% else %}
+      {% for c in components %}
+        {% include "catalogue/includes/component-card.html" with c=c only %}
+      {% empty %}
         <p>No Components are available.</p>
-      {% endif %}
+      {% endfor %}
     </section>
   </main>
 {% endblock %}

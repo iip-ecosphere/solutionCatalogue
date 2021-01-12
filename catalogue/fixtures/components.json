@@ -273,7 +273,7 @@
     "pk": 1,
     "fields": {
       "component": 1,
-      "developer": "ACME Corp.",
+      "manufacturer": "ACME Corp.",
       "contact": "",
       "additional_info": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
     }
@@ -283,7 +283,7 @@
     "pk": 2,
     "fields": {
       "component": 2,
-      "developer": "ACME Corp.",
+      "manufacturer": "ACME Corp.",
       "contact": "",
       "additional_info": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
     }
@@ -293,7 +293,7 @@
     "pk": 3,
     "fields": {
       "component": 3,
-      "developer": "ACME Corp.",
+      "manufacturer": "ACME Corp.",
       "contact": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
       "additional_info": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
     }

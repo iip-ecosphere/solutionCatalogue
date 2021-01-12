@@ -1,0 +1,15 @@
+{% load verbose_name %}
+<aside>
+  <sup>{{ c.basedata.get_trl_display }}</sup>
+  <h2><a href="{% url 'catalogue:detail' c.id %}">{{ c.basedata.name }}</a></h2>
+  <h3>{{ c.source.manufacturer }}</h3>
+  <p>{{ c.basedata.description }}</p>
+  {% if c.basedata.task_set %}
+    <label>{{ c.basedata.task_set | verbose_name_plural }}</label>
+    <ul>
+      {% for t in c.basedata.task_set.all %}
+        <li>{{ t.get_name_display }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</aside>
