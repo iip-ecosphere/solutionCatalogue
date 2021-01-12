@@ -9,10 +9,10 @@
       <h2>{{ component.basedata | verbose_name }}</h2>
       {% list_fields component.basedata as base_data %}
       {% for field, val in base_data %}
-        <label>{{ field }}:</label>
+        <label>{{ field }}</label>
         <p>{{ val }}</p>
       {% endfor %}
-      <label>Tasks:</label>
+      <label>{{ component.basedata.task_set | verbose_name_plural }}</label>
       <ul>
         {% for t in component.basedata.task_set.all %}
           <li>{{ t.get_name_display }}</li>
@@ -25,16 +25,16 @@
         <h2>{{ component.applicationprofile | verbose_name }}</h2>
         {% list_fields component.applicationprofile as ap %}
         {% for field, val in ap %}
-          <label>{{ field }}:</label>
+          <label>{{ field }}</label>
           <p>{{ val }}</p>
         {% endfor %}
-        <label>Branche (anwendbar):</label>
+        <label>{{ component.applicationprofile.branchapplicable_set | verbose_name_plural }}</label>
         <ul>
           {% for b in component.applicationprofile.branchapplicable_set.all %}
             <li>{{ b.get_name_display }}</li>
           {% endfor %}
         </ul>
-        <label>Branche (erprobt):</label>
+        <label>{{ component.applicationprofile.branchproven_set | verbose_name_plural }}</label>
         <ul>
           {% for b in component.applicationprofile.branchproven_set.all %}
             <li>{{ b.get_name_display }}</li>
@@ -48,7 +48,7 @@
         <h2>{{ component.use | verbose_name }}</h2>
         {% list_fields component.use as ap %}
         {% for field, val in ap %}
-          <label>{{ field }}:</label>
+          <label>{{ field }}</label>
           <p>{{ val }}</p>
         {% endfor %}
       </article>
@@ -57,7 +57,7 @@
         <h2>{{ component.requirements | verbose_name }}</h2>
         {% list_fields component.requirements as ap %}
         {% for field, val in ap %}
-          <label>{{ field }}:</label>
+          <label>{{ field }}</label>
           <p>{{ val }}</p>
         {% endfor %}
       </article>
@@ -68,7 +68,7 @@
         <h2>{{ component.technicalspecification | verbose_name }}</h2>
         {% list_fields component.technicalspecification as ap %}
         {% for field, val in ap %}
-          <label>{{ field }}:</label>
+          <label>{{ field }}</label>
           <p>{{ val }}</p>
         {% endfor %}
       </article>
@@ -79,7 +79,7 @@
         <h2>{{ component.source | verbose_name }}</h2>
         {% list_fields component.source as ap %}
         {% for field, val in ap %}
-          <label>{{ field }}:</label>
+          <label>{{ field }}</label>
           <p>{{ val }}</p>
         {% endfor %}
       </article>
