@@ -197,27 +197,24 @@ class InquiryAdmin(admin.ModelAdmin):
         "mail",
         "message_short",
     )
+    readonly_fields = (
+        "created",
+        "recipient",
+        "component",
+        "name",
+        "mail",
+        "message",
+    )
 
     def get_queryset(self, request):
         if is_admin_or_mod(request):
             return Inquiry.objects.all()
         return Inquiry.objects.filter(recipient=request.user)
 
-    def get_readonly_fields(self, request, obj=None):
-        if is_admin_or_mod(request):
-            return ()
-        return (
-            "created",
-            "component",
-            "name",
-            "mail",
-            "message",
-        )
-
     def message_short(self, obj):
         return Truncator(obj.message).chars(40)
 
-    message_short.short_description = "Nachricht"
+    message_short.short_description = Inquiry._meta.get_field("message").verbose_name
 
 
 # @admin.register(User)

@@ -24,3 +24,6 @@ class Inquiry(models.Model):
     message = models.TextField(
         "Nachricht", help_text="Ihre Nachricht an den Anbieter", max_length=2000
     )
+
+    def __str__(self):
+        return "{} {}".format(self._meta.verbose_name, self.id)

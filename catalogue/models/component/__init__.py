@@ -14,4 +14,5 @@ class Component(models.Model):
     lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
     published = models.BooleanField("Veröffentlicht", default=False)
 
-    # TODO: __str__()
+    def __str__(self):
+        return "{} {} - {}".format(self._meta.verbose_name, self.id, self.basedata.name)
