@@ -14,6 +14,7 @@ django-debug-toolbar = "*"
 django-crum = "*"
 django-filter = "*"
 python-dotenv = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3"

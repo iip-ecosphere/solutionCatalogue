@@ -28,10 +28,12 @@ load_dotenv(dotenv_path=dotenv_file)
 SECRET_KEY = os.getenv("SECRET_KEY", "insecurekey")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("SECRET_KEY") is None
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split(",")
 
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = DEBUG
 
 # Application definition
 
@@ -124,6 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 GRAPPELLI_ADMIN_TITLE = "AI Solutions Catalogue"
 
