@@ -2,16 +2,23 @@ from django.core.management import BaseCommand
 from django.contrib.auth.models import Group, Permission, User
 
 from catalogue import models
+from catalogue.models import messages
 
 CATALOGUE_PERMS = {
     cls: ["add", "change", "delete", "view"]
     for cls in [
+        models.AIMethod,
         models.ApplicationProfile,
         models.BaseData,
-        models.BranchProven,
         models.BranchApplicable,
+        models.BranchProven,
         models.Component,
+        models.CorporateDivision,
         models.DataAnalysisProcess,
+        models.HierarchyLevel,
+        models.KPI,
+        models.Licenses,
+        models.Process,
         models.Requirements,
         models.Source,
         models.Task,
@@ -20,10 +27,13 @@ CATALOGUE_PERMS = {
     ]
 }
 GROUPS_PERMISSIONS = {
-    "Autoren": CATALOGUE_PERMS,
+    "Autoren": {
+        models.messages.Inquiry: ["view", "delete"],
+        **CATALOGUE_PERMS},
     "Moderatoren": {
         User: ["change", "delete", "view"],
         models.Profile: ["change", "delete", "view"],
+        models.messages.Inquiry: ["view", "delete"],
         **CATALOGUE_PERMS,
     },
 }
