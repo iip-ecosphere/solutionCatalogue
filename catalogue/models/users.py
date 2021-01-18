@@ -7,7 +7,7 @@ from catalogue.models.component import Component
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     company = models.CharField("Unternehmen", max_length=100, blank=True)
 
     def __str__(self):

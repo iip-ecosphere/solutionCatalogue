@@ -9,7 +9,7 @@ class Component(models.Model):
 
     created = models.DateTimeField("Erstellt", auto_now_add=True)
     created_by = models.ForeignKey(
-        "auth.User", default=get_current_user, on_delete=models.CASCADE
+        "auth.User", default=get_current_user, on_delete=models.CASCADE, verbose_name="Erstellt von"
     )
     lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
     published = models.BooleanField("Veröffentlicht", default=False)

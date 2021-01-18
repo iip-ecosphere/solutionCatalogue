@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
+from django.urls import reverse
 
 from .models import (
     BaseData,
@@ -162,11 +163,11 @@ class ComponentAdmin(nested.NestedModelAdmin):
         "id",
         "basedata_name",
         "published",
+        "get_created_by",
         "created",
-        "created_by",
         "lastmodified_at",
     )
-    # list_editable = ("published",)
+    list_editable = ("published",)
     inlines = [
         BaseDataInline,
         ApplicationProfileInline,
@@ -176,15 +177,36 @@ class ComponentAdmin(nested.NestedModelAdmin):
         SourceInline,
     ]
 
+    def get_created_by(self, obj):
+        return mark_safe(
+            f"""
+            <a href='{reverse('admin:auth_user_change', args=(obj.created_by.id,))}'>
+            {obj.created_by}
+            </a>
+        """
+        )
+
+    get_created_by.short_description = Component._meta.get_field(
+        "created_by"
+    ).verbose_name
+    get_created_by.admin_order_field = "created_by"
+
     def get_queryset(self, request):
         if is_admin_or_mod(request):
             return Component.objects.all()
         return Component.objects.filter(created_by=request.user)
 
     def basedata_name(self, obj):
-        return obj.basedata.name
+        return mark_safe(
+            f"""
+            <a href='{reverse('admin:catalogue_component_change', args=(obj.id,))}'>
+            {obj.basedata.name}
+            </a>
+        """
+        )
 
     basedata_name.short_description = "Name"
+    basedata_name.admin_order_field = "basedata__name"
 
 
 @admin.register(Inquiry)
@@ -253,12 +275,11 @@ class CustomUserAdmin(UserAdmin):
     inlines = (ProfileInline,)
 
     def get_groups(self, obj):
-        r = sorted([f"<a title='{x}'>{x}</a>" for x in obj.groups.all()])
+        r = sorted([str(g) for g in obj.groups.all()])
         if obj.user_permissions.count():
             r += ["+"]
         return mark_safe("<nobr>{}</nobr>".format(", ".join(r)))
 
-    get_groups.allow_tags = True
     get_groups.short_description = "Gruppen"
 
     def get_company(self, obj):
