@@ -245,7 +245,10 @@ class CustomUserAdmin(UserAdmin):
         "first_name",
         "last_name",
         "is_active",
+        "is_staff",
+        "get_company",
         "get_groups",
+        "get_component_count",
     ]
     inlines = (ProfileInline,)
 
@@ -257,6 +260,17 @@ class CustomUserAdmin(UserAdmin):
 
     get_groups.allow_tags = True
     get_groups.short_description = "Gruppen"
+
+    def get_company(self, obj):
+        return obj.profile.company
+
+    get_company.short_description = Profile._meta.get_field("company").verbose_name
+    get_company.admin_order_field = "profile__company"
+
+    def get_component_count(self, obj):
+        return obj.profile.component_count
+
+    get_component_count.short_description = "Komponenten"
 
     def get_inline_instances(self, request, obj=None):
         if not obj:

@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from catalogue.models.component import Component
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -10,6 +12,10 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    @property
+    def component_count(self):
+        return Component.objects.filter(created_by=self.user).count()
 
 
 @receiver(post_save, sender=User)
