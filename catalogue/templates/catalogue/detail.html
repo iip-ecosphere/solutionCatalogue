@@ -2,97 +2,122 @@
 {% load verbose_name %}
 {% load list_fields %}
 {% block title %}Komponente - {{ component.basedata.name }}{% endblock %}
-{% block header %}<h1>{{ component.basedata.name }}</h1>{% endblock %}
+{% block header %}{{ component.basedata.name }}{% endblock %}
 {% block body %}
-  <main>
-    <article>
-      <h2>{{ component.basedata | verbose_name }}</h2>
-      {% list_fields component.basedata as base_data %}
-      {% for field, val in base_data %}
-        <label>{{ field }}</label>
-        <p>{{ val }}</p>
+  <section class="section">
+    <div class="container">
+      <span class="tag is-pulled-right">
+        {{ component.basedata.get_trl_display }}
+      </span>
+      <p class="title is-3">
+        {{ component.basedata.name }}
+      </p>
+      <p class="subtitle is-5">
+        {{ component.source.manufacturer }}
+      </p>
+      <div class="content">{{ component.basedata.description }}</div>
+      {% for t in component.basedata.task_set.all %}
+        <span class="tag has-background-info-dark has-text-white">{{ t.get_name_display }}</span>
       {% endfor %}
-      <label>{{ component.basedata.task_set | verbose_name_plural }}</label>
-      <ul>
-        {% for t in component.basedata.task_set.all %}
-          <li>{{ t.get_name_display }}</li>
-        {% endfor %}
-      </ul>
-    </article>
-    {% if component.applicationprofile %}
-      <hr>
-      <article>
-        <h2>{{ component.applicationprofile | verbose_name }}</h2>
-        {% list_fields component.applicationprofile as ap %}
-        {% for field, val in ap %}
-          <label>{{ field }}</label>
-          <p>{{ val }}</p>
-        {% endfor %}
-        <label>{{ component.applicationprofile.branchapplicable_set | verbose_name_plural }}</label>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="tabs">
         <ul>
-          {% for b in component.applicationprofile.branchapplicable_set.all %}
-            <li>{{ b.get_name_display }}</li>
-          {% endfor %}
+          <li class="is-active"><a>Tab1</a></li>
+          <li><a>Tab2</a></li>
+          <li><a>Tab3</a></li>
         </ul>
-        <label>{{ component.applicationprofile.branchproven_set | verbose_name_plural }}</label>
-        <ul>
-          {% for b in component.applicationprofile.branchproven_set.all %}
-            <li>{{ b.get_name_display }}</li>
+      </div>
+      {% if component.applicationprofile %}
+        <div class="content">
+          <h2>{{ component.applicationprofile | verbose_name }}</h2>
+          {% list_fields component.applicationprofile as ap %}
+          {% for field, val in ap %}
+            <h3>{{ field }}</h3>
+            <p>{{ val }}</p>
           {% endfor %}
-        </ul>
-      </article>
-    {% endif %}
-    {% if component.use %}
-      <hr>
-      <article>
-        <h2>{{ component.use | verbose_name }}</h2>
-        {% list_fields component.use as ap %}
-        {% for field, val in ap %}
-          <label>{{ field }}</label>
-          <p>{{ val }}</p>
-        {% endfor %}
-      </article>
-      <hr>
-      <article>
-        <h2>{{ component.requirements | verbose_name }}</h2>
-        {% list_fields component.requirements as ap %}
-        {% for field, val in ap %}
-          <label>{{ field }}</label>
-          <p>{{ val }}</p>
-        {% endfor %}
-      </article>
-    {% endif %}
-    {% if component.technicalspecification %}
-      <hr>
-      <article>
-        <h2>{{ component.technicalspecification | verbose_name }}</h2>
-        {% list_fields component.technicalspecification as ap %}
-        {% for field, val in ap %}
-          <label>{{ field }}</label>
-          <p>{{ val }}</p>
-        {% endfor %}
-      </article>
-    {% endif %}
-    {% if component.source %}
-      <hr>
-      <article>
-        <h2>{{ component.source | verbose_name }}</h2>
-        {% list_fields component.source as ap %}
-        {% for field, val in ap %}
-          <label>{{ field }}</label>
-          <p>{{ val }}</p>
-        {% endfor %}
-      </article>
-    {% endif %}
-    <hr>
-    <section>
-      <header><h2>Kontaktanfrage</h2></header>
-      <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <br>
-        <button type="submit">Senden</button>
-      </form>
-    </section>
-  </main>
+          <h3>{{ component.applicationprofile.branchapplicable_set | verbose_name_plural }}</h3>
+          <ul>
+            {% for b in component.applicationprofile.branchapplicable_set.all %}
+              <li>{{ b.get_name_display }}</li>
+            {% endfor %}
+          </ul>
+          <h3>{{ component.applicationprofile.branchproven_set | verbose_name_plural }}</h3>
+          <ul>
+            {% for b in component.applicationprofile.branchproven_set.all %}
+              <li>{{ b.get_name_display }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <hr>
+      {% endif %}
+      {% if component.use %}
+        <div class="content">
+          <h2>{{ component.use | verbose_name }}</h2>
+          {% list_fields component.use as ap %}
+          {% for field, val in ap %}
+            <h3>{{ field }}</h3>
+            <p>{{ val }}</p>
+          {% endfor %}
+        </div>
+        <hr>
+      {% endif %}
+      {% if component.requirements %}
+        <div class="content">
+          <h2>{{ component.requirements | verbose_name }}</h2>
+          {% list_fields component.requirements as ap %}
+          {% for field, val in ap %}
+            <h3>{{ field }}</h3>
+            <p>{{ val }}</p>
+          {% endfor %}
+        </div>
+        <hr>
+      {% endif %}
+      {% if component.technicalspecification %}
+        <div class="content">
+          <h2>{{ component.technicalspecification | verbose_name }}</h2>
+          {% list_fields component.technicalspecification as ap %}
+          {% for field, val in ap %}
+            <h3>{{ field }}</h3>
+            <p>{{ val }}</p>
+          {% endfor %}
+        </div>
+        <hr>
+      {% endif %}
+      {% if component.source %}
+        <div class="content">
+          <h2>{{ component.source | verbose_name }}</h2>
+          {% list_fields component.source as ap %}
+          {% for field, val in ap %}
+            <h3>{{ field }}</h3>
+            <p>{{ val }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-half is-offset-one-quarter">
+          <div class="card">
+            <div class="card-content">
+              <p class="title is-3">Kontaktanfrage</p>
+              <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-link">Submit</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

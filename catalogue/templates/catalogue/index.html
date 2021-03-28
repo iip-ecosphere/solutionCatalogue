@@ -1,15 +1,19 @@
 {% extends "catalogue/base.html" %}
 {% load verbose_name %}
 {% block title %}Catalogue Index{% endblock %}
-{% block header %}<h1>Komponenten Übersicht</h1>{% endblock %}
+{% block header %}Komponenten Übersicht{% endblock %}
 {% block body %}
-  <main>
-    <section>
-      {% for c in components %}
-        {% include "catalogue/includes/component-card.html" with c=c only %}
-      {% empty %}
-        <p>No Components are available.</p>
-      {% endfor %}
-    </section>
-  </main>
+  <section class="section">
+    <div class="container">
+      <div class="columns is-flex-wrap-wrap">
+        {% for c in components %}
+          <div class="column is-one-third">
+            {% include "catalogue/includes/component-card.html" with c=c only %}
+          </div>
+        {% empty %}
+          <p>No Components are available.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
 {% endblock %}

@@ -3,4 +3,3 @@
 Pipfile.lock
 db.sqlite3
 .env
-static/

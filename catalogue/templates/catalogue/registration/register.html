@@ -1,14 +1,26 @@
 {% extends "catalogue/base.html" %}
 {% block title %}Registrierung{% endblock %}
-{% block header %}<h1>Registrierung</h1>{% endblock %}
+{% block header %}Registrierung{% endblock %}
 {% block body %}
-  <main>
-    <section>
-      <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrieren</button>
-      </form>
-    </section>
-  </main>
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-half is-offset-one-quarter">
+          <div class="card">
+            <div class="card-content">
+              <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-link">Registrieren</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}
