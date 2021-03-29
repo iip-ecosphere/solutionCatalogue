@@ -1,2 +1,12 @@
 @charset "utf-8";
+$blue: #2a6989;
+$grey-lighter: #f6f8fa;
+$yellow: #ffbe0b;
+
+$primary: $blue;
+$primary-light: $grey-lighter;
+$info: $yellow;
+$body-background-color: $grey-lighter;
+
 @import "bulma/bulma.sass";
+

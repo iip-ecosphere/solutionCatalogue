@@ -2,34 +2,37 @@
 {% load verbose_name %}
 {% load list_fields %}
 {% block title %}Komponente - {{ component.basedata.name }}{% endblock %}
-{% block header %}{{ component.basedata.name }}{% endblock %}
 {% block body %}
-  <section class="section">
+  <section class="section has-background-primary has-text-white">
     <div class="container">
-      <span class="tag is-pulled-right">
+      <span class="tag is-pulled-right is-primary-light">
         {{ component.basedata.get_trl_display }}
       </span>
-      <p class="title is-3">
+      <p class="title is-3 has-text-white">
         {{ component.basedata.name }}
       </p>
-      <p class="subtitle is-5">
+      <p class="subtitle is-5 has-text-white">
         {{ component.source.manufacturer }}
       </p>
       <div class="content">{{ component.basedata.description }}</div>
       {% for t in component.basedata.task_set.all %}
-        <span class="tag has-background-info-dark has-text-white">{{ t.get_name_display }}</span>
+        <a class="tag has-background-info" href="#">{{ t.get_name_display }}</a>
       {% endfor %}
+    </div>
+  </section>
+  <section class="section has-background-primary has-text-white p-0">
+    <div class="container">
+      <div class="tabs">
+        <ul>
+          <li class="is-active has-background-primary-light"><a>Tab1</a></li>
+          <li class="has-background-grey-light"><a>Tab2</a></li>
+          <li class="has-background-grey-light"><a>Tab3</a></li>
+        </ul>
+      </div>
     </div>
   </section>
   <section class="section">
     <div class="container">
-      <div class="tabs">
-        <ul>
-          <li class="is-active"><a>Tab1</a></li>
-          <li><a>Tab2</a></li>
-          <li><a>Tab3</a></li>
-        </ul>
-      </div>
       {% if component.applicationprofile %}
         <div class="content">
           <h2>{{ component.applicationprofile | verbose_name }}</h2>

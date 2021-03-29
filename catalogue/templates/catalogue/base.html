@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{% static 'catalogue/bulma.css' %}">
 </head>
 <body>
-<nav class="navbar is-light is-spaced" role="navigation" aria-label="main navigation">
+<nav class="navbar is-primary is-spaced" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="{% url 'catalogue:index' %}">
       <img alt="IIP Ecosphere" src="{% static 'Logo.svg' %}">
@@ -29,15 +29,8 @@
     </div>
   </div>
 </nav>
-<section class="section">
-  <div class="container has-text-centered">
-    <h1 class="title is-1">
-      {% block header %}{% endblock %}
-    </h1>
-  </div>
-</section>
 {% block body %}{% endblock %}
-<footer class="footer">
+<footer class="footer has-background-primary has-text-white">
   <div class="content has-text-centered">
     <p>
       IIP Ecosphere Footer
