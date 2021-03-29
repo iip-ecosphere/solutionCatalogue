@@ -15,6 +15,7 @@ django-crum = "*"
 django-filter = "*"
 python-dotenv = "*"
 gunicorn = "*"
+django-sass = "*"
 
 [requires]
 python_version = "3"
