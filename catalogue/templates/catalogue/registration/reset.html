@@ -1,4 +1,5 @@
 {% extends "catalogue/base.html" %}
+{% load bulma_tags %}
 {% block title %}Reset{% endblock %}
 {% block body %}
   <section class="section">
@@ -7,12 +8,13 @@
         <div class="column is-half is-offset-one-quarter">
           <div class="card">
             <div class="card-content">
+              <p class="title is-3">Passwort vergessen</p>
               <form method="post">
                 {% csrf_token %}
-                {{ form }}
+                {{ form|bulma }}
                 <div class="field">
                   <div class="control">
-                    <button class="button is-link">Resetlink anfordern</button>
+                    <button class="button is-rounded is-link">Resetlink anfordern</button>
                   </div>
                 </div>
               </form>

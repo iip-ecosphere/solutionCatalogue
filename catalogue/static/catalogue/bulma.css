@@ -11602,3 +11602,22 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   background-color: #fafafa;
   padding: 3rem 1.5rem 6rem;
 }
+
+#logo {
+  filter: brightness(1000%);
+}
+
+.red-blue-gradient {
+  background-image: linear-gradient(to bottom, #fd6a60 -19%, #c76a7e 33%, #2a6989 100%);
+}
+
+/* tabs on details page */
+.tabs ul {
+  border-bottom: none;
+}
+
+.tabs li {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  position: relative;
+}

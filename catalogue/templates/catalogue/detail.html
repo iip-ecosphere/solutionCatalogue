@@ -1,119 +1,110 @@
 {% extends "catalogue/base.html" %}
 {% load verbose_name %}
 {% load list_fields %}
+{% load bulma_tags %}
 {% block title %}Komponente - {{ component.basedata.name }}{% endblock %}
 {% block body %}
   <section class="section has-background-primary has-text-white">
-    <div class="container">
+    <div class="container is-max-widescreen">
       <span class="tag is-pulled-right is-primary-light">
         {{ component.basedata.get_trl_display }}
       </span>
-      <p class="title is-3 has-text-white">
+      <h1 class="title is-3 has-text-white">
         {{ component.basedata.name }}
-      </p>
-      <p class="subtitle is-5 has-text-white">
+      </h1>
+      <h2 class="subtitle is-5 has-text-white">
         {{ component.source.manufacturer }}
-      </p>
+        <a class="button is-rounded is-small is-pulled-right is-primary-light" href="#contact">
+          Anbieter kontaktieren
+        </a>
+      </h2>
       <div class="content">{{ component.basedata.description }}</div>
       {% for t in component.basedata.task_set.all %}
-        <a class="tag has-background-info" href="#">{{ t.get_name_display }}</a>
+        <a class="tag has-background-info is-rounded" href="#">{{ t.get_name_display }}</a>
       {% endfor %}
     </div>
   </section>
   <section class="section has-background-primary has-text-white p-0">
-    <div class="container">
+    <div class="container is-max-widescreen">
       <div class="tabs">
         <ul>
-          <li class="is-active has-background-primary-light"><a>Tab1</a></li>
-          <li class="has-background-grey-light"><a>Tab2</a></li>
-          <li class="has-background-grey-light"><a>Tab3</a></li>
+          <li class="tabLink is-active has-background-primary-light" onclick="openTab(event, 'tab1')"><a>Grunddaten</a>
+          </li>
+          <li class="tabLink has-background-grey-light" onclick="openTab(event, 'tab2')"><a>Voraussetzungen</a></li>
         </ul>
       </div>
     </div>
   </section>
-  <section class="section">
-    <div class="container">
+  <section id="tab1" class="section tab">
+    <div class="container is-max-widescreen">
       {% if component.applicationprofile %}
-        <div class="content">
-          <h2>{{ component.applicationprofile | verbose_name }}</h2>
-          {% list_fields component.applicationprofile as ap %}
-          {% for field, val in ap %}
-            <h3>{{ field }}</h3>
-            <p>{{ val }}</p>
-          {% endfor %}
-          <h3>{{ component.applicationprofile.branchapplicable_set | verbose_name_plural }}</h3>
-          <ul>
-            {% for b in component.applicationprofile.branchapplicable_set.all %}
-              <li>{{ b.get_name_display }}</li>
-            {% endfor %}
-          </ul>
-          <h3>{{ component.applicationprofile.branchproven_set | verbose_name_plural }}</h3>
-          <ul>
-            {% for b in component.applicationprofile.branchproven_set.all %}
-              <li>{{ b.get_name_display }}</li>
-            {% endfor %}
-          </ul>
-        </div>
+        <h3 class="title is-4">{{ component.applicationprofile | verbose_name }}</h3>
+        {% list_fields component.applicationprofile as ap %}
+        {% for field, val in ap %}
+          {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
+        {% endfor %}
+        {% include "catalogue/includes/component-detail-columns.html" with title=component.applicationprofile.branchapplicable_set|verbose_name_plural value=component.applicationprofile.branchapplicable_set.all only %}
+        {% include "catalogue/includes/component-detail-columns.html" with title=component.applicationprofile.branchproven_set|verbose_name_plural value=component.applicationprofile.branchproven_set.all only %}
         <hr>
       {% endif %}
       {% if component.use %}
-        <div class="content">
-          <h2>{{ component.use | verbose_name }}</h2>
-          {% list_fields component.use as ap %}
-          {% for field, val in ap %}
-            <h3>{{ field }}</h3>
-            <p>{{ val }}</p>
-          {% endfor %}
-        </div>
+        <h3 class="title is-4">{{ component.use | verbose_name }}</h3>
+        {% list_fields component.use as ap %}
+        {% for field, val in ap %}
+          {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
+        {% endfor %}
         <hr>
-      {% endif %}
-      {% if component.requirements %}
-        <div class="content">
-          <h2>{{ component.requirements | verbose_name }}</h2>
-          {% list_fields component.requirements as ap %}
-          {% for field, val in ap %}
-            <h3>{{ field }}</h3>
-            <p>{{ val }}</p>
-          {% endfor %}
-        </div>
-        <hr>
-      {% endif %}
-      {% if component.technicalspecification %}
-        <div class="content">
-          <h2>{{ component.technicalspecification | verbose_name }}</h2>
-          {% list_fields component.technicalspecification as ap %}
-          {% for field, val in ap %}
-            <h3>{{ field }}</h3>
-            <p>{{ val }}</p>
-          {% endfor %}
-        </div>
-        <hr>
-      {% endif %}
-      {% if component.source %}
-        <div class="content">
-          <h2>{{ component.source | verbose_name }}</h2>
-          {% list_fields component.source as ap %}
-          {% for field, val in ap %}
-            <h3>{{ field }}</h3>
-            <p>{{ val }}</p>
-          {% endfor %}
-        </div>
       {% endif %}
     </div>
   </section>
-  <section class="section">
-    <div class="container">
+  <section id="tab2" class="section tab" style="display: none">
+    <div class="container is-max-widescreen">
+      {% if component.requirements %}
+        <h3 class="title is-4">{{ component.requirements | verbose_name }}</h3>
+        {% list_fields component.requirements as ap %}
+        {% for field, val in ap %}
+          {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
+        {% endfor %}
+        <hr>
+      {% endif %}
+      {% if component.technicalspecification %}
+        <h3 class="title is-4">{{ component.technicalspecification | verbose_name }}</h3>
+        {% list_fields component.technicalspecification as ap %}
+        {% for field, val in ap %}
+          {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
+        {% endfor %}
+        <hr>
+      {% endif %}
+      {% if component.source %}
+        <h3 class="title is-4">{{ component.source | verbose_name }}</h3>
+        {% list_fields component.source as ap %}
+        {% for field, val in ap %}
+          {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </section>
+  <section id="contact" class="section red-blue-gradient">
+    <div class="container is-max-widescreen">
       <div class="columns">
-        <div class="column is-half is-offset-one-quarter">
+        <div class="column is-half">
+          <h3 class="title is-3 has-text-white">
+            Lösungsanbieter:
+          </h3>
+          <h4 class="subtitle is-5 has-text-white">{{ component.source.manufacturer }}</h4>
+          <p class="has-text-white">Kontakt: {{ component.source.contact }}</p>
+          <p class="has-text-white">{{ component.source.additional_info }}</p>
+        </div>
+        <div class="column is-half">
           <div class="card">
             <div class="card-content">
               <p class="title is-3">Kontaktanfrage</p>
               <form method="post">
                 {% csrf_token %}
-                {{ form }}
+                {{ form|bulma }}
                 <div class="field">
                   <div class="control">
-                    <button class="button is-link">Submit</button>
+                    <button class="button is-link is-rounded">Senden</button>
                   </div>
                 </div>
               </form>
@@ -123,4 +114,21 @@
       </div>
     </div>
   </section>
+{% endblock %}
+{% block script %}
+  <script>
+    function openTab(event, tabName) {
+      var i, x, tablinks;
+      x = document.getElementsByClassName("tab");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tabLink");
+      for (i = 0; i < x.length; i++) {
+        tablinks[i].className = "tabLink has-background-grey-light"
+      }
+      document.getElementById(tabName).style.display = "block";
+      event.currentTarget.className = "tabLink is-active has-background-primary-light"
+    }
+  </script>
 {% endblock %}

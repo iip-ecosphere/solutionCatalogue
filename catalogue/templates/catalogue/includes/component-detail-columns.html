@@ -1,0 +1,17 @@
+{% load filters %}
+<div class="columns">
+  <div class="column is-one-third">
+    <h4 class="title is-6">{{ title }}</h4>
+  </div>
+  <div class="column">
+    {% if value|is_list %}
+      <ul>
+        {% for x in value %}
+          <li>{{ x.get_name_display }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>{{ value }}</p>
+    {% endif %}
+  </div>
+</div>

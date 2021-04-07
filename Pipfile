@@ -16,6 +16,7 @@ django-filter = "*"
 python-dotenv = "*"
 gunicorn = "*"
 django-sass = "*"
+django-bulma = "*"
 
 [requires]
 python_version = "3"
