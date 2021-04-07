@@ -20,6 +20,14 @@
           {% endfor %}
         </ul>
       {% endif %}
+      {% if c.applicationprofile.process_set %}
+        <p class="title is-6">{{ c.applicationprofile.process_set | verbose_name_plural }}</p>
+        <ul>
+          {% for t in c.applicationprofile.process_set.all %}
+            <li>{{ t.get_name_display }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
       <div class="level">
         <div class="level-item has-text-centered">
           <a class="button is-rounded is-primary is-center" href="{% url 'catalogue:detail' c.id %}">

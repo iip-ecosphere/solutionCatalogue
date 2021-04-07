@@ -2,7 +2,15 @@ from django import forms
 from django.db.models import Q, Count
 import django_filters
 
-from .models import Component, TRLChoices, TaskChoices
+from .models import (
+    Component,
+    TRLChoices,
+    TaskChoices,
+    ProcessChoices,
+    BaseData,
+    Task,
+    Process,
+)
 
 
 class ComponentFilter(django_filters.FilterSet):
@@ -14,10 +22,19 @@ class ComponentFilter(django_filters.FilterSet):
     # basedata__name = django_filters.CharFilter(lookup_expr="icontains", label="Name")
     # basedata__description = django_filters.CharFilter(lookup_expr="icontains", label="Beschreibung")
     basedata__trl = django_filters.MultipleChoiceFilter(
-        label="TRL", choices=TRLChoices.choices[1:], widget=forms.CheckboxSelectMultiple
+        label=BaseData._meta.get_field("trl").verbose_name,
+        choices=TRLChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
     )
     basedata__task__name = django_filters.MultipleChoiceFilter(
-        label="Task", choices=TaskChoices.choices
+        label=Task._meta.verbose_name,
+        choices=TaskChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
+    )
+    applicationprofile__process__name = django_filters.MultipleChoiceFilter(
+        label=Process._meta.verbose_name,
+        choices=ProcessChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
     )
 
     class Meta:
@@ -26,7 +43,7 @@ class ComponentFilter(django_filters.FilterSet):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.add_count_to_facet("basedata__trl")
+        # self.add_count_to_facet("basedata__trl")
 
     def get_facet_counts(self, field):
         qs = self.filter_queryset(self.queryset) if self.is_valid() else self.queryset
@@ -36,15 +53,15 @@ class ComponentFilter(django_filters.FilterSet):
     def add_count_to_facet(self, field):
         counts = self.get_facet_counts(field)
         self.form.fields[field].choices = [
-            (x, y + f" ({counts.get(x, 0)})")
-            for x, y in self.form.fields[field].choices
+            (x, f"{y} ({counts.get(x, 0)})") for x, y in self.form.fields[field].choices
         ]
 
     @property
     def qs(self):
         return super().qs.filter(published=True)
 
-    def combined_filter(self, queryset, name, value):
+    @staticmethod
+    def combined_filter(queryset, name, value):
         # TODO: use postgres full text search
         q = Q()
         for n in name:

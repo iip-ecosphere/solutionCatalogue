@@ -6,6 +6,6 @@ class InquiryForm(ModelForm):
     class Meta:
         model = Inquiry
         widgets = {
-            'message': Textarea(attrs={'rows': 4, 'cols': 15}),
+            "message": Textarea(attrs={"rows": 4, "cols": 15}),
         }
         exclude = ["created", "recipient", "component"]

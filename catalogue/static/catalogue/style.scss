@@ -1,22 +1,35 @@
 @charset "utf-8";
 $blue: #2a6989;
-$grey-lighter: #f6f8fa;
+$grey-bg: #f6f8fa;
 $yellow: #ffbe0b;
 
 $primary: $blue;
-$primary-light: $grey-lighter;
+$primary-light: $grey-bg;
 $info: $yellow;
-$body-background-color: $grey-lighter;
+$body-background-color: $grey-bg;
+$footer-background-color: $blue;
 
 @import "bulma/bulma.sass";
 
-
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+footer {
+  margin-top: auto;
+}
 #logo {
   filter: brightness(1000%);
+}
+.input {
+  border: 1px solid $grey-lighter;
 }
 
 .red-blue-gradient {
   background-image: linear-gradient(to bottom, #fd6a60 -19%, #c76a7e 33%, #2a6989 100%);
+  /*background-image: url(/static/catalogue/images/bubble-gradient.svg);
+  background-size: cover; */
 }
 
 /* tabs on details page */

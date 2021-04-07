@@ -27,9 +27,7 @@ CATALOGUE_PERMS = {
     ]
 }
 GROUPS_PERMISSIONS = {
-    "Autoren": {
-        models.messages.Inquiry: ["view", "delete"],
-        **CATALOGUE_PERMS},
+    "Autoren": {models.messages.Inquiry: ["view", "delete"], **CATALOGUE_PERMS},
     "Moderatoren": {
         User: ["change", "delete", "view"],
         models.Profile: ["change", "delete", "view"],

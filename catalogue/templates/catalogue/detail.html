@@ -75,13 +75,6 @@
         {% endfor %}
         <hr>
       {% endif %}
-      {% if component.source %}
-        <h3 class="title is-4">{{ component.source | verbose_name }}</h3>
-        {% list_fields component.source as ap %}
-        {% for field, val in ap %}
-          {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
-        {% endfor %}
-      {% endif %}
     </div>
   </section>
   <section id="contact" class="section red-blue-gradient">
@@ -118,17 +111,21 @@
 {% block script %}
   <script>
     function openTab(event, tabName) {
-      var i, x, tablinks;
+      var i, x;
+      var activeClasses = document.getElementsByClassName("tabLink is-active")[0].className;
+      var inactiveClasses = document.querySelectorAll("li.tabLink:not(.is-active)")[0].className;
+      var tablinks = document.getElementsByClassName("tabLink");
+      // tab selection
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = inactiveClasses;
+      }
+      event.currentTarget.className = activeClasses;
+      // switch content
       x = document.getElementsByClassName("tab");
       for (i = 0; i < x.length; i++) {
         x[i].style.display = "none";
       }
-      tablinks = document.getElementsByClassName("tabLink");
-      for (i = 0; i < x.length; i++) {
-        tablinks[i].className = "tabLink has-background-grey-light"
-      }
       document.getElementById(tabName).style.display = "block";
-      event.currentTarget.className = "tabLink is-active has-background-primary-light"
     }
   </script>
 {% endblock %}

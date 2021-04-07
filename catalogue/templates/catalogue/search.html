@@ -1,45 +1,81 @@
 {% extends "catalogue/base.html" %}
+{% load bulma_tags %}
 {% block title %}Catalogue Search{% endblock %}
 {% block body %}
-  <section class="section">
-    <div class="container">
-      <div class="columns">
-        <div class="column is-three-fifths is-offset-one-fifth">
-          <form method="get">
-            {% with filter.form as form %}
-              {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-              {% endfor %}
-              {% for field in form.visible_fields %}
+  <section class="section has-background-primary">
+    <div class="columns is-flex-wrap-wrap">
+      <div class="column is-full">
+        <div class="columns">
+          <div class="column is-one-third is-offset-one-third mb-6">
+            <input class="input is-rounded" type="text" placeholder="Suchen">
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-one-fifth has-text-white">
+        <form method="get" id="searchForm">
+          {% with filter.form as form %}
+            {% for hidden in form.hidden_fields %}
+              {{ hidden }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+              {% if field|is_input %}
+                {{ field.as_hidden }}
+              {% else %}
                 <div class="field">
-                  <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                  <div class="control">
+                  <label class="label has-text-white" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                  <div class="control is-size-7">
                     {{ field }}
                   </div>
                 </div>
-              {% endfor %}
-            {% endwith %}
-            <div class="field">
-              <div class="control">
-                <button class="button is-link">Submit</button>
-              </div>
-            </div>
-          </form>
-        </div>
+              {% endif %}
+            {% endfor %}
+          {% endwith %}
+        </form>
       </div>
-  </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="columns is-flex-wrap-wrap">
-        {% for c in components %}
-          <div class="column is-one-third">
-            {% include "catalogue/includes/component-card.html" with c=c only %}
+      <div class="column has-background-primary-light">
+        <div class="container is-max-widescreen">
+          <div class="columns is-flex-wrap-wrap">
+            {% for c in components %}
+              <div class="column is-half-desktop">
+                {% include "catalogue/includes/component-card.html" with c=c only %}
+              </div>
+            {% empty %}
+              <div class="column has-text-centered">
+                <p class="mt-6">Keine Ergebnisse gefunden.</p>
+              </div>
+            {% endfor %}
           </div>
-        {% empty %}
-          <p>No Components are available.</p>
-        {% endfor %}
+        </div>
       </div>
     </div>
   </section>
+{% endblock %}
+{% block script %}
+  <script>
+    const searchForm = document.getElementById("searchForm");
+    /* copy textfield to hidden */
+    const input = document.querySelector('input[type="text"]');
+    const hiddenInput = document.querySelector('input[type="hidden"]');
+    input.value = hiddenInput.value; // load text on page load
+    input.addEventListener('input', function copyValue(e) {
+        hiddenInput.value = e.target.value;
+      }
+    );
+    input.addEventListener('keydown', function (e) {
+      if (e.keyCode === 13) {
+        searchForm.submit();
+      }
+    });
+
+
+    /* submit form on checkbox change */
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (let i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].addEventListener('change', function () {
+        searchForm.submit()
+      });
+    }
+  </script>
 {% endblock %}
