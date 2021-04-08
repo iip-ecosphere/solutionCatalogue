@@ -6,7 +6,7 @@
         {{ c.basedata.get_trl_display }}
       </span>
       <p class="title is-3">
-        {{ c.basedata.name }}
+        <a href="{% url 'catalogue:detail' c.id %}">{{ c.basedata.name }}</a>
       </p>
       <p class="subtitle is-5">
         {{ c.source.manufacturer }}

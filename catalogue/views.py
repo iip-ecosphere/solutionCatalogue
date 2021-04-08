@@ -4,14 +4,15 @@ from django.views import generic
 from django_filters.views import FilterView
 
 from .forms import InquiryForm
-from .filters import ComponentFilter
+from .filters import ComponentFilter, ComponentFilterBase
 from .models import Component
 
 
-class IndexView(generic.ListView):
-    queryset = Component.objects.filter(published=True)
+class IndexView(FilterView):
+    # queryset = Component.objects.filter(published=True)
     template_name = "catalogue/index.html"
     context_object_name = "components"
+    filterset_class = ComponentFilterBase
 
 
 class SearchView(FilterView):

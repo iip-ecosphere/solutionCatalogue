@@ -20,7 +20,8 @@
       </h2>
       <div class="content">{{ component.basedata.description }}</div>
       {% for t in component.basedata.task_set.all %}
-        <a class="tag has-background-info is-rounded" href="#">{{ t.get_name_display }}</a>
+        <a class="tag has-background-info is-rounded"
+           href="{% url 'catalogue:search' %}?basedata__task__name={{ t.name }}">{{ t.get_name_display }}</a>
       {% endfor %}
     </div>
   </section>
@@ -77,7 +78,7 @@
       {% endif %}
     </div>
   </section>
-  <section id="contact" class="section red-blue-gradient">
+  <section id="contact" class="section bg-bubble-gradient">
     <div class="container is-max-widescreen">
       <div class="columns">
         <div class="column is-half">

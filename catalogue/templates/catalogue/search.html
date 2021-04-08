@@ -1,4 +1,5 @@
 {% extends "catalogue/base.html" %}
+{% load static %}
 {% load bulma_tags %}
 {% block title %}Catalogue Search{% endblock %}
 {% block body %}
@@ -7,7 +8,12 @@
       <div class="column is-full">
         <div class="columns">
           <div class="column is-one-third is-offset-one-third mb-6">
-            <input class="input is-rounded" type="text" placeholder="Suchen">
+            <p class="control has-icons-right">
+              <input class="input is-rounded" type="text" placeholder="Katalog durchsuchen">
+              <span class="icon is-small is-right">
+              <img src="{% static 'catalogue/images/search.svg' %}" style="padding: 4px"/>
+            </span>
+            </p>
           </div>
         </div>
       </div>
@@ -54,28 +60,29 @@
 {% endblock %}
 {% block script %}
   <script>
-    const searchForm = document.getElementById("searchForm");
-    /* copy textfield to hidden */
-    const input = document.querySelector('input[type="text"]');
-    const hiddenInput = document.querySelector('input[type="hidden"]');
-    input.value = hiddenInput.value; // load text on page load
-    input.addEventListener('input', function copyValue(e) {
-        hiddenInput.value = e.target.value;
-      }
-    );
-    input.addEventListener('keydown', function (e) {
-      if (e.keyCode === 13) {
-        searchForm.submit();
-      }
-    });
-
-
-    /* submit form on checkbox change */
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    for (let i = 0; i < checkboxes.length; i++) {
-      checkboxes[i].addEventListener('change', function () {
-        searchForm.submit()
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchForm = document.getElementById("searchForm");
+      // copy textfield to hidden
+      const input = document.querySelector('input[type="text"]');
+      const hiddenInput = document.querySelector('input[type="hidden"]');
+      input.value = hiddenInput.value; // load text on page load
+      input.addEventListener('input', function copyValue(e) {
+          hiddenInput.value = e.target.value;
+        }
+      );
+      // submit on keydown
+      input.addEventListener('keydown', function (e) {
+        if (e.keyCode === 13) {
+          searchForm.submit();
+        }
       });
-    }
+      // submit form on checkbox change
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('change', function () {
+          searchForm.submit()
+        });
+      }
+    })
   </script>
 {% endblock %}

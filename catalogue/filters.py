@@ -10,10 +10,13 @@ from .models import (
     BaseData,
     Task,
     Process,
+    BranchChoices,
+    BranchProven,
+    BranchApplicable,
 )
 
 
-class ComponentFilter(django_filters.FilterSet):
+class ComponentFilterBase(django_filters.FilterSet):
     combined = django_filters.CharFilter(
         field_name=["basedata__name", "basedata__description"],
         label="Name / Beschreibung",
@@ -21,19 +24,19 @@ class ComponentFilter(django_filters.FilterSet):
     )
     # basedata__name = django_filters.CharFilter(lookup_expr="icontains", label="Name")
     # basedata__description = django_filters.CharFilter(lookup_expr="icontains", label="Beschreibung")
-    basedata__trl = django_filters.MultipleChoiceFilter(
-        label=BaseData._meta.get_field("trl").verbose_name,
-        choices=TRLChoices.choices[1:],
-        widget=forms.CheckboxSelectMultiple,
-    )
     basedata__task__name = django_filters.MultipleChoiceFilter(
         label=Task._meta.verbose_name,
         choices=TaskChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
-    applicationprofile__process__name = django_filters.MultipleChoiceFilter(
-        label=Process._meta.verbose_name,
-        choices=ProcessChoices.choices[1:],
+    applicationprofile__branchproven__name = django_filters.MultipleChoiceFilter(
+        label=BranchProven._meta.verbose_name,
+        choices=BranchChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
+    )
+    applicationprofile__branchapplicable__name = django_filters.MultipleChoiceFilter(
+        label=BranchApplicable._meta.verbose_name,
+        choices=BranchChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
 
@@ -67,3 +70,16 @@ class ComponentFilter(django_filters.FilterSet):
         for n in name:
             q |= Q(**{f"{n}__icontains": value})
         return queryset.filter(q)
+
+
+class ComponentFilter(ComponentFilterBase):
+    basedata__trl = django_filters.MultipleChoiceFilter(
+        label=BaseData._meta.get_field("trl").verbose_name,
+        choices=TRLChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
+    )
+    applicationprofile__process__name = django_filters.MultipleChoiceFilter(
+        label=Process._meta.verbose_name,
+        choices=ProcessChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
+    )

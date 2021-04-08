@@ -6,12 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'catalogue/bulma.css' %}">
+  <link rel="stylesheet" href="{% static 'catalogue/fas.min.css' %}">
 </head>
 <body>
-<nav class="navbar is-primary is-spaced" role="navigation" aria-label="main navigation">
+<nav class="navbar is-spaced is-primary {% if request.path == "/" %}transparent{% endif %}"
+     role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="{% url 'catalogue:index' %}">
-      <img alt="IIP Ecosphere" id="logo" src="{% static 'Logo.svg' %}">
+      <img alt="IIP Ecosphere" id="logo" src="{% static 'catalogue/logo/iip.svg' %}">
       <span class="ml-2">IIP-Ecosphere</span>
     </a>
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
@@ -55,6 +57,8 @@
           // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
           el.classList.toggle('is-active');
           $target.classList.toggle('is-active');
+          // remove transparency from navbar
+          document.querySelector('nav.navbar').classList.toggle("transparent");
         });
       });
     }
