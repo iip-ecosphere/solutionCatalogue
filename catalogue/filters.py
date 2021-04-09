@@ -27,7 +27,7 @@ from .models import (
 
 
 class ComponentFilterBase(django_filters.FilterSet):
-    combined = django_filters.CharFilter(
+    q = django_filters.CharFilter(
         field_name=["basedata__name", "basedata__description"],
         label="Name / Beschreibung",
         method="combined_filter",
@@ -80,6 +80,12 @@ class ComponentFilterBase(django_filters.FilterSet):
         for n in name:
             q |= Q(**{f"{n}__icontains": value})
         return queryset.filter(q)
+
+
+class ComponentFilterFrontPage(ComponentFilterBase):
+    @property
+    def qs(self):
+        return super().qs[:3]
 
 
 class ComponentFilter(ComponentFilterBase):

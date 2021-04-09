@@ -4,7 +4,7 @@ from django.views import generic
 from django_filters.views import FilterView
 
 from .forms import InquiryForm
-from .filters import ComponentFilter, ComponentFilterBase
+from .filters import ComponentFilter, ComponentFilterFrontPage
 from .models import Component
 
 
@@ -12,7 +12,7 @@ class IndexView(FilterView):
     # queryset = Component.objects.filter(published=True)
     template_name = "catalogue/index.html"
     context_object_name = "components"
-    filterset_class = ComponentFilterBase
+    filterset_class = ComponentFilterFrontPage
 
 
 class SearchView(FilterView):
