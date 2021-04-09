@@ -17,6 +17,7 @@
           </p>
         </div>
       </div>
+
       <form method="get" name="searchForm" action="{% url 'catalogue:search' %}">
         {% with filter.form as form %}
           {% for hidden in form.hidden_fields %}
@@ -26,13 +27,7 @@
             <div class="column is-one-third is-offset-one-third mb-1">
               {% for field in form.visible_fields %}
                 {% if field|is_input %}
-                  <p class="control has-icons-right">
-                    <input class="input is-rounded" name="{{ field.name }}" type="text"
-                           placeholder="Katalog durchsuchen">
-                    <span class="icon is-small is-right clicky" onclick="document.searchForm.submit()">
-                      <img src="{% static 'catalogue/images/search.svg' %}" style="padding: 4px"/>
-                    </span>
-                  </p>
+                  {% include "catalogue/includes/searchbar.html" with name=field.name only %}
                 {% endif %}
               {% endfor %}
             </div>
@@ -58,6 +53,7 @@
       </form>
     </div>
   </section>
+
   <section class="section bg-gradient-blue-red">
     <div class="container is-max-widescreen">
       <div class="columns is-flex-wrap-wrap">
@@ -65,22 +61,22 @@
           <div class="column is-one-third">
             {% include "catalogue/includes/component-card.html" with c=c only %}
           </div>
-        {% empty %}
-          <p>No Components are available.</p>
         {% endfor %}
       </div>
     </div>
   </section>
+
   <section class="section has-background-white">
     <nav class="level">
       <p class="level-item has-text-centered">
-        <img src="{% static 'catalogue/logo/Logo_IIP-Ecosphere.svg' %}" style="height: 140px;">
+        <img src="{% static 'catalogue/logo/Logo_IIP-Ecosphere.svg' %}" style="height: 140px;" alt="IIP Ecosphere">
       </p>
       <p class="level-item has-text-centered">
-        <img src="{% static 'catalogue/logo/L3S_Logo_NEU_small.jpg' %}" style="height: 130px;">
+        <img src="{% static 'catalogue/logo/L3S_Logo_NEU_small.jpg' %}" style="height: 130px;"
+             alt="L3S Research Center">
       </p>
       <p class="level-item has-text-centered">
-        <img src="{% static 'catalogue/logo/bmwi.png' %}" style="height: 150px;">
+        <img src="{% static 'catalogue/logo/bmwi.png' %}" style="height: 150px;" alt="BMWI">
       </p>
     </nav>
   </section>
@@ -92,8 +88,8 @@
       const foldersDown = document.querySelectorAll('div.folder-down');
       for (let i = 0; i < foldersDown.length; i++) {
         foldersDown[i].addEventListener('click', function (e) {
-          e.target.parentNode.classList.toggle("folded");
-          e.target.classList.toggle("is-hidden");
+          e.currentTarget.parentNode.classList.toggle("folded");
+          e.currentTarget.classList.toggle("is-hidden");
         });
       }
     })

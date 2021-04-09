@@ -1,5 +1,4 @@
 {% extends "catalogue/base.html" %}
-{% load static %}
 {% load bulma_tags %}
 {% block title %}Catalogue Search{% endblock %}
 {% block body %}
@@ -8,18 +7,13 @@
       <div class="column is-full">
         <div class="columns">
           <div class="column is-one-third is-offset-one-third mb-6">
-            <p class="control has-icons-right">
-              <input class="input is-rounded" type="text" placeholder="Katalog durchsuchen">
-              <span class="icon is-small is-right">
-              <img src="{% static 'catalogue/images/search.svg' %}" style="padding: 4px"/>
-            </span>
-            </p>
+            {% include "catalogue/includes/searchbar.html" %}
           </div>
         </div>
       </div>
 
-      <div class="column is-one-fifth has-text-white">
-        <form method="get" id="searchForm">
+      <div class="column is-half-tablet is-one-quarter-desktop is-one-fifth-widescreen has-text-white">
+        <form method="get" name="searchForm">
           {% with filter.form as form %}
             {% for hidden in form.hidden_fields %}
               {{ hidden }}
@@ -28,11 +22,27 @@
               {% if field|is_input %}
                 {{ field.as_hidden }}
               {% else %}
-                <div class="field">
-                  <label class="label has-text-white" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                  <div class="control is-size-7">
-                    {{ field }}
+                <button class="button is-white is-outlined mb-2 is-fullwidth drop-down-button" type="button"
+                        aria-label="menu" aria-expanded="false" data-target="{{ field.html_name }}dropdown">
+                  <span>{{ field.label }}</span>
+                  <span class="icon is-right drop-down-icon">
+                    <i class="fas fa-angle-down"></i>
+                    <i class="fas fa-angle-up"></i>
+                  </span>
+                </button>
+                <div class="drop-down-menu mb-4" id="{{ field.html_name }}dropdown">
+                  <div class="field">
+                    <div class="control is-size-7">
+                      {{ field }}
+                    </div>
                   </div>
+                </div>
+                <div class="tags mb-1">
+                  {% for id, name in field.field.choices %}
+                    {% if id|stringformat:"s" in field.value %}
+                      <span class="tag has-background-info is-rounded">{{ name }}</span>
+                    {% endif %}
+                  {% endfor %}
                 </div>
               {% endif %}
             {% endfor %}
@@ -41,10 +51,10 @@
       </div>
 
       <div class="column has-background-primary-light">
-        <div class="container is-max-widescreen">
+        <div class="container">
           <div class="columns is-flex-wrap-wrap">
             {% for c in components %}
-              <div class="column is-half-desktop">
+              <div class="column is-half-desktop is-one-third-fullhd">
                 {% include "catalogue/includes/component-card.html" with c=c only %}
               </div>
             {% empty %}
@@ -61,7 +71,6 @@
 {% block script %}
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const searchForm = document.getElementById("searchForm");
       // copy textfield to hidden
       const input = document.querySelector('input[type="text"]');
       const hiddenInput = document.querySelector('input[type="hidden"]');
@@ -73,16 +82,31 @@
       // submit on keydown
       input.addEventListener('keydown', function (e) {
         if (e.keyCode === 13) {
-          searchForm.submit();
+          document.searchForm.submit();
         }
       });
       // submit form on checkbox change
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
       for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener('change', function () {
-          searchForm.submit()
+          document.searchForm.submit()
         });
       }
-    })
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // dropdown buttons
+      const $dropdownButtons = Array.prototype.slice.call(document.querySelectorAll('.drop-down-button'), 0);
+      if ($dropdownButtons.length > 0) {
+        $dropdownButtons.forEach(el => {
+          el.addEventListener('click', () => {
+            // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
   </script>
 {% endblock %}

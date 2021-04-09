@@ -1,0 +1,9 @@
+{% load static %}
+<p class="control has-icons-right">
+  <input class="input is-rounded"
+         {% if name %}name="{{ name }}"{% endif %}
+         type="text" placeholder="Katalog durchsuchen">
+  <span class="icon is-small is-right clicky" onclick="document.searchForm.submit()">
+    <img src="{% static 'catalogue/images/search.svg' %}" style="padding: 4px"/>
+  </span>
+</p>

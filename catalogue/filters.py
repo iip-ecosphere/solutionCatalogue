@@ -13,6 +13,16 @@ from .models import (
     BranchChoices,
     BranchProven,
     BranchApplicable,
+    HierarchyLevel,
+    HierarchyLevelChoices,
+    CorporateDivision,
+    CorporateDivisionChoices,
+    DataAnalysisProcess,
+    DAProcessChoices,
+    Licenses,
+    LicenseChoices,
+    RealtimeChoices,
+    TechnicalSpecification,
 )
 
 
@@ -81,5 +91,34 @@ class ComponentFilter(ComponentFilterBase):
     applicationprofile__process__name = django_filters.MultipleChoiceFilter(
         label=Process._meta.verbose_name,
         choices=ProcessChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
+    )
+    applicationprofile__hierarchylevel__name = django_filters.MultipleChoiceFilter(
+        label=HierarchyLevel._meta.verbose_name,
+        choices=HierarchyLevelChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
+    )
+    applicationprofile__corporatedivision__name = django_filters.MultipleChoiceFilter(
+        label=CorporateDivision._meta.verbose_name,
+        choices=CorporateDivisionChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
+    )
+    technicalspecification__dataanalysisprocess__name = (
+        django_filters.MultipleChoiceFilter(
+            label=DataAnalysisProcess._meta.verbose_name,
+            choices=DAProcessChoices.choices[1:],
+            widget=forms.CheckboxSelectMultiple,
+        )
+    )
+    technicalspecification__realtime_processing = django_filters.MultipleChoiceFilter(
+        label=TechnicalSpecification._meta.get_field(
+            "realtime_processing"
+        ).verbose_name,
+        choices=RealtimeChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
+    )
+    technicalspecification__licenses__name = django_filters.MultipleChoiceFilter(
+        label=Licenses._meta.verbose_name,
+        choices=LicenseChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )

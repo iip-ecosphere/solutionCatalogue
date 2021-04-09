@@ -1,4 +1,5 @@
 @charset "utf-8";
+$white: #fff;
 $blue: #2a6989;
 $grey-bg: #f6f8fa;
 $yellow: #ffbe0b;
@@ -8,6 +9,7 @@ $primary-light: $grey-bg;
 $info: $yellow;
 $body-background-color: $grey-bg;
 $footer-background-color: $blue;
+
 
 @import "bulma/bulma.sass";
 
@@ -66,6 +68,7 @@ footer {
   background-image: linear-gradient(to bottom, #fd6a60 -19%, #c76a7e 33%, #2a6989 100%);
 }
 
+/* pull section background upward into nav on frontpage */
 .pull-nav {
   margin-top: -3.25rem;
 }
@@ -76,6 +79,7 @@ footer {
   }
 }
 
+/* folded search facets on frontpage */
 .folded ul {
   height: 150px;
   overflow: hidden;
@@ -91,6 +95,25 @@ footer {
   overflow: visible;
 }
 
+/* dropdown buttons */
+.button .icon.is-right:not(:first-child) {
+  margin-left: auto;
+}
+
+.button:focus .icon.drop-down-icon i:first-child,
+.button:not(:focus) .icon.drop-down-icon i:last-child {
+  // swap icons
+  display: none;
+}
+
+.drop-down-menu {
+  display: none;
+}
+
+.drop-down-menu.is-active {
+  display: block;
+}
+
 /* tabs on details page */
 .tabs ul {
   border-bottom: none;
@@ -102,7 +125,11 @@ footer {
   position: relative;
 }
 
+/* checkbox lists */
 div.control.is-size-7 input[type="checkbox"] {
   // fix checkbox alignment
   vertical-align: text-bottom;
+}
+div.control li {
+  margin-bottom: 0.25rem;
 }
