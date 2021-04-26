@@ -1,0 +1,11 @@
+<div class="progress-circle-container is-pulled-right">
+  <div class="progress-circle p{{ component.basedata.trl }} {% if component.basedata.trl > 4 %}over50{% endif %}"
+       title="{{ component.basedata.get_trl_display }}">
+    <span>{{ component.basedata.trl }}</span>
+    <div class="left-half-clipper">
+      <div class="first50-bar"></div>
+      <div class="value-bar"></div>
+    </div>
+  </div>
+  <span>TRL</span>
+</div>

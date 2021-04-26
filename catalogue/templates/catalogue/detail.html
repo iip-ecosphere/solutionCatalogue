@@ -6,17 +6,7 @@
 {% block body %}
   <section class="section has-background-primary has-text-white">
     <div class="container is-max-widescreen">
-      <div class="progress-circle-container is-pulled-right">
-        <div class="progress-circle p{{ component.basedata.trl }} {% if component.basedata.trl > 4 %}over50{% endif %}"
-             title="{{ component.basedata.get_trl_display }}">
-          <span>{{ component.basedata.trl }}</span>
-          <div class="left-half-clipper">
-            <div class="first50-bar"></div>
-            <div class="value-bar"></div>
-          </div>
-        </div>
-        <span>TRL</span>
-      </div>
+      {% include "catalogue/includes/trl.html" with component=component only %}
       <h1 class="title is-3 has-text-white">
         {{ component.basedata.name }}
       </h1>

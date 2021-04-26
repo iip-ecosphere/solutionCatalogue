@@ -2,17 +2,7 @@
 <div class="card">
   <div class="card-content">
     <div class="content">
-      <div class="progress-circle-container is-pulled-right">
-        <div class="progress-circle p{{ c.basedata.trl }} {% if c.basedata.trl > 4 %}over50{% endif %}"
-             title="{{ c.basedata.get_trl_display }}">
-          <span>{{ c.basedata.trl }}</span>
-          <div class="left-half-clipper">
-            <div class="first50-bar"></div>
-            <div class="value-bar"></div>
-          </div>
-        </div>
-        <span>TRL</span>
-      </div>
+      {% include "catalogue/includes/trl.html" with component=c only %}
       <p class="title is-3">
         <a href="{% url 'catalogue:detail' c.id %}">{{ c.basedata.name }}</a>
       </p>
