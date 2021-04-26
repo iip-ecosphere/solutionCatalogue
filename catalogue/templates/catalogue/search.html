@@ -100,9 +100,9 @@
       if ($dropdownButtons.length > 0) {
         $dropdownButtons.forEach(el => {
           el.addEventListener('click', () => {
+            el.classList.toggle("is-active");
             // Get the target from the "data-target" attribute
-            const target = el.dataset.target;
-            const $target = document.getElementById(target);
+            const $target = document.getElementById(el.dataset.target);
             $target.classList.toggle('is-active');
           });
         });

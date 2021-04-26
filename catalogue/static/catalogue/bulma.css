@@ -11683,13 +11683,19 @@ footer {
 }
 
 /* dropdown buttons */
-.button .icon.is-right:not(:first-child) {
+.button.drop-down-button .icon.is-right {
   margin-left: auto;
 }
 
-.button:focus .icon.drop-down-icon i:first-child,
-.button:not(:focus) .icon.drop-down-icon i:last-child {
+.button.drop-down-button.is-active .icon.drop-down-icon i:first-child,
+.button.drop-down-button:not(.is-active) .icon.drop-down-icon i:last-child {
   display: none;
+}
+
+.button.drop-down-button.is-active {
+  background-color: #fff;
+  border-color: #fff;
+  color: #0a0a0a;
 }
 
 .drop-down-menu {
