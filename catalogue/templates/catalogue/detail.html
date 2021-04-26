@@ -6,19 +6,27 @@
 {% block body %}
   <section class="section has-background-primary has-text-white">
     <div class="container is-max-widescreen">
-      <span class="tag is-pulled-right is-primary-light">
-        {{ component.basedata.get_trl_display }}
-      </span>
+      <div class="progress-circle-container is-pulled-right">
+        <div class="progress-circle p{{ component.basedata.trl }} {% if component.basedata.trl > 4 %}over50{% endif %}"
+             title="{{ component.basedata.get_trl_display }}">
+          <span>{{ component.basedata.trl }}</span>
+          <div class="left-half-clipper">
+            <div class="first50-bar"></div>
+            <div class="value-bar"></div>
+          </div>
+        </div>
+        <span>TRL</span>
+      </div>
       <h1 class="title is-3 has-text-white">
         {{ component.basedata.name }}
       </h1>
       <h2 class="subtitle is-5 has-text-white">
         {{ component.source.manufacturer }}
-        <a class="button is-rounded is-small is-pulled-right is-primary-light" href="#contact">
-          Anbieter kontaktieren
-        </a>
       </h2>
       <div class="content">{{ component.basedata.description }}</div>
+      <a class="button is-rounded is-small is-pulled-right is-primary-light" href="#contact">
+        Anbieter kontaktieren
+      </a>
       {% for t in component.basedata.task_set.all %}
         <a class="tag has-background-info is-rounded"
            href="{% url 'catalogue:search' %}?basedata__task__name={{ t.name }}">{{ t.get_name_display }}</a>
