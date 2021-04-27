@@ -1,10 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Eczar">
   <link rel="stylesheet" href="{% static 'catalogue/bulma.css' %}">
   <link rel="stylesheet" href="{% static 'catalogue/fas.min.css' %}">
   <link rel="stylesheet" href="{% static 'catalogue/progress-bar/css-circular-prog-bar.css' %}">
@@ -12,23 +13,25 @@
 <body>
 <nav class="navbar is-spaced is-primary {% if request.path == "/" %}transparent{% endif %}"
      role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="{% url 'catalogue:index' %}">
-      <img alt="IIP Ecosphere" id="logo" src="{% static 'catalogue/logo/iip.svg' %}">
-      <span class="ml-2">IIP-Ecosphere</span>
-    </a>
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
+  <div class="container is-max-widescreen">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="{% url 'catalogue:index' %}">
+        <img alt="IIP Ecosphere" id="logo" src="{% static 'catalogue/logo/iip.svg' %}">
+        <span class="ml-2">IIP-Ecosphere</span>
+      </a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
 
-  <div id="navMenu" class="navbar-menu">
-    <div class="navbar-end">
-      <a class="navbar-item" href="{% url 'catalogue:index' %}">Index</a>
-      <a class="navbar-item" href="{% url 'catalogue:search' %}">Search</a>
-      <a class="navbar-item" href="{% url 'catalogue:login' %}">Login</a>
+    <div id="navMenu" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="{% url 'catalogue:index' %}">Index</a>
+        <a class="navbar-item" href="{% url 'catalogue:search' %}">Search</a>
+        <a class="navbar-item" href="{% url 'catalogue:login' %}">Login</a>
+      </div>
     </div>
   </div>
 </nav>

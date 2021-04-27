@@ -3,9 +3,11 @@ $white: #fff;
 $blue: #2a6989;
 $grey-bg: #f6f8fa;
 $yellow: #ffbe0b;
+$black: #253029;
 
 $primary: $blue;
 $primary-light: $grey-bg;
+$primary-dark: $black;
 $info: $yellow;
 $body-background-color: $grey-bg;
 $footer-background-color: $blue;
@@ -38,6 +40,10 @@ footer {
   border: 1px solid $grey-lighter;
 }
 
+.title {
+  font-family: Eczar, $family-sans-serif;
+}
+
 .clicky {
   pointer-events: unset !important;
   cursor: pointer;
@@ -66,6 +72,18 @@ footer {
 
 .bg-gradient-red-blue {
   background-image: linear-gradient(to bottom, #fd6a60 -19%, #c76a7e 33%, #2a6989 100%);
+}
+
+/* START */
+#start-search-bar {
+  .control .input {
+    height: 3.5em;
+  }
+
+  .control .icon {
+    height: 3.5em;
+    width: 3.5em;
+  }
 }
 
 /* pull section background upward into nav on frontpage */
@@ -115,10 +133,12 @@ footer {
 
 .drop-down-menu {
   display: none;
+
   &.is-active {
     display: block;
   }
 }
+
 
 /* tabs on details page */
 .tabs ul {
@@ -136,6 +156,7 @@ div.control.is-size-7 input[type="checkbox"] {
   // fix checkbox alignment
   vertical-align: text-bottom;
 }
+
 div.control li {
   margin-bottom: 0.25rem;
 }

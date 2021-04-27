@@ -14,11 +14,12 @@
         {{ component.source.manufacturer }}
       </h2>
       <div class="content">{{ component.basedata.description }}</div>
-      <a class="button is-rounded is-small is-pulled-right is-primary-light" href="#contact">
+      <a class="button is-rounded is-small is-pulled-right is-primary-light has-text-primary has-text-weight-bold"
+         href="#contact">
         Anbieter kontaktieren
       </a>
       {% for t in component.basedata.task_set.all %}
-        <a class="tag has-background-info is-rounded"
+        <a class="tag has-background-info is-rounded has-text-primary-dark has-text-weight-bold"
            href="{% url 'catalogue:search' %}?basedata__task__name={{ t.name }}">{{ t.get_name_display }}</a>
       {% endfor %}
     </div>
@@ -27,9 +28,13 @@
     <div class="container is-max-widescreen">
       <div class="tabs">
         <ul>
-          <li class="tabLink is-active has-background-primary-light" onclick="openTab(event, 'tab1')"><a>Grunddaten</a>
+          <li class="tabLink is-active has-background-primary-light has-text-weight-bold is-uppercase"
+              onclick="openTab(event, 'tab1')">
+            <a>Grunddaten</a>
           </li>
-          <li class="tabLink has-background-grey-light" onclick="openTab(event, 'tab2')"><a>Voraussetzungen</a></li>
+          <li class="tabLink has-background-grey-light has-text-weight-bold is-uppercase" onclick="openTab(event, 'tab2')">
+            <a>Voraussetzungen</a>
+          </li>
         </ul>
       </div>
     </div>

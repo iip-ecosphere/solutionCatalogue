@@ -24,7 +24,7 @@
             {{ hidden }}
           {% endfor %}
           <div class="columns">
-            <div class="column is-one-third is-offset-one-third mb-1">
+            <div id="start-search-bar" class="column is-half is-offset-one-quarter mb-2">
               {% for field in form.visible_fields %}
                 {% if field|is_input %}
                   {% include "catalogue/includes/searchbar.html" with name=field.name only %}
@@ -58,8 +58,11 @@
     </div>
   </section>
 
-  <section class="section bg-gradient-blue-red">
+  <section class="section bg-gradient-blue-red pt-0">
     <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-white has-text-centered">
+        Ausgewählte Lösungen
+      </h2>
       <div class="columns is-flex-wrap-wrap">
         {% for c in components %}
           <div class="column is-one-third">
@@ -89,7 +92,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // unfold search facets
-      const foldersDown = document.querySelectorAll('div.folder-down');
+      const foldersDown = document.querySelectorAll("div.folder-down");
       for (let i = 0; i < foldersDown.length; i++) {
         foldersDown[i].addEventListener('click', function (e) {
           e.currentTarget.parentNode.classList.toggle("folded");
