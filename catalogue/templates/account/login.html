@@ -1,0 +1,28 @@
+{% extends "account/base_card.html" %}
+{% load bulma_tags %}
+{% load socialaccount %}
+{% block title %}Login{% endblock %}
+{% block card %}
+  <form method="post" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form|bulma }}
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+    <div class="field">
+      <div class="control">
+        <button class="button is-rounded is-link">Login</button>
+      </div>
+    </div>
+    {% get_providers as socialaccount_providers %}
+    {% if socialaccount_providers %}
+      <ul>
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+      </ul>
+    {% endif %}
+  </form>
+{% endblock %}
+{% block card-footer %}
+    <a class="card-footer-item" href="{% url 'account_signup' %}">Registrieren</a>
+    <a class="card-footer-item" href="{% url 'account_reset_password' %}">Passwort vergessen?</a>
+{% endblock %}

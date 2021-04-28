@@ -272,6 +272,7 @@ class CustomUserAdmin(UserAdmin):
         "get_groups",
         "get_component_count",
     ]
+    list_select_related = ("profile",)
     inlines = (ProfileInline,)
 
     def get_groups(self, obj):

@@ -17,6 +17,7 @@ python-dotenv = "*"
 gunicorn = "*"
 django-sass = "*"
 django-bulma = "*"
+django-allauth = "*"
 
 [requires]
 python_version = "3"

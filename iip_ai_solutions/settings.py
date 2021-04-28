@@ -47,9 +47,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "debug_toolbar",
     "django_sass",
     "bulma",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
 ]
 
 MIDDLEWARE = [
@@ -62,6 +67,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 ROOT_URLCONF = "iip_ai_solutions.urls"
@@ -85,7 +97,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "iip_ai_solutions.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -96,8 +107,7 @@ DATABASES = {
     }
 }
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -106,11 +116,16 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -125,7 +140,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -138,6 +152,12 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+SITE_ID = 1
+
 LOGIN_REDIRECT_URL = "/admin/"
-LOGOUT_REDIRECT_URL = "/account/login/"
-LOGIN_URL = "/account/login/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
+LOGIN_URL = "/accounts/login/"
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = DEBUG
+ACCOUNT_EMAIL_VERIFICATION = "optional" if DEBUG else "mandatory"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
