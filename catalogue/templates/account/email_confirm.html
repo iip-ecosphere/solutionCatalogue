@@ -1,0 +1,26 @@
+{% extends "account/base_card.html" %}
+{% load account %}
+{% load i18n %}
+{% block title %}E-Mail-Adresse bestätigen{% endblock %}
+{% block card %}
+  {% if confirmation %}
+    {% user_display confirmation.email_address.user as user_display %}
+    <p>
+      Bitte bestätigen Sie, dass
+      <a href="mailto:{{ confirmation.email_address.email }}">
+        {{ confirmation.email_address.email }}
+      </a> eine E-Mail-Adresse von {{ user_display }} ist.
+    </p>
+    <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+      {% csrf_token %}
+      <div class="has-text-centered mt-2">
+        <button class="button is-rounded is-link is-centered">Bestätigen</button>
+      </div>
+    </form>
+  {% else %}
+    <p>
+      Der Email Bestätigungslink ist abgelaufen oder fehlerhaft. Lassen Sie sich bitte eine neue
+      <a href="{% url 'account_email' %}">Bestätigungs-Mail</a> zusenden.
+    </p>
+  {% endif %}
+{% endblock %}

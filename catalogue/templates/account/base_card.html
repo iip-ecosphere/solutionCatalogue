@@ -1,5 +1,17 @@
 {% extends "catalogue/base.html" %}
 {% block body %}
+  {% if messages %}
+    <section class="section">
+      <div class="container">
+        {% for message in messages %}
+          <div class="notification is-info">
+            <button class="delete"></button>
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
   <section class="section">
     <div class="container">
       <div class="columns">
