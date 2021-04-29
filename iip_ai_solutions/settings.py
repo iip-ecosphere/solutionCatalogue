@@ -163,6 +163,16 @@ ACCOUNT_EMAIL_REQUIRED = DEBUG
 ACCOUNT_EMAIL_VERIFICATION = "optional" if DEBUG else "mandatory"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
 
+SOCIALACCOUNT_PROVIDERS = {
+    "github": {
+        "APP": {
+            "client_id": os.getenv("SOCIAL_GITHUB_CLIENT_ID", ""),
+            "secret": os.getenv("SOCIAL_GITHUB_SECRET", ""),
+            "key": "",
+        }
+    }
+}
+
 EMAIL_HOST = os.getenv("EMAIL_HOST", "localhost")
 EMAIL_PORT = os.getenv("EMAIL_PORT", "1025")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")

@@ -1,0 +1,12 @@
+{% extends "account/base_card.html" %}
+{% load bulma_tags %}
+{% block title %}Abmelden{% endblock %}
+{% block card %}
+  <p class="mb-2">Sind Sie sicher, dass Sie sich abmelden möchten?</p>
+  <form method="post" action="{% url 'account_logout' %}">
+    {% csrf_token %}
+    <div class="has-text-centered">
+      <button class="button is-rounded is-link" type="submit">Abmelden</button>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "account/base_card.html" %}
+{% load bulma_tags %}
+{% block title %}Konto-Verknüpfungen{% endblock %}
+{% block card %}
+  {% if form.accounts %}
+    <p class="mb-2">Sie können sich bei uns über folgende soziale Netzwerke anmelden:</p>
+    <form method="post" action="{% url 'socialaccount_connections' %}">
+      {% csrf_token %}
+      <fieldset class="blockLabels">
+        {% for base_account in form.accounts %}
+          {% with base_account.get_provider_account as account %}
+            <div class="field">
+              <div class="control">
+                <label class="radio">
+                  <input id="id_account_{{ base_account.id }}" type="radio" name="account"
+                         value="{{ base_account.id }}"/>
+                  {{ account.get_brand.name }}
+                  <span class="tag">{{ account }}</span>
+                </label>
+              </div>
+            </div>
+          {% endwith %}
+        {% endfor %}
+        <div class="field">
+          <p class="control">
+            <button class="button is-danger" type="submit">
+              Entfernen
+            </button>
+          </p>
+        </div>
+      </fieldset>
+    </form>
+  {% else %}
+    <p>Sie haben aktuell keine Konten von sozialen Netzwerken mit Ihrem Account verknüpft.</p>
+  {% endif %}
+  <hr>
+  <h2 class="subtitle">Soziales Netzwerk hinzufügen</h2>
+  {% load socialaccount %}
+  {% get_providers as socialaccount_providers %}
+  {% if socialaccount_providers %}
+    <ul>
+      {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
+    </ul>
+  {% endif %}
+{% endblock %}

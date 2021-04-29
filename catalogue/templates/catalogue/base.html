@@ -28,9 +28,29 @@
 
     <div id="navMenu" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="{% url 'catalogue:index' %}">Index</a>
-        <a class="navbar-item" href="{% url 'catalogue:search' %}">Search</a>
-        <a class="navbar-item" href="{% url 'account_login' %}">Login</a>
+        <a class="navbar-item" href="{% url 'catalogue:index' %}">Start</a>
+        <a class="navbar-item" href="{% url 'catalogue:search' %}">Suche</a>
+        {% if user.is_authenticated %}
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Account
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="{% url 'account_email' %}">E-Mail-Adressen</a>
+              <a class="navbar-item" href="{% url 'account_change_password' %}">Passwort</a>
+              <a class="navbar-item" href="{% url 'socialaccount_connections' %}">Konto-Verknüpfungen</a>
+              <hr class="navbar-divider">
+              <a class="navbar-item" href="{% url 'account_logout' %}">Abmelden</a>
+            </div>
+          </div>
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-light is-small" href="{% url 'admin:index' %}">Verwaltung</a>
+            </div>
+          </div>
+        {% else %}
+          <a class="navbar-item" href="{% url 'account_login' %}">Login</a>
+        {% endif %}
       </div>
     </div>
   </div>

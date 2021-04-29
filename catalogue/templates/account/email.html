@@ -1,0 +1,75 @@
+{% extends "account/base_card.html" %}
+{% load bulma_tags %}
+{% block title %}E-Mail-Adressen{% endblock %}
+{% block card %}
+  {% if user.emailaddress_set.all %}
+    <p class="mb-2">Folgende E-Mail-Adressen sind mit diesem Konto verknüpft:</p>
+    <form method="post" action="{% url 'account_email' %}">
+      {% csrf_token %}
+      {% for emailaddress in user.emailaddress_set.all %}
+        <div class="field">
+          <div class="control">
+            <label class="radio">
+              <input id="email_radio_{{ forloop.counter }}" type="radio" name="email"
+                     {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{% endif %}
+                     value="{{ emailaddress.email }}"/>
+              {{ emailaddress.email }}
+              {% if emailaddress.verified %}
+                <span class="tag is-success">Bestätigt</span>
+              {% else %}
+                <span class="tag is-warning">Unbestätigt</span>
+              {% endif %}
+              {% if emailaddress.primary %}<span class="tag is-primary">Primär</span>{% endif %}
+            </label>
+          </div>
+        </div>
+      {% endfor %}
+      <div class="field is-grouped">
+        <p class="control">
+          <button class="button is-link" type="submit" name="action_primary">
+            Primäradresse setzen
+          </button>
+        </p>
+        <p class="control">
+          <button class="button" type="submit" name="action_send">
+            Bestätigung erneut senden
+          </button>
+        </p>
+        <p class="control">
+          <button class="button is-danger" type="submit" name="action_remove">
+            Entfernen
+          </button>
+        </p>
+      </div>
+    </form>
+  {% else %}
+    <p><strong>Warnung:</strong> Sie haben bisher keine E-Mail Adressen angegeben.</p>
+  {% endif %}
+  <hr>
+  {% if can_add_email %}
+    <h2 class="subtitle">E-Mail-Adresse hinzufügen</h2>
+    <form method="post" action="{% url 'account_email' %}">
+      {% csrf_token %}
+      {{ form|bulma }}
+      <div class="has-text-centered">
+        <button class="button is-rounded is-link" name="action_add" type="submit">E-Mail hinzufügen</button>
+      </div>
+    </form>
+  {% endif %}
+{% endblock %}
+{% block script %}
+  {{ block.super }}
+  <script type="text/javascript">
+    (function () {
+      var message = "Möchten Sie die ausgewählte Adresse wirklich entfernen?";
+      var actions = document.getElementsByName('action_remove');
+      if (actions.length) {
+        actions[0].addEventListener("click", function (e) {
+          if (!confirm(message)) {
+            e.preventDefault();
+          }
+        });
+      }
+    })();
+  </script>
+{% endblock %}

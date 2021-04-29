@@ -12,10 +12,20 @@
       </div>
     </section>
   {% endif %}
+  {% if form.non_field_errors %}
+    <section class="section">
+      <div class="container">
+        <div class="notification is-danger">
+          <button class="delete"></button>
+          {{ form.non_field_errors }}
+        </div>
+      </div>
+    </section>
+  {% endif %}
   <section class="section">
     <div class="container">
       <div class="columns">
-        <div class="column is-one-third is-offset-one-third">
+        <div class="column is-half is-offset-one-quarter">
           <div class="card">
             <div class="card-content">
               <h1 class="title is-3">{% block title %}{% endblock %}</h1>
@@ -29,4 +39,17 @@
       </div>
     </div>
   </section>
+{% endblock %}
+{% block script %}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+        const $notification = $delete.parentNode;
+
+        $delete.addEventListener('click', () => {
+          $notification.parentNode.removeChild($notification);
+        });
+      });
+    });
+  </script>
 {% endblock %}
