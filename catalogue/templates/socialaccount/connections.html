@@ -38,8 +38,6 @@
   {% load socialaccount %}
   {% get_providers as socialaccount_providers %}
   {% if socialaccount_providers %}
-    <ul>
-      {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
-    </ul>
+    {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
   {% endif %}
 {% endblock %}

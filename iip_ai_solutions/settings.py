@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.gitlab",
+    "allauth.socialaccount.providers.twitter",
+    "allauth.socialaccount.providers.linkedin",
 ]
 
 MIDDLEWARE = [
@@ -156,6 +159,7 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = "/admin/"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
+ACCOUNT_LOGOUT_REDIRECT_URL = LOGOUT_REDIRECT_URL
 LOGIN_URL = "/accounts/login/"
 
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
