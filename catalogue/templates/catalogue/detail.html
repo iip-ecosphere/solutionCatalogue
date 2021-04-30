@@ -52,18 +52,16 @@
     <div class="container is-max-widescreen">
       {% if component.applicationprofile %}
         <h3 class="title is-4">{{ component.applicationprofile | verbose_name }}</h3>
-        {% list_fields component.applicationprofile as ap %}
-        {% for field, val in ap %}
+        {% list_fields component.applicationprofile as fields %}
+        {% for field, val in fields %}
           {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
         {% endfor %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=component.applicationprofile.branchapplicable_set|verbose_name_plural value=component.applicationprofile.branchapplicable_set.all only %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=component.applicationprofile.branchproven_set|verbose_name_plural value=component.applicationprofile.branchproven_set.all only %}
         <hr>
       {% endif %}
       {% if component.use %}
         <h3 class="title is-4">{{ component.use | verbose_name }}</h3>
-        {% list_fields component.use as ap %}
-        {% for field, val in ap %}
+        {% list_fields component.use as fields %}
+        {% for field, val in fields %}
           {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
         {% endfor %}
         <hr>
@@ -74,16 +72,16 @@
     <div class="container is-max-widescreen">
       {% if component.requirements %}
         <h3 class="title is-4">{{ component.requirements | verbose_name }}</h3>
-        {% list_fields component.requirements as ap %}
-        {% for field, val in ap %}
+        {% list_fields component.requirements as fields %}
+        {% for field, val in fields %}
           {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
         {% endfor %}
         <hr>
       {% endif %}
       {% if component.technicalspecification %}
         <h3 class="title is-4">{{ component.technicalspecification | verbose_name }}</h3>
-        {% list_fields component.technicalspecification as ap %}
-        {% for field, val in ap %}
+        {% list_fields component.technicalspecification as fields %}
+        {% for field, val in fields %}
           {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
         {% endfor %}
         <hr>

@@ -7,7 +7,13 @@
     {% if value|is_list %}
       <ul>
         {% for x in value %}
-          <li>{{ x.get_name_display }}</li>
+          <li>
+            {% if x.get_name_display %}
+              {{ x.get_name_display }}
+            {% else %}
+              {{ x.name }}
+            {% endif %}
+          </li>
         {% endfor %}
       </ul>
     {% else %}
