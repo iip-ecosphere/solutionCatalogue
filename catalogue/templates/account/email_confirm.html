@@ -5,7 +5,7 @@
 {% block card %}
   {% if confirmation %}
     {% user_display confirmation.email_address.user as user_display %}
-    <p>
+    <p class="block">
       Bitte bestätigen Sie, dass
       <a href="mailto:{{ confirmation.email_address.email }}">
         {{ confirmation.email_address.email }}
@@ -13,7 +13,7 @@
     </p>
     <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
       {% csrf_token %}
-      <div class="has-text-centered mt-2">
+      <div class="has-text-centered">
         <button class="button is-rounded is-link is-centered">Bestätigen</button>
       </div>
     </form>

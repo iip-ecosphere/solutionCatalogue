@@ -15,7 +15,7 @@
     {% get_providers as socialaccount_providers %}
     {% if socialaccount_providers %}
       <hr>
-      <p class="subtitle has-text-centered mb-2">Login via</p>
+      <p class="subtitle has-text-centered">Login via</p>
       {% include "socialaccount/snippets/provider_list.html" with process="login" %}
     {% endif %}
   </form>

@@ -2,7 +2,7 @@
 
 {% get_providers as socialaccount_providers %}
 
-<p class="buttons is-centered">
+<p class="buttons block is-centered">
   {% for provider in socialaccount_providers %}
     {% if provider.id == "openid" %}
       {% for brand in provider.get_brands %}
