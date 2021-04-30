@@ -6,14 +6,22 @@
 {% block body %}
   <section class="section has-background-primary has-text-white">
     <div class="container is-max-widescreen">
-      {% include "catalogue/includes/trl.html" with component=component only %}
-      <h1 class="title is-3 has-text-white">
-        {{ component.basedata.name }}
-      </h1>
-      <h2 class="subtitle is-5 has-text-white">
-        {{ component.source.manufacturer }}
-      </h2>
-      <div class="content">{{ component.basedata.description }}</div>
+      <div class="media">
+        <div class="media-content">
+          <h1 class="title is-3 has-text-white">
+            {{ component.basedata.name }}
+          </h1>
+          <h2 class="subtitle is-5 has-text-white">
+            {{ component.source.manufacturer }}
+          </h2>
+        </div>
+        <div class="media-right">
+          {% include "catalogue/includes/trl.html" with component=component only %}
+        </div>
+      </div>
+      <div class="content mt-4">
+        <p>{{ component.basedata.description }}</p>
+      </div>
       <a class="button is-rounded is-small is-pulled-right is-primary-light has-text-primary has-text-weight-bold"
          href="#contact">
         Anbieter kontaktieren
@@ -32,7 +40,8 @@
               onclick="openTab(event, 'tab1')">
             <a>Grunddaten</a>
           </li>
-          <li class="tabLink has-background-grey-light has-text-weight-bold is-uppercase" onclick="openTab(event, 'tab2')">
+          <li class="tabLink has-background-grey-light has-text-weight-bold is-uppercase"
+              onclick="openTab(event, 'tab2')">
             <a>Voraussetzungen</a>
           </li>
         </ul>

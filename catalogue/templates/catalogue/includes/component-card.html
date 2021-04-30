@@ -1,14 +1,20 @@
 {% load verbose_name %}
 <div class="card">
   <div class="card-content">
+    <div class="media">
+      <div class="media-content">
+        <p class="title is-4">
+          <a href="{% url 'catalogue:detail' c.id %}">{{ c.basedata.name }}</a>
+        </p>
+        <p class="subtitle is-6">
+          {{ c.source.manufacturer }}
+        </p>
+      </div>
+      <div class="media-right">
+        {% include "catalogue/includes/trl.html" with component=c only %}
+      </div>
+    </div>
     <div class="content">
-      {% include "catalogue/includes/trl.html" with component=c only %}
-      <p class="title is-3">
-        <a href="{% url 'catalogue:detail' c.id %}">{{ c.basedata.name }}</a>
-      </p>
-      <p class="subtitle is-5">
-        {{ c.source.manufacturer }}
-      </p>
       <p>{{ c.basedata.description }}</p>
       {% if c.basedata.task_set %}
         <p class="title is-6">{{ c.basedata.task_set | verbose_name_plural }}</p>
