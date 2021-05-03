@@ -150,6 +150,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
 GRAPPELLI_ADMIN_TITLE = "AI Solutions Catalogue"
+GRAPPELLI_SWITCH_USER = True
 
 INTERNAL_IPS = [
     "127.0.0.1",
