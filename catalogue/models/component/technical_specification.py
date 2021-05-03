@@ -46,7 +46,7 @@ class AIMethod(models.Model):
     )
 
     def __str__(self):
-        return ""
+        return self.name
 
 
 class DataAnalysisProcess(models.Model):
@@ -67,7 +67,7 @@ class DataAnalysisProcess(models.Model):
     # FIXME: "einzelne Schritte des Prozesses erklären"
 
     def __str__(self):
-        return ""
+        return self.get_name_display()
 
 
 class Licenses(models.Model):
@@ -92,4 +92,7 @@ class Licenses(models.Model):
     )
 
     def __str__(self):
-        return ""
+        if self.name:
+            return f"{self.get_type_display()} - {self.name}"
+        else:
+            return f"{self.get_type_display()}"

@@ -30,7 +30,7 @@ class BaseData(models.Model):
     )
 
     def __str__(self):
-        return ""
+        return f"{self.name} - TRL {self.trl}"
 
 
 class Task(models.Model):
@@ -50,4 +50,4 @@ class Task(models.Model):
     )
 
     def __str__(self):
-        return ""
+        return self.get_name_display()

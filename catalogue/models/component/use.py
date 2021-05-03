@@ -16,7 +16,7 @@ class Use(models.Model):
     )
 
     def __str__(self):
-        return ""
+        return self.scenarios
 
 
 class KPI(models.Model):
@@ -39,4 +39,4 @@ class KPI(models.Model):
     )
 
     def __str__(self):
-        return ""
+        return self.get_type_display()

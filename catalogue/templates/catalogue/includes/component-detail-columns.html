@@ -7,13 +7,7 @@
     {% if value|is_list %}
       <ul>
         {% for x in value %}
-          <li>
-            {% if x.get_name_display %}
-              {{ x.get_name_display }}
-            {% else %}
-              {{ x.name }}
-            {% endif %}
-          </li>
+          <li>{{ x }}</li>
         {% endfor %}
       </ul>
     {% else %}

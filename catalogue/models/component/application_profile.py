@@ -18,7 +18,7 @@ class ApplicationProfile(models.Model):
     product = models.TextField("Produkt", help_text="Hergestelltes Produkt")
 
     def __str__(self):
-        return ""
+        return self.product
 
 
 class CorporateDivision(models.Model):
@@ -37,7 +37,7 @@ class CorporateDivision(models.Model):
     )
 
     def __str__(self):
-        return ""
+        return self.get_name_display()
 
 
 class HierarchyLevel(models.Model):
@@ -56,7 +56,7 @@ class HierarchyLevel(models.Model):
     )
 
     def __str__(self):
-        return ""
+        return self.get_name_display()
 
 
 class Process(models.Model):
@@ -75,7 +75,7 @@ class Process(models.Model):
     )
 
     def __str__(self):
-        return ""
+        return self.get_name_display()
 
 
 class BranchProven(models.Model):
@@ -94,7 +94,7 @@ class BranchProven(models.Model):
     )
 
     def __str__(self):
-        return ""
+        return self.get_name_display()
 
 
 class BranchApplicable(models.Model):
@@ -113,4 +113,4 @@ class BranchApplicable(models.Model):
     )
 
     def __str__(self):
-        return ""
+        return self.get_name_display()
