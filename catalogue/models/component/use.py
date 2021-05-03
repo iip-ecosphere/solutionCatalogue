@@ -24,7 +24,7 @@ class KPI(models.Model):
         verbose_name = "KPI"
         verbose_name_plural = verbose_name
 
-    technical_specification = models.ForeignKey(Use, on_delete=models.CASCADE)
+    use = models.ForeignKey(Use, on_delete=models.CASCADE)
     # TODO: Hierarchy
     type = models.CharField(
         "Typ",
