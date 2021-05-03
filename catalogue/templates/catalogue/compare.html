@@ -1,0 +1,93 @@
+{% extends "catalogue/base.html" %}
+{% load bulma_tags %}
+{% load list_fields %}
+{% block title %}Vergleich{% endblock %}
+{% block body %}
+  <section class="section has-background-primary">
+    <div class="columns">
+      <div class="column is-half is-offset-one-quarter">
+        <div class="card">
+          <div class="card-content">
+            <form method="get">
+              {{ filter.form|bulma }}
+              <div class="has-text-centered">
+                <button class="button is-rounded is-link">Compare</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container is-max-widescreen is-align-content-center">
+      {% if filter.is_valid %}
+        <div class="level">
+          <div class="level-item table-container">
+            <table class="table is-striped is-hoverable has-text-centered">
+              <thead>
+              <tr>
+                <th></th>
+                {% for c in components %}
+                  <th><a href="{% url 'catalogue:detail' c.id %}">{{ c.basedata.name }}</a></th>
+                {% endfor %}
+              </tr>
+              </thead>
+              <tbody>
+              {% list_field_names components.0.basedata as fields %}
+              {% for name, field in fields %}
+                <tr>
+                  <th>{{ name }}</th>
+                  {% for c in components %}
+                    <td>{% get_field c.basedata field %}</td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+              {% list_field_names components.0.applicationprofile as fields %}
+              {% for name, field in fields %}
+                <tr>
+                  <th>{{ name }}</th>
+                  {% for c in components %}
+                    <td>{% get_field c.applicationprofile field %}</td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+              {% list_field_names components.0.use as fields %}
+              {% for name, field in fields %}
+                <tr>
+                  <th>{{ name }}</th>
+                  {% for c in components %}
+                    <td>{% get_field c.use field %}</td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+              {% list_field_names components.0.requirements as fields %}
+              {% for name, field in fields %}
+                <tr>
+                  <th>{{ name }}</th>
+                  {% for c in components %}
+                    <td>{% get_field c.requirements field %}</td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+              {% list_field_names components.0.technicalspecification as fields %}
+              {% for name, field in fields %}
+                <tr>
+                  <th>{{ name }}</th>
+                  {% for c in components %}
+                    <td>{% get_field c.technicalspecification field %}</td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      {% else %}
+        <div class="column has-text-centered">
+          <p class="mt-6">Keine Komponenten zum Vergleich ausgewählt.</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

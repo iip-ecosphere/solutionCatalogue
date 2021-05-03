@@ -1,7 +1,9 @@
 from django import forms
 from django.db.models import Q, Count
+
 import django_filters
 
+from . import COMPONENT_RELATED_FIELDS
 from .models import (
     Component,
     TRLChoices,
@@ -27,6 +29,10 @@ from .models import (
 
 
 class ComponentFilterBase(django_filters.FilterSet):
+    class Meta:
+        model = Component
+        fields = []
+
     q = django_filters.CharFilter(
         field_name=["basedata__name", "basedata__description"],
         label="Name / Beschreibung",
@@ -50,10 +56,6 @@ class ComponentFilterBase(django_filters.FilterSet):
         widget=forms.CheckboxSelectMultiple,
     )
 
-    class Meta:
-        model = Component
-        fields = []
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # self.add_count_to_facet("basedata__trl")
@@ -71,7 +73,7 @@ class ComponentFilterBase(django_filters.FilterSet):
 
     @property
     def qs(self):
-        return super().qs.filter(published=True)
+        return super().qs.filter(published=True).select_related(*COMPONENT_RELATED_FIELDS)
 
     @staticmethod
     def combined_filter(queryset, name, value):
@@ -128,3 +130,22 @@ class ComponentFilter(ComponentFilterBase):
         choices=LicenseChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
+
+
+class ComponentComparisonFilter(django_filters.FilterSet):
+    class Meta:
+        model = Component
+        fields = []
+
+    id = django_filters.MultipleChoiceFilter(
+        label="ID",
+        choices=zip(
+            Component.objects.values_list("id", flat=True),
+            Component.objects.values_list("id", flat=True)
+        ),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    @property
+    def qs(self):
+        return super().qs.filter(published=True).select_related(*COMPONENT_RELATED_FIELDS)

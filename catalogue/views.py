@@ -1,10 +1,15 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.views import generic
+
 from django_filters.views import FilterView
 
+from . import COMPONENT_RELATED_FIELDS
 from .forms import InquiryForm
-from .filters import ComponentFilter, ComponentFilterFrontPage
+from .filters import (
+    ComponentFilter,
+    ComponentFilterFrontPage,
+    ComponentComparisonFilter,
+)
 from .models import Component
 
 
@@ -22,7 +27,9 @@ class SearchView(FilterView):
 
 
 class ComponentDetail(generic.DetailView):
-    queryset = Component.objects.filter(published=True)
+    queryset = Component.objects.filter(published=True).select_related(
+        *COMPONENT_RELATED_FIELDS
+    )
     template_name = "catalogue/detail.html"
 
     def get_context_data(self, **kwargs):
@@ -59,3 +66,9 @@ class DetailView(generic.View):
     def post(self, request, *args, **kwargs):
         view = SendInquiry.as_view()
         return view(request, *args, **kwargs)
+
+
+class ComparisonView(FilterView):
+    template_name = "catalogue/compare.html"
+    context_object_name = "components"
+    filterset_class = ComponentComparisonFilter

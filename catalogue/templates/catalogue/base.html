@@ -30,6 +30,7 @@
       <div class="navbar-end">
         <a class="navbar-item" href="{% url 'catalogue:index' %}">Start</a>
         <a class="navbar-item" href="{% url 'catalogue:search' %}">Suche</a>
+        <a class="navbar-item" href="{% url 'catalogue:compare' %}">Vergleichen</a>
         {% if user.is_authenticated %}
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
