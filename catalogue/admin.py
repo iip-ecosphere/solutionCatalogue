@@ -172,6 +172,11 @@ class ComponentAdmin(nested.NestedModelAdmin):
     basedata_name.short_description = "Name"
     basedata_name.admin_order_field = "basedata__name"
 
+    def save_model(self, request, obj, form, change):
+        if not hasattr(obj, "created_by"):
+            obj.created_by = request.user
+        super().save_model(request, obj, form, change)
+
 
 @admin.register(Inquiry)
 class InquiryAdmin(admin.ModelAdmin):

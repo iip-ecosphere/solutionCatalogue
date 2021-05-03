@@ -1,5 +1,5 @@
-from crum import get_current_user
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Component(models.Model):
@@ -9,8 +9,7 @@ class Component(models.Model):
 
     created = models.DateTimeField("Erstellt", auto_now_add=True)
     created_by = models.ForeignKey(
-        "auth.User",
-        default=get_current_user,
+        User,
         on_delete=models.CASCADE,
         verbose_name="Erstellt von",
     )
