@@ -3,7 +3,7 @@ from django.db.models import Q, Count
 
 import django_filters
 
-from . import COMPONENT_RELATED_FIELDS, COMPONENT_PREFETCH_RELATED_FIELDS
+from . import COMPONENT_RELATED_FIELDS
 from .models import (
     Component,
     TRLChoices,
