@@ -42,93 +42,67 @@ def is_admin_or_mod(request):
     return is_admin(request) or is_mod(request)
 
 
-class SourceInline(nested.NestedStackedInline):
-    model = Source
+class TopNestedBase:
+    extra = 0
+    min_num = 1
     verbose_name = ""
     inline_classes = ("grp-collapse grp-open",)
     can_delete = False
 
 
-class TechnicalSpecificationInline(nested.NestedStackedInline):
-    class AIMethodInline(nested.NestedStackedInline):
+class SubNestedBase:
+    extra = 0
+    min_num = 1
+    inline_classes = ("grp-open",)
+
+
+class SourceInline(TopNestedBase, nested.NestedStackedInline):
+    model = Source
+
+
+class TechnicalSpecificationInline(TopNestedBase, nested.NestedStackedInline):
+    class AIMethodInline(SubNestedBase, nested.NestedStackedInline):
         model = AIMethod
-        extra = 0
-        min_num = 1
-        inline_classes = ("grp-open",)
 
-    class DAProcessInline(nested.NestedStackedInline):
+    class DAProcessInline(SubNestedBase, nested.NestedStackedInline):
         model = DataAnalysisProcess
-        extra = 0
-        min_num = 1
-        inline_classes = ("grp-open",)
 
-    class LicensesInline(nested.NestedStackedInline):
+    class LicensesInline(SubNestedBase, nested.NestedStackedInline):
         model = Licenses
-        extra = 0
-        min_num = 1
-        inline_classes = ("grp-open",)
 
     model = TechnicalSpecification
-    verbose_name = ""
     inlines = [LicensesInline, AIMethodInline, DAProcessInline]
-    inline_classes = ("grp-collapse grp-open",)
-    can_delete = False
 
 
-class RequirementsInline(nested.NestedStackedInline):
+class RequirementsInline(TopNestedBase, nested.NestedStackedInline):
     model = Requirements
-    verbose_name = ""
-    inline_classes = ("grp-collapse grp-open",)
-    can_delete = False
 
 
-class UseInline(nested.NestedStackedInline):
-    class KPIInline(nested.NestedStackedInline):
+class UseInline(TopNestedBase, nested.NestedStackedInline):
+    class KPIInline(SubNestedBase, nested.NestedStackedInline):
         model = KPI
-        extra = 0
-        min_num = 1
-        inline_classes = ("grp-open",)
 
     model = Use
-    verbose_name = ""
     inlines = [KPIInline]
-    inline_classes = ("grp-collapse grp-open",)
-    can_delete = False
 
 
-class ApplicationProfileInline(nested.NestedStackedInline):
-    class BranchProvenInline(nested.NestedStackedInline):
+class ApplicationProfileInline(TopNestedBase, nested.NestedStackedInline):
+    class BranchProvenInline(SubNestedBase, nested.NestedStackedInline):
         model = BranchProven
-        extra = 0
-        min_num = 1
-        inline_classes = ("grp-open",)
 
-    class BranchApplicableInline(nested.NestedStackedInline):
+    class BranchApplicableInline(SubNestedBase, nested.NestedStackedInline):
         model = BranchApplicable
-        extra = 0
-        min_num = 1
-        inline_classes = ("grp-open",)
 
-    class CorporateDivisionInline(nested.NestedStackedInline):
+    class CorporateDivisionInline(SubNestedBase, nested.NestedStackedInline):
         model = CorporateDivision
-        extra = 0
-        min_num = 1
-        inline_classes = ("grp-open",)
 
-    class HierarchyLevelInline(nested.NestedStackedInline):
+    class HierarchyLevelInline(SubNestedBase, nested.NestedStackedInline):
         model = HierarchyLevel
-        extra = 0
-        min_num = 1
-        inline_classes = ("grp-open",)
 
-    class ProcessInline(nested.NestedStackedInline):
+    class ProcessInline(SubNestedBase, nested.NestedStackedInline):
         model = Process
-        extra = 0
-        min_num = 1
-        inline_classes = ("grp-open",)
 
     model = ApplicationProfile
-    verbose_name = ""
     inlines = [
         BranchProvenInline,
         BranchApplicableInline,
@@ -136,24 +110,14 @@ class ApplicationProfileInline(nested.NestedStackedInline):
         HierarchyLevelInline,
         ProcessInline,
     ]
-    inline_classes = ("grp-collapse grp-open",)
-    can_delete = False
 
 
-class BaseDataInline(nested.NestedStackedInline):
-    class TaskInline(nested.NestedStackedInline):
+class BaseDataInline(TopNestedBase, nested.NestedStackedInline):
+    class TaskInline(SubNestedBase, nested.NestedStackedInline):
         model = Task
-        extra = 0
-        min_num = 1
-        inline_classes = ("grp-open",)
 
     model = BaseData
-    extra = 0
-    min_num = 1
-    verbose_name = ""
     inlines = [TaskInline]
-    inline_classes = ("grp-collapse grp-open",)
-    can_delete = False
 
 
 @admin.register(Component)
