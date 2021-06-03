@@ -428,7 +428,7 @@
     "model": "catalogue.kpi",
     "pk": 1,
     "fields": {
-      "technical_specification": 2,
+      "use": 2,
       "type": "Q4"
     }
   },
@@ -436,7 +436,7 @@
     "model": "catalogue.kpi",
     "pk": 2,
     "fields": {
-      "technical_specification": 3,
+      "use": 3,
       "type": "E7"
     }
   },
