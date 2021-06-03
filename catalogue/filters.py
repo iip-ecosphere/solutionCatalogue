@@ -75,9 +75,9 @@ class ComponentFilterBase(django_filters.FilterSet):
     def qs(self):
         return (
             super()
-            .qs.filter(published=True)
-            .select_related(*COMPONENT_RELATED_FIELDS)
-            .prefetch_related(
+                .qs.filter(published=True)
+                .select_related(*COMPONENT_RELATED_FIELDS)
+                .prefetch_related(
                 "basedata__task_set",
                 "applicationprofile__process_set",
             )
@@ -145,12 +145,9 @@ class ComponentComparisonFilter(django_filters.FilterSet):
         model = Component
         fields = []
 
-    id = django_filters.MultipleChoiceFilter(
-        label="ID",
-        choices=zip(
-            Component.objects.values_list("id", flat=True),
-            Component.objects.values_list("id", flat=True),
-        ),
+    id = django_filters.ModelMultipleChoiceFilter(
+        to_field_name="id",
+        queryset=Component.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
 
