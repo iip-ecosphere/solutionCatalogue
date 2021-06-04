@@ -34,23 +34,23 @@ class ComponentFilterBase(django_filters.FilterSet):
         fields = []
 
     q = django_filters.CharFilter(
-        field_name=["basedata__name", "basedata__description"],
+        field_name=["name", "description"],
         label="Name / Beschreibung",
         method="combined_filter",
     )
     # basedata__name = django_filters.CharFilter(lookup_expr="icontains", label="Name")
     # basedata__description = django_filters.CharFilter(lookup_expr="icontains", label="Beschreibung")
-    basedata__task__name = django_filters.MultipleChoiceFilter(
+    task__name = django_filters.MultipleChoiceFilter(
         label=Task._meta.verbose_name,
         choices=TaskChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
-    applicationprofile__branchproven__name = django_filters.MultipleChoiceFilter(
+    branchproven__name = django_filters.MultipleChoiceFilter(
         label=BranchProven._meta.verbose_name,
         choices=BranchChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
-    applicationprofile__branchapplicable__name = django_filters.MultipleChoiceFilter(
+    branchapplicable__name = django_filters.MultipleChoiceFilter(
         label=BranchApplicable._meta.verbose_name,
         choices=BranchChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
@@ -76,10 +76,9 @@ class ComponentFilterBase(django_filters.FilterSet):
         return (
             super()
                 .qs.filter(published=True)
-                .select_related(*COMPONENT_RELATED_FIELDS)
                 .prefetch_related(
-                "basedata__task_set",
-                "applicationprofile__process_set",
+                "task_set",
+                "process_set",
             )
         )
 
@@ -99,41 +98,41 @@ class ComponentFilterFrontPage(ComponentFilterBase):
 
 
 class ComponentFilter(ComponentFilterBase):
-    basedata__trl = django_filters.MultipleChoiceFilter(
+    trl = django_filters.MultipleChoiceFilter(
         label=BaseData._meta.get_field("trl").verbose_name,
         choices=TRLChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
-    applicationprofile__process__name = django_filters.MultipleChoiceFilter(
+    process__name = django_filters.MultipleChoiceFilter(
         label=Process._meta.verbose_name,
         choices=ProcessChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
-    applicationprofile__hierarchylevel__name = django_filters.MultipleChoiceFilter(
+    hierarchylevel__name = django_filters.MultipleChoiceFilter(
         label=HierarchyLevel._meta.verbose_name,
         choices=HierarchyLevelChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
-    applicationprofile__corporatedivision__name = django_filters.MultipleChoiceFilter(
+    name = django_filters.MultipleChoiceFilter(
         label=CorporateDivision._meta.verbose_name,
         choices=CorporateDivisionChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
-    technicalspecification__dataanalysisprocess__name = (
+    dataanalysisprocess__name = (
         django_filters.MultipleChoiceFilter(
             label=DataAnalysisProcess._meta.verbose_name,
             choices=DAProcessChoices.choices[1:],
             widget=forms.CheckboxSelectMultiple,
         )
     )
-    technicalspecification__realtime_processing = django_filters.MultipleChoiceFilter(
+    realtime_processing = django_filters.MultipleChoiceFilter(
         label=TechnicalSpecification._meta.get_field(
             "realtime_processing"
         ).verbose_name,
         choices=RealtimeChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
-    technicalspecification__licenses__name = django_filters.MultipleChoiceFilter(
+    licenses__name = django_filters.MultipleChoiceFilter(
         label=Licenses._meta.verbose_name,
         choices=LicenseChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
@@ -156,17 +155,17 @@ class ComponentComparisonFilter(django_filters.FilterSet):
         return (
             super()
             .qs.filter(published=True)
-            .select_related(*COMPONENT_RELATED_FIELDS)
-            .prefetch_related(
-                "basedata__task_set",
-                "applicationprofile__corporatedivision_set",
-                "applicationprofile__hierarchylevel_set",
-                "applicationprofile__process_set",
-                "applicationprofile__branchproven_set",
-                "applicationprofile__branchapplicable_set",
-                "use__kpi_set",
-                "technicalspecification__aimethod_set",
-                "technicalspecification__dataanalysisprocess_set",
-                "technicalspecification__licenses_set",
-            )
+            #.select_related(*COMPONENT_RELATED_FIELDS)
+            # .prefetch_related(
+            #     "basedata__task_set",
+            #     "applicationprofile__corporatedivision_set",
+            #     "applicationprofile__hierarchylevel_set",
+            #     "applicationprofile__process_set",
+            #     "applicationprofile__branchproven_set",
+            #     "applicationprofile__branchapplicable_set",
+            #     "use__kpi_set",
+            #     "technicalspecification__aimethod_set",
+            #     "technicalspecification__dataanalysisprocess_set",
+            #     "technicalspecification__licenses_set",
+            # )
         )

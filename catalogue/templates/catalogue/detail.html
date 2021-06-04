@@ -2,17 +2,17 @@
 {% load verbose_name %}
 {% load list_fields %}
 {% load bulma_tags %}
-{% block title %}Komponente - {{ component.basedata.name }}{% endblock %}
+{% block title %}Komponente - {{ component.name }}{% endblock %}
 {% block body %}
   <section class="section has-background-primary has-text-white">
     <div class="container is-max-widescreen">
       <div class="media">
         <div class="media-content">
           <h1 class="title is-3 has-text-white">
-            {{ component.basedata.name }}
+            {{ component.name }}
           </h1>
           <h2 class="subtitle is-5 has-text-white">
-            {{ component.source.manufacturer }}
+            {{ component.manufacturer }}
           </h2>
         </div>
         <div class="media-right">
@@ -20,13 +20,13 @@
         </div>
       </div>
       <div class="content mt-4">
-        <p>{{ component.basedata.description }}</p>
+        <p>{{ component.description }}</p>
       </div>
       <a class="button is-rounded is-small is-pulled-right is-primary-light has-text-primary has-text-weight-bold"
          href="#contact">
         Anbieter kontaktieren
       </a>
-      {% for t in component.basedata.task_set.all %}
+      {% for t in component.task_set.all %}
         <a class="tag has-background-info is-rounded has-text-primary-dark has-text-weight-bold"
            href="{% url 'catalogue:search' %}?basedata__task__name={{ t.name }}">{{ t.get_name_display }}</a>
       {% endfor %}
@@ -50,42 +50,16 @@
   </section>
   <section id="tab1" class="section tab">
     <div class="container is-max-widescreen">
-      {% if component.applicationprofile %}
-        <h3 class="title is-4">{{ component.applicationprofile | verbose_name }}</h3>
-        {% list_fields component.applicationprofile as fields %}
-        {% for field, val in fields %}
-          {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
-        {% endfor %}
-        <hr>
-      {% endif %}
-      {% if component.use %}
-        <h3 class="title is-4">{{ component.use | verbose_name }}</h3>
-        {% list_fields component.use as fields %}
-        {% for field, val in fields %}
-          {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
-        {% endfor %}
-        <hr>
-      {% endif %}
+      <h3 class="title is-4">{{ component | verbose_name }}</h3>
+      {% list_fields component as fields %}
+      {% for field, val in fields %}
+        {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
+      {% endfor %}
     </div>
   </section>
   <section id="tab2" class="section tab" style="display: none">
     <div class="container is-max-widescreen">
-      {% if component.requirements %}
-        <h3 class="title is-4">{{ component.requirements | verbose_name }}</h3>
-        {% list_fields component.requirements as fields %}
-        {% for field, val in fields %}
-          {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
-        {% endfor %}
-        <hr>
-      {% endif %}
-      {% if component.technicalspecification %}
-        <h3 class="title is-4">{{ component.technicalspecification | verbose_name }}</h3>
-        {% list_fields component.technicalspecification as fields %}
-        {% for field, val in fields %}
-          {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
-        {% endfor %}
-        <hr>
-      {% endif %}
+
     </div>
   </section>
   <section id="contact" class="section bg-bubble-gradient">

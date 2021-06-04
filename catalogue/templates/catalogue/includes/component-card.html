@@ -4,10 +4,10 @@
     <div class="media">
       <div class="media-content">
         <p class="title is-4">
-          <a href="{% url 'catalogue:detail' c.id %}">{{ c.basedata.name }}</a>
+          <a href="{% url 'catalogue:detail' c.id %}">{{ c.name }}</a>
         </p>
         <p class="subtitle is-6">
-          {{ c.source.manufacturer }}
+          {{ c.manufacturer }}
         </p>
       </div>
       <div class="media-right">
@@ -15,19 +15,19 @@
       </div>
     </div>
     <div class="content">
-      <p>{{ c.basedata.description }}</p>
-      {% if c.basedata.task_set %}
-        <p class="title is-6">{{ c.basedata.task_set | verbose_name_plural }}</p>
+      <p>{{ c.description }}</p>
+      {% if c.task_set %}
+        <p class="title is-6">{{ c.task_set | verbose_name_plural }}</p>
         <ul>
-          {% for t in c.basedata.task_set.all %}
+          {% for t in c.task_set.all %}
             <li>{{ t.get_name_display }}</li>
           {% endfor %}
         </ul>
       {% endif %}
-      {% if c.applicationprofile.process_set %}
-        <p class="title is-6">{{ c.applicationprofile.process_set | verbose_name_plural }}</p>
+      {% if c.process_set %}
+        <p class="title is-6">{{ c.process_set | verbose_name_plural }}</p>
         <ul>
-          {% for t in c.applicationprofile.process_set.all %}
+          {% for t in c.process_set.all %}
             <li>{{ t.get_name_display }}</li>
           {% endfor %}
         </ul>

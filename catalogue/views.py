@@ -3,7 +3,6 @@ from django.views import generic
 
 from django_filters.views import FilterView
 
-from . import COMPONENT_RELATED_FIELDS
 from .forms import InquiryForm
 from .filters import (
     ComponentFilter,
@@ -27,14 +26,13 @@ class SearchView(FilterView):
 
 
 class ComponentDetail(generic.DetailView):
-    queryset = Component.objects.filter(published=True).select_related(
-        *COMPONENT_RELATED_FIELDS
-    )
+    queryset = Component.objects.filter(published=True)
     template_name = "catalogue/detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = InquiryForm()
+        # context["base"] = BaseData
         return context
 
 
