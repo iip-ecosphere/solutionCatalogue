@@ -1,4 +1,4 @@
-from typing import Generator, Union, List
+from typing import Union, List, Iterable, Tuple
 
 from django import template
 from django.db import models
@@ -21,7 +21,7 @@ def get_related_fields(m: models.Model) -> List[models.ForeignObjectRel]:
 @register.simple_tag
 def list_fields(
     m: models.Model,
-) -> Generator[Union[str, List[str], QuerySet], None, None]:
+) -> Iterable[Union[str, List[str], QuerySet]]:
     """Extract all field names and values for a model."""
     for field in get_fields(m):
         if field.choices:
@@ -37,7 +37,7 @@ def list_fields(
 
 
 @register.simple_tag
-def list_field_names(m: models.Model):
+def list_field_names(m: models.Model) -> Iterable[Tuple[str, str]]:
     """Return field names of a model"""
     for field in get_fields(m):
         yield field.verbose_name, field.name
