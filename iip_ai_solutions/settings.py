@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "insecurekey")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("SECRET_KEY") is None
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = DEBUG
