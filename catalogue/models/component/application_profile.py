@@ -1,6 +1,5 @@
 from django.db import models
 
-from . import Component
 from ..choices import (
     CorporateDivisionChoices,
     HierarchyLevelChoices,
@@ -8,17 +7,7 @@ from ..choices import (
     BranchChoices,
 )
 
-
-class ApplicationProfile(models.Model):
-    class Meta:
-        verbose_name = "Anwendungsprofil"
-        verbose_name_plural = verbose_name
-
-    component = models.OneToOneField(Component, on_delete=models.CASCADE)
-    product = models.TextField("Produkt", help_text="Hergestelltes Produkt")
-
-    def __str__(self):
-        return self.product
+from . import Component
 
 
 class CorporateDivision(models.Model):
@@ -26,8 +15,8 @@ class CorporateDivision(models.Model):
         verbose_name = "Unternehmensbereich"
         verbose_name_plural = verbose_name
 
-    application_profile = models.ForeignKey(
-        ApplicationProfile, on_delete=models.CASCADE
+    component = models.ForeignKey(
+        Component, on_delete=models.CASCADE
     )
     name = models.CharField(
         help_text="Bereich des produzierenden Unternehmens, für den die Komponenten entwickelt wurde",
@@ -45,8 +34,8 @@ class HierarchyLevel(models.Model):
         verbose_name = "Hierarchie-Ebene"
         verbose_name_plural = verbose_name
 
-    application_profile = models.ForeignKey(
-        ApplicationProfile, on_delete=models.CASCADE
+    component = models.ForeignKey(
+        Component, on_delete=models.CASCADE
     )
     name = models.CharField(
         choices=HierarchyLevelChoices.choices,
@@ -64,8 +53,8 @@ class Process(models.Model):
         verbose_name = "Prozess"
         verbose_name_plural = verbose_name
 
-    application_profile = models.ForeignKey(
-        ApplicationProfile, on_delete=models.CASCADE
+    component = models.ForeignKey(
+        Component, on_delete=models.CASCADE
     )
     name = models.CharField(
         choices=ProcessChoices.choices,
@@ -83,8 +72,8 @@ class BranchProven(models.Model):
         verbose_name = "Branche (erprobt)"
         verbose_name_plural = verbose_name
 
-    application_profile = models.ForeignKey(
-        ApplicationProfile, on_delete=models.CASCADE
+    component = models.ForeignKey(
+        Component, on_delete=models.CASCADE
     )
     name = models.CharField(
         help_text="Branche(n) für die die Komponente bereits erfolgreich erprobt wurde; belegte Anwendung",
@@ -102,8 +91,8 @@ class BranchApplicable(models.Model):
         verbose_name = "Branche (anwendbar)"
         verbose_name_plural = verbose_name
 
-    application_profile = models.ForeignKey(
-        ApplicationProfile, on_delete=models.CASCADE
+    component = models.ForeignKey(
+        Component, on_delete=models.CASCADE
     )
     name = models.CharField(
         help_text="Branche, in denen die Komponenten anwendbar ist",
