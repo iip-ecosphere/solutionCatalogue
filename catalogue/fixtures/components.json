@@ -3,9 +3,23 @@
     "model": "catalogue.component",
     "pk": 1,
     "fields": {
+      "name": "ACME Rectifier",
+      "trl": 1,
+      "description": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "product": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "scenarios": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "manufacturer": "ACME Corp.",
+      "contact": "",
+      "additional_info": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "realtime_processing": 0,
+      "data_formats": "JPG, PNG",
+      "protocols": "HTTP",
+      "it_environment": "NGINX",
+      "hardware_requirements": "Nvidia GPU",
+      "devices": "3D Printer",
       "created": "2020-10-28T11:42:29.546Z",
       "created_by": 1,
-      "lastmodified_at": "2020-12-10T12:24:13.873Z",
+      "lastmodified_at": "2021-06-04T13:51:56.472Z",
       "published": true
     }
   },
@@ -13,9 +27,23 @@
     "model": "catalogue.component",
     "pk": 2,
     "fields": {
+      "name": "Bitcoin Materializer",
+      "trl": 4,
+      "description": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "product": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "scenarios": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "manufacturer": "ACME Corp.",
+      "contact": "",
+      "additional_info": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "realtime_processing": 2,
+      "data_formats": "JPG",
+      "protocols": "LDAP",
+      "it_environment": "UNIX",
+      "hardware_requirements": "Camera",
+      "devices": "CNC Fräse",
       "created": "2020-12-08T21:39:53.747Z",
       "created_by": 1,
-      "lastmodified_at": "2020-12-08T21:39:53.747Z",
+      "lastmodified_at": "2021-06-04T13:51:56.482Z",
       "published": true
     }
   },
@@ -23,41 +51,55 @@
     "model": "catalogue.component",
     "pk": 3,
     "fields": {
+      "name": "Cyber Factory Augmentation",
+      "trl": 9,
+      "description": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "product": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "scenarios": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "manufacturer": "ACME Corp.",
+      "contact": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "additional_info": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
+      "realtime_processing": 1,
+      "data_formats": "TXT",
+      "protocols": "REST API",
+      "it_environment": "Arduino",
+      "hardware_requirements": "ESP8266",
+      "devices": "Prusa Mk3",
       "created": "2020-12-10T12:27:30.947Z",
       "created_by": 1,
-      "lastmodified_at": "2020-12-10T12:27:40.626Z",
+      "lastmodified_at": "2021-06-04T13:51:56.494Z",
       "published": true
     }
   },
   {
-    "model": "catalogue.applicationprofile",
-    "pk": 1,
+    "model": "catalogue.component",
+    "pk": 4,
     "fields": {
-      "component": 1,
-      "product": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
-    }
-  },
-  {
-    "model": "catalogue.applicationprofile",
-    "pk": 2,
-    "fields": {
-      "component": 2,
-      "product": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
-    }
-  },
-  {
-    "model": "catalogue.applicationprofile",
-    "pk": 3,
-    "fields": {
-      "component": 3,
-      "product": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
+      "name": "dsadsa",
+      "trl": 3,
+      "description": "dsad",
+      "product": "dsafg",
+      "scenarios": "dsfg",
+      "manufacturer": "gddgfdgf",
+      "contact": "",
+      "additional_info": "",
+      "realtime_processing": 1,
+      "data_formats": "",
+      "protocols": "das",
+      "it_environment": "das",
+      "hardware_requirements": "gfd",
+      "devices": "fd",
+      "created": "2021-05-03T23:52:39.462Z",
+      "created_by": 1,
+      "lastmodified_at": "2021-06-04T13:51:56.505Z",
+      "published": false
     }
   },
   {
     "model": "catalogue.corporatedivision",
     "pk": 1,
     "fields": {
-      "application_profile": 1,
+      "component": 1,
       "name": "DD"
     }
   },
@@ -65,7 +107,7 @@
     "model": "catalogue.corporatedivision",
     "pk": 2,
     "fields": {
-      "application_profile": 2,
+      "component": 2,
       "name": "MA"
     }
   },
@@ -73,7 +115,7 @@
     "model": "catalogue.corporatedivision",
     "pk": 3,
     "fields": {
-      "application_profile": 3,
+      "component": 3,
       "name": "PA"
     }
   },
@@ -81,7 +123,7 @@
     "model": "catalogue.hierarchylevel",
     "pk": 1,
     "fields": {
-      "application_profile": 1,
+      "component": 1,
       "name": "CD"
     }
   },
@@ -89,7 +131,7 @@
     "model": "catalogue.hierarchylevel",
     "pk": 2,
     "fields": {
-      "application_profile": 2,
+      "component": 2,
       "name": "ST"
     }
   },
@@ -97,7 +139,7 @@
     "model": "catalogue.hierarchylevel",
     "pk": 3,
     "fields": {
-      "application_profile": 3,
+      "component": 3,
       "name": "IP"
     }
   },
@@ -105,7 +147,7 @@
     "model": "catalogue.process",
     "pk": 1,
     "fields": {
-      "application_profile": 1,
+      "component": 1,
       "name": "PM"
     }
   },
@@ -113,7 +155,7 @@
     "model": "catalogue.process",
     "pk": 2,
     "fields": {
-      "application_profile": 2,
+      "component": 2,
       "name": "PMSP"
     }
   },
@@ -121,7 +163,7 @@
     "model": "catalogue.process",
     "pk": 3,
     "fields": {
-      "application_profile": 3,
+      "component": 3,
       "name": "PP"
     }
   },
@@ -129,7 +171,7 @@
     "model": "catalogue.branchproven",
     "pk": 1,
     "fields": {
-      "application_profile": 1,
+      "component": 1,
       "name": "C24"
     }
   },
@@ -137,7 +179,7 @@
     "model": "catalogue.branchproven",
     "pk": 2,
     "fields": {
-      "application_profile": 2,
+      "component": 2,
       "name": "C12"
     }
   },
@@ -145,7 +187,7 @@
     "model": "catalogue.branchapplicable",
     "pk": 1,
     "fields": {
-      "application_profile": 1,
+      "component": 1,
       "name": "C21"
     }
   },
@@ -153,7 +195,7 @@
     "model": "catalogue.branchapplicable",
     "pk": 2,
     "fields": {
-      "application_profile": 2,
+      "component": 2,
       "name": "C24"
     }
   },
@@ -161,7 +203,7 @@
     "model": "catalogue.branchapplicable",
     "pk": 3,
     "fields": {
-      "application_profile": 3,
+      "component": 3,
       "name": "C27"
     }
   },
@@ -169,45 +211,15 @@
     "model": "catalogue.branchapplicable",
     "pk": 4,
     "fields": {
-      "application_profile": 3,
-      "name": "C28"
-    }
-  },
-  {
-    "model": "catalogue.basedata",
-    "pk": 1,
-    "fields": {
-      "component": 1,
-      "name": "ACME Rectifier",
-      "trl": 1,
-      "description": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
-    }
-  },
-  {
-    "model": "catalogue.basedata",
-    "pk": 2,
-    "fields": {
-      "component": 2,
-      "name": "Bitcoin Materializer",
-      "trl": 4,
-      "description": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
-    }
-  },
-  {
-    "model": "catalogue.basedata",
-    "pk": 3,
-    "fields": {
       "component": 3,
-      "name": "Cyber Factory Augmentation",
-      "trl": 9,
-      "description": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
+      "name": "C28"
     }
   },
   {
     "model": "catalogue.task",
     "pk": 1,
     "fields": {
-      "base_data": 2,
+      "component": 2,
       "name": "DM"
     }
   },
@@ -215,7 +227,7 @@
     "model": "catalogue.task",
     "pk": 2,
     "fields": {
-      "base_data": 1,
+      "component": 1,
       "name": "DA"
     }
   },
@@ -223,7 +235,7 @@
     "model": "catalogue.task",
     "pk": 3,
     "fields": {
-      "base_data": 1,
+      "component": 1,
       "name": "KM"
     }
   },
@@ -231,105 +243,15 @@
     "model": "catalogue.task",
     "pk": 4,
     "fields": {
-      "base_data": 3,
+      "component": 3,
       "name": "RAS"
     }
   },
   {
-    "model": "catalogue.requirements",
-    "pk": 1,
-    "fields": {
-      "component": 1,
-      "protocols": "HTTP",
-      "it_environment": "NGINX",
-      "hardware_requirements": "Nvidia GPU",
-      "devices": "3D Printer"
-    }
-  },
-  {
-    "model": "catalogue.requirements",
-    "pk": 2,
-    "fields": {
-      "component": 2,
-      "protocols": "LDAP",
-      "it_environment": "UNIX",
-      "hardware_requirements": "Camera",
-      "devices": "CNC Fräse"
-    }
-  },
-  {
-    "model": "catalogue.requirements",
-    "pk": 3,
-    "fields": {
-      "component": 3,
-      "protocols": "REST API",
-      "it_environment": "Arduino",
-      "hardware_requirements": "ESP8266",
-      "devices": "Prusa Mk3"
-    }
-  },
-  {
-    "model": "catalogue.source",
-    "pk": 1,
-    "fields": {
-      "component": 1,
-      "manufacturer": "ACME Corp.",
-      "contact": "",
-      "additional_info": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
-    }
-  },
-  {
-    "model": "catalogue.source",
-    "pk": 2,
-    "fields": {
-      "component": 2,
-      "manufacturer": "ACME Corp.",
-      "contact": "",
-      "additional_info": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
-    }
-  },
-  {
-    "model": "catalogue.source",
-    "pk": 3,
-    "fields": {
-      "component": 3,
-      "manufacturer": "ACME Corp.",
-      "contact": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.",
-      "additional_info": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
-    }
-  },
-  {
-    "model": "catalogue.technicalspecification",
-    "pk": 1,
-    "fields": {
-      "component": 1,
-      "realtime_processing": 0,
-      "data_formats": ""
-    }
-  },
-  {
-    "model": "catalogue.technicalspecification",
-    "pk": 2,
-    "fields": {
-      "component": 2,
-      "realtime_processing": 2,
-      "data_formats": "JPG"
-    }
-  },
-  {
-    "model": "catalogue.technicalspecification",
-    "pk": 3,
-    "fields": {
-      "component": 3,
-      "realtime_processing": 1,
-      "data_formats": "TXT"
-    }
-  },
-  {
     "model": "catalogue.aimethod",
     "pk": 1,
     "fields": {
-      "technical_specification": 1,
+      "component": 1,
       "name": "Deep Learning"
     }
   },
@@ -337,7 +259,7 @@
     "model": "catalogue.aimethod",
     "pk": 2,
     "fields": {
-      "technical_specification": 2,
+      "component": 2,
       "name": "Deep Learning"
     }
   },
@@ -345,7 +267,7 @@
     "model": "catalogue.aimethod",
     "pk": 3,
     "fields": {
-      "technical_specification": 3,
+      "component": 3,
       "name": "Deep Learning"
     }
   },
@@ -353,7 +275,7 @@
     "model": "catalogue.dataanalysisprocess",
     "pk": 1,
     "fields": {
-      "technical_specification": 1,
+      "component": 1,
       "name": "DA"
     }
   },
@@ -361,7 +283,7 @@
     "model": "catalogue.dataanalysisprocess",
     "pk": 2,
     "fields": {
-      "technical_specification": 2,
+      "component": 2,
       "name": "MS"
     }
   },
@@ -369,7 +291,7 @@
     "model": "catalogue.dataanalysisprocess",
     "pk": 3,
     "fields": {
-      "technical_specification": 3,
+      "component": 3,
       "name": "PC"
     }
   },
@@ -377,7 +299,7 @@
     "model": "catalogue.licenses",
     "pk": 1,
     "fields": {
-      "technical_specification": 1,
+      "component": 1,
       "type": "OSCL",
       "name": "GPL"
     }
@@ -386,7 +308,7 @@
     "model": "catalogue.licenses",
     "pk": 2,
     "fields": {
-      "technical_specification": 2,
+      "component": 2,
       "type": "PRO",
       "name": ""
     }
@@ -395,40 +317,16 @@
     "model": "catalogue.licenses",
     "pk": 3,
     "fields": {
-      "technical_specification": 3,
+      "component": 3,
       "type": "OSCL",
       "name": "MIT"
-    }
-  },
-  {
-    "model": "catalogue.use",
-    "pk": 1,
-    "fields": {
-      "component": 1,
-      "scenarios": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
-    }
-  },
-  {
-    "model": "catalogue.use",
-    "pk": 2,
-    "fields": {
-      "component": 2,
-      "scenarios": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
-    }
-  },
-  {
-    "model": "catalogue.use",
-    "pk": 3,
-    "fields": {
-      "component": 3,
-      "scenarios": "Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab.Quia nemo qui consequatur nihil sunt rerum nemo. Et delectus suscipit inventore vel pariatur ullam. Ex nulla quia voluptas et. Velit nihil quod quia.\r\n\r\nAliquid omnis est omnis explicabo nam et dolores. Vitae amet voluptatibus et perspiciatis. Vel dolore quod voluptas voluptas quis earum laudantium expedita. Asperiores animi occaecati est ut nihil fugit. Sunt qui aut autem dolor. Dolorem temporibus vero natus illo inventore provident ab."
     }
   },
   {
     "model": "catalogue.kpi",
     "pk": 1,
     "fields": {
-      "use": 2,
+      "component": 2,
       "type": "Q4"
     }
   },
@@ -436,8 +334,16 @@
     "model": "catalogue.kpi",
     "pk": 2,
     "fields": {
-      "use": 3,
+      "component": 3,
       "type": "E7"
+    }
+  },
+  {
+    "model": "catalogue.kpi",
+    "pk": 3,
+    "fields": {
+      "component": 1,
+      "type": "Q7"
     }
   },
   {
