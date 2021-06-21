@@ -25,8 +25,7 @@ def list_fields(
     """Extract all field names and values for a model."""
     for field in get_fields(m):
         if field.choices:
-            choice = [c for i, c in field.choices if i ==
-                      field.value_from_object(m)][0]
+            choice = [c for i, c in field.choices if i == field.value_from_object(m)][0]
             yield field.verbose_name, choice
         else:
             yield field.verbose_name, field.value_to_string(m)
@@ -48,29 +47,23 @@ def list_field_names(m: models.Model) -> Iterable[Tuple[str, str]]:
 
 
 @register.simple_tag
-def get_field(m: models.Model, field: str) -> str:
+def get_field(m: models.Model, field_name: str) -> str:
     """Return value of a field in a model"""
-    related_fields = set(f.name for f in get_related_fields(m))
-    if field in related_fields:
-        return ", ".join(str(x) for x in getattr(m, field + "_set").all())
-    elif field := m._meta.get_field(field):
-        if field.choices:
-            choice = [c for i, c in field.choices if i ==
-                      field.value_from_object(m)][0]
-            return choice
-        else:
-            return field.value_to_string(m)
+    field = m._meta.get_field(field_name)
+    if field.choices:
+        choice = [c for i, c in field.choices if i == field.value_from_object(m)][0]
+        return choice
+    else:
+        return field.value_to_string(m)
 
 
 @register.simple_tag
-def get_related_field_value(m: models.Model, field: str):
+def get_related_field(m: models.Model, field: str) -> QuerySet:
+    """Return related objects for a field in a model"""
     return getattr(m, field + "_set").all()
 
 
 @register.simple_tag
-def check_category_empty(m: models, field_names: List) -> bool:
-    for name in field_names:
-        field = m._meta.get_field(name)
-        if field is not None:
-            return False
-    return True
+def check_category_empty(m: models.Model, field_names: List[str]) -> bool:
+    """Check if all given fields are empty"""
+    return not any(m._meta.get_field(name) for name in field_names)

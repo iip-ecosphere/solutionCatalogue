@@ -59,26 +59,25 @@
           {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
         {% endfor %}
 
-        {% get_related_field_value component "corporatedivision" as val %}
+        {% get_related_field component "corporatedivision" as val %}
         {% verbose_name component.corporatedivision_set as title %}
         {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
 
-        {% get_related_field_value component "hierarchylevel" as val %}
+        {% get_related_field component "hierarchylevel" as val %}
         {% verbose_name component.hierarchylevel_set as title %}
         {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
 
-        {% get_related_field_value component "process" as val %}
+        {% get_related_field component "process" as val %}
         {% verbose_name component.process_set as title %}
         {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
 
-        {% get_related_field_value component "branchproven" as val %}
+        {% get_related_field component "branchproven" as val %}
         {% verbose_name component.branchproven_set as title %}
         {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
 
-        {% get_related_field_value component "branchapplicable" as val %}
+        {% get_related_field component "branchapplicable" as val %}
         {% verbose_name component.branchapplicable_set as title %}
         {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-
         <hr>
       {% endif %}
       {% check_category_empty component use_fields as is_empty %}
@@ -90,7 +89,7 @@
           {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
         {% endfor %}
 
-        {% get_related_field_value component "kpi" as val %}
+        {% get_related_field component "kpi" as val %}
         {% verbose_name component.kpi_set as title %}
         {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
         <hr>
@@ -118,15 +117,15 @@
           {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
         {% endfor %}
 
-        {% get_related_field_value component "aimethod" as val %}
+        {% get_related_field component "aimethod" as val %}
         {% verbose_name component.aimethod_set as title %}
         {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
 
-        {% get_related_field_value component "dataanalysisprocess" as val %}
+        {% get_related_field component "dataanalysisprocess" as val %}
         {% verbose_name component.dataanalysisprocess_set as title %}
         {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
 
-        {% get_related_field_value component "licenses" as val %}
+        {% get_related_field component "licenses" as val %}
         {% verbose_name component.licenses_set as title %}
         {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
         <hr>
