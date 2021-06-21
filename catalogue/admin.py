@@ -6,17 +6,18 @@ from django.utils.text import Truncator
 from django.urls import reverse
 
 from .models import (
-    BaseData,
     Component,
-    Task,
+    BaseData,
     ApplicationProfile,
+    TechnicalSpecification,
+    Use,
+    Source,
+    Requirements,
+    Task,
     BranchProven,
     BranchApplicable,
-    Use,
-    Requirements,
     TechnicalSpecification,
     DataAnalysisProcess,
-    Source,
     CorporateDivision,
     HierarchyLevel,
     Process,
@@ -26,8 +27,6 @@ from .models import (
 )
 from .models.users import Profile
 from .models.messages import Inquiry
-
-from nested_admin import nested
 
 
 def is_admin(request):
@@ -56,89 +55,117 @@ class SubNestedBase:
     inline_classes = ("grp-open",)
 
 
-class SourceInline(TopNestedBase, nested.NestedStackedInline):
-    model = Source
+# BaseData
+class TaskInline(SubNestedBase, admin.StackedInline):
+    model = Task
 
 
-class TechnicalSpecificationInline(TopNestedBase, nested.NestedStackedInline):
-    class AIMethodInline(SubNestedBase, nested.NestedStackedInline):
-        model = AIMethod
-
-    class DAProcessInline(SubNestedBase, nested.NestedStackedInline):
-        model = DataAnalysisProcess
-
-    class LicensesInline(SubNestedBase, nested.NestedStackedInline):
-        model = Licenses
-
-    model = TechnicalSpecification
-    inlines = [LicensesInline, AIMethodInline, DAProcessInline]
+# ApplicationProfile
+class BranchProvenInline(SubNestedBase, admin.StackedInline):
+    model = BranchProven
 
 
-class RequirementsInline(TopNestedBase, nested.NestedStackedInline):
-    model = Requirements
+class BranchApplicableInline(SubNestedBase, admin.StackedInline):
+    model = BranchApplicable
 
 
-class UseInline(TopNestedBase, nested.NestedStackedInline):
-    class KPIInline(SubNestedBase, nested.NestedStackedInline):
-        model = KPI
-
-    model = Use
-    inlines = [KPIInline]
+class CorporateDivisionInline(SubNestedBase, admin.StackedInline):
+    model = CorporateDivision
 
 
-class ApplicationProfileInline(TopNestedBase, nested.NestedStackedInline):
-    class BranchProvenInline(SubNestedBase, nested.NestedStackedInline):
-        model = BranchProven
-
-    class BranchApplicableInline(SubNestedBase, nested.NestedStackedInline):
-        model = BranchApplicable
-
-    class CorporateDivisionInline(SubNestedBase, nested.NestedStackedInline):
-        model = CorporateDivision
-
-    class HierarchyLevelInline(SubNestedBase, nested.NestedStackedInline):
-        model = HierarchyLevel
-
-    class ProcessInline(SubNestedBase, nested.NestedStackedInline):
-        model = Process
-
-    model = ApplicationProfile
-    inlines = [
-        BranchProvenInline,
-        BranchApplicableInline,
-        CorporateDivisionInline,
-        HierarchyLevelInline,
-        ProcessInline,
-    ]
+class HierarchyLevelInline(SubNestedBase, admin.StackedInline):
+    model = HierarchyLevel
 
 
-class BaseDataInline(TopNestedBase, nested.NestedStackedInline):
-    class TaskInline(SubNestedBase, nested.NestedStackedInline):
-        model = Task
+class ProcessInline(SubNestedBase, admin.StackedInline):
+    model = Process
 
-    model = BaseData
-    inlines = [TaskInline]
+
+# Use
+class KPIInline(SubNestedBase, admin.StackedInline):
+    model = KPI
+
+
+# TechnicalSpecification
+class AIMethodInline(SubNestedBase, admin.StackedInline):
+    model = AIMethod
+
+
+class DAProcessInline(SubNestedBase, admin.StackedInline):
+    model = DataAnalysisProcess
+
+
+class LicensesInline(SubNestedBase, admin.StackedInline):
+    model = Licenses
 
 
 @admin.register(Component)
-class ComponentAdmin(nested.NestedModelAdmin):
+class ComponentAdmin(admin.ModelAdmin):
     exclude = ("created_by",)
     list_display = (
         "id",
-        "basedata_name",
+        "get_name",
         "published",
         "get_created_by",
         "created",
         "lastmodified_at",
     )
     list_editable = ("published",)
+    fieldsets = (
+        (None, {
+            "fields": ("published",)
+        }),
+        # Base
+        (BaseData._meta.verbose_name, {
+            "fields": ("name", "trl", "description",)
+        }),
+        (None, {"classes": ("placeholder", "task_set-group"), "fields": ()}),
+        # Application
+        (ApplicationProfile._meta.verbose_name, {
+            "fields": ("product",)
+        }),
+        (None, {"classes": ("placeholder", "branchproven_set-group"), "fields": ()}),
+        (None, {"classes": ("placeholder", "branchapplicable_set-group"), "fields": ()}),
+        (None, {"classes": ("placeholder", "corporatedivision_set-group"), "fields": ()}),
+        (None, {"classes": ("placeholder", "hierarchylevel_set-group"), "fields": ()}),
+        (None, {"classes": ("placeholder", "process_set-group"), "fields": ()}),
+        # Use
+        (Use._meta.verbose_name, {
+            "fields": ("scenarios",)
+        }),
+        (None, {"classes": ("placeholder", "kpi_set-group"), "fields": ()}),
+        # Source
+        (Source._meta.verbose_name, {
+            "fields": ("manufacturer", "contact", "additional_info",)
+        }),
+        # Technical
+        (TechnicalSpecification._meta.verbose_name, {
+            "fields": ("realtime_processing", "data_formats",)
+        }),
+        (None, {"classes": ("placeholder", "aimethod_set-group"), "fields": ()}),
+        (None, {"classes": ("placeholder", "dataanalysisprocess_set-group"), "fields": ()}),
+        (None, {"classes": ("placeholder", "licenses_set-group"), "fields": ()}),
+        # Requirements
+        (Requirements._meta.verbose_name, {
+            "fields": ("protocols", "it_environment", "hardware_requirements", "devices",)
+        })
+    )
+
     inlines = [
-        BaseDataInline,
-        ApplicationProfileInline,
-        UseInline,
-        RequirementsInline,
-        TechnicalSpecificationInline,
-        SourceInline,
+        # BaseData
+        TaskInline,
+        # ApplicationProfile
+        BranchProvenInline,
+        BranchApplicableInline,
+        CorporateDivisionInline,
+        HierarchyLevelInline,
+        ProcessInline,
+        # Use
+        KPIInline,
+        # TechnicalSpecification
+        AIMethodInline,
+        DAProcessInline,
+        LicensesInline,
     ]
 
     def get_created_by(self, obj):
@@ -160,17 +187,17 @@ class ComponentAdmin(nested.NestedModelAdmin):
             return Component.objects.all()
         return Component.objects.filter(created_by=request.user)
 
-    def basedata_name(self, obj):
+    def get_name(self, obj):
         return mark_safe(
             f"""
             <a href='{reverse('admin:catalogue_component_change', args=(obj.id,))}'>
-            {obj.basedata.name}
+            {obj.name}
             </a>
         """
         )
 
-    basedata_name.short_description = "Name"
-    basedata_name.admin_order_field = "basedata__name"
+    get_name.short_description = "Name"
+    get_name.admin_order_field = "name"
 
     def save_model(self, request, obj, form, change):
         if not hasattr(obj, "created_by"):

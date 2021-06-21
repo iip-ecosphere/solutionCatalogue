@@ -25,7 +25,8 @@ def list_fields(
     """Extract all field names and values for a model."""
     for field in get_fields(m):
         if field.choices:
-            choice = [c for i, c in field.choices if i == field.value_from_object(m)][0]
+            choice = [c for i, c in field.choices if i ==
+                      field.value_from_object(m)][0]
             yield field.verbose_name, choice
         else:
             yield field.verbose_name, field.value_to_string(m)
@@ -52,5 +53,24 @@ def get_field(m: models.Model, field: str) -> str:
     related_fields = set(f.name for f in get_related_fields(m))
     if field in related_fields:
         return ", ".join(str(x) for x in getattr(m, field + "_set").all())
-    else:
-        return getattr(m, field)
+    elif field := m._meta.get_field(field):
+        if field.choices:
+            choice = [c for i, c in field.choices if i ==
+                      field.value_from_object(m)][0]
+            return choice
+        else:
+            return field.value_to_string(m)
+
+
+@register.simple_tag
+def get_related_field_value(m: models.Model, field: str):
+    return getattr(m, field + "_set").all()
+
+
+@register.simple_tag
+def check_category_empty(m: models, field_names: List) -> bool:
+    for name in field_names:
+        field = m._meta.get_field(name)
+        if field is not None:
+            return False
+    return True

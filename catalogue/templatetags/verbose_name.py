@@ -4,6 +4,7 @@ from django.db import models
 register = template.Library()
 
 
+@register.simple_tag
 @register.filter
 def verbose_name(m) -> str:
     """Return verbose name of a model or relation"""
