@@ -26,7 +26,7 @@ from .models import (
     KPI,
 )
 from .models.users import Profile
-from .models.messages import Inquiry
+from .models.messages import Inquiry, Feedback
 
 
 def is_admin(request):
@@ -233,6 +233,36 @@ class InquiryAdmin(admin.ModelAdmin):
         return Truncator(obj.message).chars(40)
 
     message_short.short_description = Inquiry._meta.get_field("message").verbose_name
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = (
+        "created",
+        "name",
+        "mail",
+        "message_short",
+        "sentiment",
+        "search_url",
+    )
+    readonly_fields = (
+        "created",
+        "name",
+        "mail",
+        "message",
+        "sentiment",
+        "search_url",
+    )
+
+    def get_queryset(self, request):
+        if is_admin_or_mod(request):
+            return Feedback.objects.all()
+        return None
+
+    def message_short(self, obj):
+        return Truncator(obj.message).chars(40)
+
+    message_short.short_description = Feedback._meta.get_field("message").verbose_name
 
 
 # @admin.register(User)
