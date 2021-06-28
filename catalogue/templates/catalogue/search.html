@@ -40,7 +40,10 @@
                 <div class="tags mb-1">
                   {% for id, name in field.field.choices %}
                     {% if id|stringformat:"s" in field.value %}
-                      <span class="tag has-background-info is-rounded">{{ name }}</span>
+                      <span class="tag has-background-info is-rounded">
+                        {{ name }}
+                        <button type="button" value="id_{{field.name}}_{{ forloop.counter0 }}" class="delete is-small"></button>
+                      </span>
                     {% endif %}
                   {% endfor %}
                 </div>
@@ -89,7 +92,17 @@
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
       for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener('change', function () {
-          document.searchForm.submit()
+          document.searchForm.submit();
+        });
+      }
+      // add listener on delete Buttons for unchecking box when clicked
+      const deleteButtons = document.querySelectorAll('.delete');
+      for (let i = 0; i < deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener('click', function () {
+          button = deleteButtons[i];
+          checkbox = document.querySelector("input[type=checkbox][id="+button.value+"]");
+          checkbox.checked = false;
+          document.searchForm.submit();
         });
       }
     });
