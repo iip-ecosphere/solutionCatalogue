@@ -1,3 +1,4 @@
+
 {% extends "catalogue/base.html" %}
 {% load bulma_tags %}
 {% block title %}Catalogue Search{% endblock %}
@@ -40,7 +41,10 @@
                 <div class="tags mb-1">
                   {% for id, name in field.field.choices %}
                     {% if id|stringformat:"s" in field.value %}
-                      <span class="tag has-background-info is-rounded">{{ name }}</span>
+                      <span class="tag has-background-info is-rounded">
+                        {{ name }}
+                        <button type="button" value="id_{{field.name}}_{{ forloop.counter0 }}" class="delete is-small"></button>
+                      </span>
                     {% endif %}
                   {% endfor %}
                 </div>
@@ -66,6 +70,34 @@
         </div>
       </div>
     </div>
+    <div id="feedbackModal" class="modal" hx-target="#content" hx-swap="innerHTML">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Feedback</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <form hx-post="{{ request.get_full_path }}">
+          <div id="content">
+            <section class="modal-card-body">
+              {% csrf_token %}
+              {{ form|bulma }}
+              <input id="url" value="{{ request.get_full_path }}" hidden>
+            </section>
+            <footer class="modal-card-foot">
+              <div class="field">
+                <div class="control">
+                  <button class="button is-success">Sende Feedback</button>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <button id="feedbackBtn" class="button is-info vertical-right-aligned">Feedback</button>
   </section>
 {% endblock %}
 {% block script %}
@@ -89,7 +121,17 @@
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
       for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener('change', function () {
-          document.searchForm.submit()
+          document.searchForm.submit();
+        });
+      }
+      // add listener on delete Buttons for unchecking box when clicked
+      const deleteButtons = document.querySelectorAll('.delete');
+      for (let i = 0; i < deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener('click', function () {
+          button = deleteButtons[i];
+          checkbox = document.querySelector("input[type=checkbox][id="+button.value+"]");
+          checkbox.checked = false;
+          document.searchForm.submit();
         });
       }
     });
@@ -107,6 +149,20 @@
           });
         });
       }
+    });
+
+    document.getElementById("feedbackBtn").addEventListener("click", function() {
+      var modal = document.querySelector('.modal');
+      modal.classList.add("is-active");
+
+      modal.querySelector('.modal-background').addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.remove('is-active');
+      });
+      modal.querySelector('.delete').addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.remove('is-active');
+      });
     });
   </script>
 {% endblock %}
