@@ -1,0 +1,25 @@
+{% load bulma_tags %}
+<div class="modal is-active">
+  <div class="modal-background" onclick="closeModal()"></div>
+  <div class="modal-content">
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Feedback</p>
+        <button class="delete" aria-label="close" onclick="closeModal()"></button>
+      </header>
+      <form hx-post="{% url 'catalogue:search_feedback' %}" hx-swap="outerHTML">
+        <section class="modal-card-body">
+          {% csrf_token %}
+          {{ form|bulma }}
+        </section>
+        <footer class="modal-card-foot">
+          <div class="field">
+            <div class="control">
+              <button class="button is-success">Sende Feedback</button>
+            </div>
+          </div>
+        </footer>
+      </form>
+    </div>
+  </div>
+</div>

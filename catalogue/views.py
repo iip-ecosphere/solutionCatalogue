@@ -33,7 +33,8 @@ class SearchView(FilterView):
 
 
 class SearchFeedbackView(generic.edit.FormView):
-    template_name = "catalogue/feedback_view.html"
+    template_name = "catalogue/modals/search-feedback/form.html"
+    success_template = "catalogue/modals/search-feedback/success.html"
     form_class = FeedbackForm
 
     def post(self, request, *args, **kwargs):
@@ -45,7 +46,7 @@ class SearchFeedbackView(generic.edit.FormView):
         feedback.search_url = self.request.META["HTTP_REFERER"]
         feedback.save()
         return render(
-            self.request, "catalogue/success_feedback.html", self.get_context_data()
+            self.request, self.success_template, self.get_context_data()
         )
 
 
