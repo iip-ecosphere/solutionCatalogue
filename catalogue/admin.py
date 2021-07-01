@@ -112,43 +112,74 @@ class ComponentAdmin(admin.ModelAdmin):
     )
     list_editable = ("published",)
     fieldsets = (
-        (None, {
-            "fields": ("published",)
-        }),
+        (None, {"fields": ("published",)}),
         # Base
-        (BaseData._meta.verbose_name, {
-            "fields": ("name", "trl", "description",)
-        }),
+        (
+            BaseData._meta.verbose_name,
+            {
+                "fields": (
+                    "name",
+                    "trl",
+                    "description",
+                )
+            },
+        ),
         (None, {"classes": ("placeholder", "task_set-group"), "fields": ()}),
         # Application
-        (ApplicationProfile._meta.verbose_name, {
-            "fields": ("product",)
-        }),
+        (ApplicationProfile._meta.verbose_name, {"fields": ("product",)}),
         (None, {"classes": ("placeholder", "branchproven_set-group"), "fields": ()}),
-        (None, {"classes": ("placeholder", "branchapplicable_set-group"), "fields": ()}),
-        (None, {"classes": ("placeholder", "corporatedivision_set-group"), "fields": ()}),
+        (
+            None,
+            {"classes": ("placeholder", "branchapplicable_set-group"), "fields": ()},
+        ),
+        (
+            None,
+            {"classes": ("placeholder", "corporatedivision_set-group"), "fields": ()},
+        ),
         (None, {"classes": ("placeholder", "hierarchylevel_set-group"), "fields": ()}),
         (None, {"classes": ("placeholder", "process_set-group"), "fields": ()}),
         # Use
-        (Use._meta.verbose_name, {
-            "fields": ("scenarios",)
-        }),
+        (Use._meta.verbose_name, {"fields": ("scenarios",)}),
         (None, {"classes": ("placeholder", "kpi_set-group"), "fields": ()}),
         # Source
-        (Source._meta.verbose_name, {
-            "fields": ("manufacturer", "contact", "additional_info",)
-        }),
+        (
+            Source._meta.verbose_name,
+            {
+                "fields": (
+                    "manufacturer",
+                    "contact",
+                    "additional_info",
+                )
+            },
+        ),
         # Technical
-        (TechnicalSpecification._meta.verbose_name, {
-            "fields": ("realtime_processing", "data_formats",)
-        }),
+        (
+            TechnicalSpecification._meta.verbose_name,
+            {
+                "fields": (
+                    "realtime_processing",
+                    "data_formats",
+                )
+            },
+        ),
         (None, {"classes": ("placeholder", "aimethod_set-group"), "fields": ()}),
-        (None, {"classes": ("placeholder", "dataanalysisprocess_set-group"), "fields": ()}),
+        (
+            None,
+            {"classes": ("placeholder", "dataanalysisprocess_set-group"), "fields": ()},
+        ),
         (None, {"classes": ("placeholder", "licenses_set-group"), "fields": ()}),
         # Requirements
-        (Requirements._meta.verbose_name, {
-            "fields": ("protocols", "it_environment", "hardware_requirements", "devices",)
-        })
+        (
+            Requirements._meta.verbose_name,
+            {
+                "fields": (
+                    "protocols",
+                    "it_environment",
+                    "hardware_requirements",
+                    "devices",
+                )
+            },
+        ),
     )
 
     inlines = [
@@ -243,7 +274,7 @@ class FeedbackAdmin(admin.ModelAdmin):
         "mail",
         "message_short",
         "sentiment",
-        "search_url",
+        "get_search_url",
     )
     readonly_fields = (
         "created",
@@ -254,13 +285,15 @@ class FeedbackAdmin(admin.ModelAdmin):
         "search_url",
     )
 
-    def get_queryset(self, request):
-        if is_admin_or_mod(request):
-            return Feedback.objects.all()
-        return None
-
     def message_short(self, obj):
         return Truncator(obj.message).chars(40)
+
+    def get_search_url(self, obj):
+        return mark_safe(f"""<a href='{obj.search_url}'>{obj.search_url}</a>""")
+
+    get_search_url.short_description = Feedback._meta.get_field(
+        "search_url"
+    ).verbose_name
 
     message_short.short_description = Feedback._meta.get_field("message").verbose_name
 

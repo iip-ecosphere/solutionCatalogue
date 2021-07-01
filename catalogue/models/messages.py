@@ -37,19 +37,20 @@ class Inquiry(SenderInfo):
         return "{} {}".format(self._meta.verbose_name, self.id)
 
 
-
 class Feedback(SenderInfo):
     class Meta:
         verbose_name = "Feedback"
         verbose_name_plural = "Feedbacks"
 
-    CHOICES=[('positive', 'Positiv'),
-         ('neutral', 'Neutral'),
-         ('negativ', 'Negativ')]
-    sentiment = models.CharField("Wie zufieden sind Sie mit der Suche?", max_length=8, choices=CHOICES, default=CHOICES[0][0])
-    message = models.TextField(
-        "Nachricht", help_text="Ihr Feedback", max_length=2000
+    CHOICES = [("positive", "Positiv"), ("neutral", "Neutral"), ("negativ", "Negativ")]
+    sentiment = models.CharField(
+        "Wie zufieden sind Sie mit der Suche?",
+        max_length=8,
+        choices=CHOICES,
+        default=CHOICES[0][0],
     )
-    search_url = models.URLField(default=None, max_length=200)
+    message = models.TextField("Nachricht", help_text="Ihr Feedback", max_length=2000)
+    search_url = models.TextField(default=None)
+
     def __str__(self):
         return "{} {}".format(self._meta.verbose_name, self.id)

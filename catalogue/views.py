@@ -26,18 +26,14 @@ class SearchView(FilterView):
     context_object_name = "components"
     filterset_class = ComponentFilter
 
-    def post(self, request, *args, **kwargs):
-        view = SendFeedback.as_view()
-        return view(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = FeedbackForm()
         return context
 
 
-class SendFeedback(generic.edit.FormView):
-    template_name = "catalogue/success_feedback.html"
+class SearchFeedbackView(generic.edit.FormView):
+    template_name = "catalogue/feedback_view.html"
     form_class = FeedbackForm
 
     def post(self, request, *args, **kwargs):
@@ -48,11 +44,9 @@ class SendFeedback(generic.edit.FormView):
         feedback = form.save(commit=False)
         feedback.search_url = self.request.META["HTTP_REFERER"]
         feedback.save()
-        return render(self.request, self.template_name, self.get_context_data())
-    """
-    def get_success_url(self):
-        return reverse("catalogue:search")+'?q='+self.request.GET.get('q', '')
-    """
+        return render(
+            self.request, "catalogue/success_feedback.html", self.get_context_data()
+        )
 
 
 class ComponentDetail(generic.DetailView):
@@ -63,9 +57,10 @@ class ComponentDetail(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context["form"] = InquiryForm()
         for parent in Component.__bases__:
-            context[parent.__name__.lower()+"_name"] = parent._meta.verbose_name
-            context[parent.__name__.lower()
-            +"_fields"] = [x.name for x in parent._meta.get_fields()]
+            context[parent.__name__.lower() + "_name"] = parent._meta.verbose_name
+            context[parent.__name__.lower() + "_fields"] = [
+                x.name for x in parent._meta.get_fields()
+            ]
 
         return context
 

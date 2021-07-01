@@ -1,4 +1,3 @@
-
 {% extends "catalogue/base.html" %}
 {% load bulma_tags %}
 {% block title %}Catalogue Search{% endblock %}
@@ -70,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div id="feedbackModal" class="modal" hx-target="#content" hx-swap="innerHTML">
+    <div id="feedbackModal" class="modal">
       <div class="modal-background"></div>
       <div class="modal-content">
         <div class="modal-card">
@@ -78,26 +77,11 @@
             <p class="modal-card-title">Feedback</p>
             <button class="delete" aria-label="close"></button>
           </header>
-          <form hx-post="{{ request.get_full_path }}">
-          <div id="content">
-            <section class="modal-card-body">
-              {% csrf_token %}
-              {{ form|bulma }}
-              <input id="url" value="{{ request.get_full_path }}" hidden>
-            </section>
-            <footer class="modal-card-foot">
-              <div class="field">
-                <div class="control">
-                  <button class="button is-success">Sende Feedback</button>
-                </div>
-              </div>
-            </footer>
-          </div>
-        </form>
+          <div id="content"></div>
         </div>
       </div>
     </div>
-    <button id="feedbackBtn" class="button is-info vertical-right-aligned">Feedback</button>
+    <button id="feedbackBtn" class="button is-info feedback-button" hx-get="{% url 'catalogue:search_feedback' %}" hx-target="#content" hx-swap="innerHTML">Feedback</button>
   </section>
 {% endblock %}
 {% block script %}
@@ -125,11 +109,11 @@
         });
       }
       // add listener on delete Buttons for unchecking box when clicked
-      const deleteButtons = document.querySelectorAll('.delete');
+      const deleteButtons = document.querySelectorAll('.tag > .delete');
       for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].addEventListener('click', function () {
           button = deleteButtons[i];
-          checkbox = document.querySelector("input[type=checkbox][id="+button.value+"]");
+          checkbox = document.querySelector("#"+button.value);
           checkbox.checked = false;
           document.searchForm.submit();
         });
@@ -159,7 +143,7 @@
         e.preventDefault();
         modal.classList.remove('is-active');
       });
-      modal.querySelector('.delete').addEventListener('click', function(e) {
+      modal.querySelector('.modal-card-head > button.delete').addEventListener('click', function(e) {
         e.preventDefault();
         modal.classList.remove('is-active');
       });

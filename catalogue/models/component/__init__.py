@@ -144,7 +144,9 @@ class Requirements(models.Model):
         return ""
 
 
-class Component(ApplicationProfile, BaseData, Requirements, Source, Use, TechnicalSpecification):
+class Component(
+    ApplicationProfile, BaseData, Requirements, Source, Use, TechnicalSpecification
+):
     class Meta:
         verbose_name = "KI Komponente"
         verbose_name_plural = "KI Komponenten"

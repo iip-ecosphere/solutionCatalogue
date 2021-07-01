@@ -75,8 +75,8 @@ class ComponentFilterBase(django_filters.FilterSet):
     def qs(self):
         return (
             super()
-                .qs.filter(published=True)
-                .prefetch_related(
+            .qs.filter(published=True)
+            .prefetch_related(
                 "task_set",
                 "process_set",
             )
@@ -118,12 +118,10 @@ class ComponentFilter(ComponentFilterBase):
         choices=CorporateDivisionChoices.choices[1:],
         widget=forms.CheckboxSelectMultiple,
     )
-    dataanalysisprocess__name = (
-        django_filters.MultipleChoiceFilter(
-            label=DataAnalysisProcess._meta.verbose_name,
-            choices=DAProcessChoices.choices[1:],
-            widget=forms.CheckboxSelectMultiple,
-        )
+    dataanalysisprocess__name = django_filters.MultipleChoiceFilter(
+        label=DataAnalysisProcess._meta.verbose_name,
+        choices=DAProcessChoices.choices[1:],
+        widget=forms.CheckboxSelectMultiple,
     )
     realtime_processing = django_filters.MultipleChoiceFilter(
         label=TechnicalSpecification._meta.get_field(
@@ -153,9 +151,8 @@ class ComponentComparisonFilter(django_filters.FilterSet):
     @property
     def qs(self):
         return (
-            super()
-            .qs.filter(published=True)
-            #.select_related(*COMPONENT_RELATED_FIELDS)
+            super().qs.filter(published=True)
+            # .select_related(*COMPONENT_RELATED_FIELDS)
             # .prefetch_related(
             #     "basedata__task_set",
             #     "applicationprofile__corporatedivision_set",
