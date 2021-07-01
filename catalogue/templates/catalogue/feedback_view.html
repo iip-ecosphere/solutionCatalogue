@@ -1,0 +1,14 @@
+{% load bulma_tags %}
+<form hx-post="{% url 'catalogue:search_feedback' %}" hx-target="#content" hx-swap="innerHTML">
+    <section class="modal-card-body">
+        {% csrf_token %}
+        {{ form|bulma }}
+    </section>
+    <footer class="modal-card-foot">
+        <div class="field">
+        <div class="control">
+            <button class="button is-success">Sende Feedback</button>
+        </div>
+        </div>
+    </footer>
+</form>

@@ -15,9 +15,7 @@ class CorporateDivision(models.Model):
         verbose_name = "Unternehmensbereich"
         verbose_name_plural = verbose_name
 
-    component = models.ForeignKey(
-        Component, on_delete=models.CASCADE
-    )
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         help_text="Bereich des produzierenden Unternehmens, für den die Komponenten entwickelt wurde",
         choices=CorporateDivisionChoices.choices,
@@ -34,9 +32,7 @@ class HierarchyLevel(models.Model):
         verbose_name = "Hierarchie-Ebene"
         verbose_name_plural = verbose_name
 
-    component = models.ForeignKey(
-        Component, on_delete=models.CASCADE
-    )
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         choices=HierarchyLevelChoices.choices,
         help_text="Automatisierebene, für die die KI-Komponente gedacht ist",
@@ -53,9 +49,7 @@ class Process(models.Model):
         verbose_name = "Prozess"
         verbose_name_plural = verbose_name
 
-    component = models.ForeignKey(
-        Component, on_delete=models.CASCADE
-    )
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         choices=ProcessChoices.choices,
         help_text="Prozess der durch die KI-Komponente unterstützt wird",
@@ -72,9 +66,7 @@ class BranchProven(models.Model):
         verbose_name = "Branche (erprobt)"
         verbose_name_plural = verbose_name
 
-    component = models.ForeignKey(
-        Component, on_delete=models.CASCADE
-    )
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         help_text="Branche(n) für die die Komponente bereits erfolgreich erprobt wurde; belegte Anwendung",
         choices=BranchChoices.choices,
@@ -91,9 +83,7 @@ class BranchApplicable(models.Model):
         verbose_name = "Branche (anwendbar)"
         verbose_name_plural = verbose_name
 
-    component = models.ForeignKey(
-        Component, on_delete=models.CASCADE
-    )
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         help_text="Branche, in denen die Komponenten anwendbar ist",
         choices=BranchChoices.choices,

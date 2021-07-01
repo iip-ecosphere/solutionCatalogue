@@ -9,9 +9,7 @@ class AIMethod(models.Model):
         verbose_name = "KI-Methode"
         verbose_name_plural = verbose_name
 
-    component = models.ForeignKey(
-        Component, on_delete=models.CASCADE
-    )
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         help_text="Angabe der verwendeten KI-Methode (z.B. Deep Learning)",
         max_length=1000,
@@ -27,9 +25,7 @@ class DataAnalysisProcess(models.Model):
         verbose_name = "Datenanalyse-Prozess"
         verbose_name_plural = verbose_name
 
-    component = models.ForeignKey(
-        Component, on_delete=models.CASCADE
-    )
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         choices=DAProcessChoices.choices,
         max_length=2,
@@ -48,9 +44,7 @@ class Licenses(models.Model):
         verbose_name = "Lizenz"
         verbose_name_plural = "Lizenzen"
 
-    component = models.ForeignKey(
-        Component, on_delete=models.CASCADE
-    )
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
     type = models.CharField(
         "Typ",
         choices=LicenseChoices.choices,

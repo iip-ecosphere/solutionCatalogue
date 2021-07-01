@@ -160,3 +160,13 @@ div.control.is-size-7 input[type="checkbox"] {
 div.control li {
   margin-bottom: 0.25rem;
 }
+
+/* feedback button */
+.feedback-button {
+  transform: rotate(-90deg);
+  transform-origin: 100% 100%;
+  position: fixed;
+  right: 0;
+  top: 70%;
+  z-index: 100;
+}

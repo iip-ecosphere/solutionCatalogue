@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{% static 'catalogue/bulma.css' %}">
   <link rel="stylesheet" href="{% static 'catalogue/fas.min.css' %}">
   <link rel="stylesheet" href="{% static 'catalogue/progress-bar/css-circular-prog-bar.css' %}">
+  <script src="{% static 'catalogue/js/htmx.min.js' %}"></script>
 </head>
 <body>
 <nav class="navbar is-spaced is-primary {% if request.path == "/" %}transparent{% endif %}"
@@ -88,6 +89,12 @@
       });
     }
   });
+</script>
+<script>
+  // CSRF Token for htmx
+  document.body.addEventListener('htmx:configRequest', (event) => {
+    event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+  })
 </script>
 {% block script %}{% endblock %}
 </html>

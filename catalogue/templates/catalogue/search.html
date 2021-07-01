@@ -69,6 +69,19 @@
         </div>
       </div>
     </div>
+    <div id="feedbackModal" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Feedback</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <div id="content"></div>
+        </div>
+      </div>
+    </div>
+    <button id="feedbackBtn" class="button is-info feedback-button" hx-get="{% url 'catalogue:search_feedback' %}" hx-target="#content" hx-swap="innerHTML">Feedback</button>
   </section>
 {% endblock %}
 {% block script %}
@@ -96,11 +109,11 @@
         });
       }
       // add listener on delete Buttons for unchecking box when clicked
-      const deleteButtons = document.querySelectorAll('.delete');
+      const deleteButtons = document.querySelectorAll('.tag > .delete');
       for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].addEventListener('click', function () {
           button = deleteButtons[i];
-          checkbox = document.querySelector("input[type=checkbox][id="+button.value+"]");
+          checkbox = document.querySelector("#"+button.value);
           checkbox.checked = false;
           document.searchForm.submit();
         });
@@ -120,6 +133,20 @@
           });
         });
       }
+    });
+
+    document.getElementById("feedbackBtn").addEventListener("click", function() {
+      var modal = document.querySelector('.modal');
+      modal.classList.add("is-active");
+
+      modal.querySelector('.modal-background').addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.remove('is-active');
+      });
+      modal.querySelector('.modal-card-head > button.delete').addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.remove('is-active');
+      });
     });
   </script>
 {% endblock %}
