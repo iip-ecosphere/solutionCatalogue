@@ -147,7 +147,7 @@
           <div class="card">
             <div class="card-content">
               <p class="title is-3">Kontaktanfrage</p>
-              <form method="post">
+              <form hx-post="{% url 'catalogue:send_inquiry' component.id %}" hx-swap="outerHTML">
                 {% csrf_token %}
                 {{ form|bulma }}
                 <div class="field">
