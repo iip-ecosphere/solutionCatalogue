@@ -7,7 +7,7 @@ app_name = "catalogue"
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
     path("search/", views.SearchView.as_view(), name="search"),
-    path("component/<int:pk>/", views.DetailView.as_view(), name="detail"),
+    path("component/<int:pk>/", views.ComponentDetail.as_view(), name="detail"),
     path("compare/", views.ComparisonView.as_view(), name="compare"),
     path("admin/login/", RedirectView.as_view(url="/accounts/login/")),
     path(

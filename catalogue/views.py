@@ -88,6 +88,7 @@ class ComponentDetail(generic.DetailView):
 
 
 class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
+    http_method_names = ["post"]
     template_name = "catalogue/modals/contact/success.html"
     form_class = InquiryForm
     model = Component
@@ -119,12 +120,6 @@ class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
             from_email="anfrage@solution-catalog.de",
             recipient_list=[obj.created_by.email],
         )
-
-
-class DetailView(generic.View):
-    def get(self, request, *args, **kwargs):
-        view = ComponentDetail.as_view()
-        return view(request, *args, **kwargs)
 
 
 class ComparisonView(FilterView):
