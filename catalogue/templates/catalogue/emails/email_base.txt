@@ -1,5 +1,6 @@
 {% block content %}
 {% endblock content %}
+
 --
 Impressum:
 KI Lösungskatalog
