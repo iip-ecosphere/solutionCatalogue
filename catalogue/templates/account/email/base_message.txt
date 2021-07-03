@@ -1,6 +1,7 @@
-{% extends "catalogue/emails/email_base.txt" %}
-{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name %}Hallo von {{ site_name }}!{% endblocktrans %}
+{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name %}Hello from {{ site_name }}!{% endblocktrans %}
 
 {% block content %}{% endblock %}
+
+{% include "catalogue/emails/email_footer.txt" %}
 
 {% endautoescape %}

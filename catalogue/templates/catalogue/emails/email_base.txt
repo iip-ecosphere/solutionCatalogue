@@ -1,6 +1,3 @@
-{% block content %}
-{% endblock content %}
+{% block content %}{% endblock %}
 
---
-Impressum:
-KI Lösungskatalog
+{% include "catalogue/emails/email_footer.txt" %}
