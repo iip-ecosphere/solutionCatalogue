@@ -1,0 +1,3 @@
+{% block content %}{% endblock %}
+
+{% include "catalogue/emails/email_footer.txt" %}

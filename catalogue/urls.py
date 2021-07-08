@@ -13,4 +13,7 @@ urlpatterns = [
     path(
         "search/feedback/", views.SearchFeedbackView.as_view(), name="search_feedback"
     ),
+    path(
+        "component/<int:pk>/contact", views.SendInquiry.as_view(), name="send_inquiry"
+    ),
 ]

@@ -1,0 +1,8 @@
+{% extends "catalogue/emails/email_base.txt" %}
+
+{% block content %}
+Sie haben eine Nachricht von {{ name }} bezüglich der Komponente {{ comp }} erhalten:
+{{ message }}
+
+Kontakt: {{ email }}
+{% endblock content %}

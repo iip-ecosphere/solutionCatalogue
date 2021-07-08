@@ -179,6 +179,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+SENDER_EMAIL_MESSAGE = os.getenv("SENDER_EMAIL_MESSAGE", "noreply@example.com")
+SENDER_EMAIL_FEEDBACK = os.getenv("SENDER_EMAIL_FEEDBACK", "noreply@example.com")
 EMAIL_HOST = os.getenv("EMAIL_HOST", "localhost")
 EMAIL_PORT = os.getenv("EMAIL_PORT", "1025")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
