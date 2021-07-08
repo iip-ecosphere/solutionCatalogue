@@ -4,7 +4,7 @@ from django.views import generic
 from django_filters.views import FilterView
 from django.shortcuts import render
 from django.core.mail import send_mail
-from django.template.loader import get_template, render_to_string
+from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
 
 from . import COMPONENT_RELATED_FIELDS
@@ -53,8 +53,9 @@ class SearchFeedbackView(generic.edit.FormView):
 
     def send_mail_feedback(self, form):
         User = get_user_model()
-        users = User.objects.all().filter(is_superuser=True)
-        emails = users.values_list("email", flat=True)
+        admin_emails = (
+            User.objects.all().filter(is_superuser=True).values_list("email", flat=True)
+        )
 
         context = {
             "name": form.name,
@@ -67,11 +68,11 @@ class SearchFeedbackView(generic.edit.FormView):
             subject="IIP Ecosphere Lösungskatalog: Feedback",
             message=content,
             from_email="feedback@solution-catalog.de",
-            recipient_list=emails,
+            recipient_list=admin_emails,
         )
 
 
-class ComponentDetail(generic.DetailView):
+class DetailView(generic.DetailView):
     queryset = Component.objects.filter(published=True)
     template_name = "catalogue/detail.html"
 
@@ -99,7 +100,6 @@ class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
 
     def form_valid(self, form):
         inquiry = form.save(commit=False)
-        print(inquiry.mail)
         inquiry.component = self.object
         inquiry.recipient = self.object.created_by
         inquiry.save()
