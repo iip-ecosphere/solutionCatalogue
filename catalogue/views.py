@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 from . import COMPONENT_RELATED_FIELDS
 from .forms import InquiryForm, FeedbackForm
@@ -67,7 +68,7 @@ class SearchFeedbackView(generic.edit.FormView):
         send_mail(
             subject="IIP Ecosphere Lösungskatalog: Feedback",
             message=content,
-            from_email="feedback@solution-catalog.de",
+            from_email=settings.SENDER_EMAIL_FEEDBACK,
             recipient_list=admin_emails,
         )
 
@@ -117,7 +118,7 @@ class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
         send_mail(
             subject="IIP Ecosphere Lösungskatalog: Anfrage",
             message=content,
-            from_email="anfrage@solution-catalog.de",
+            from_email=settings.SENDER_EMAIL_MESSAGE,
             recipient_list=[obj.created_by.email],
         )
 

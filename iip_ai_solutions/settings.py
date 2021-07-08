@@ -179,6 +179,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+SENDER_EMAIL_MESSAGE = "anfrage@solution-catalog.de"
+SENDER_EMAIL_FEEDBACK = "feedback@solution-catalog.de"
 EMAIL_HOST = os.getenv("EMAIL_HOST", "localhost")
 EMAIL_PORT = os.getenv("EMAIL_PORT", "1025")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
