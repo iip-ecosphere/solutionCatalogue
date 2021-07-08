@@ -55,7 +55,7 @@ class SearchFeedbackView(generic.edit.FormView):
     def send_mail_feedback(self, form):
         User = get_user_model()
         admin_emails = (
-            User.objects.all().filter(is_superuser=True).values_list("email", flat=True)
+            User.objects.filter(is_superuser=True).values_list("email", flat=True)
         )
 
         context = {
