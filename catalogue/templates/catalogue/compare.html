@@ -1,6 +1,7 @@
 {% extends "catalogue/base.html" %}
 {% load bulma_tags %}
 {% load list_fields %}
+{% load verbose_name %}
 {% block title %}Vergleich{% endblock %}
 {% block body %}
   <section class="section has-background-primary">
@@ -29,53 +30,53 @@
               <tr>
                 <th></th>
                 {% for c in components %}
-                  <th><a href="{% url 'catalogue:detail' c.id %}">{{ c.basedata.name }}</a></th>
+                  <th><a href="{% url 'catalogue:detail' c.id %}">{{ c.name }}</a></th>
                 {% endfor %}
               </tr>
               </thead>
               <tbody>
-              {% list_field_names components.0.basedata as fields %}
-              {% for name, field in fields %}
+              {% for field in basedata_fields %}
+                {% get_verbose_field_name components.0 field as name %}
                 <tr>
                   <th>{{ name }}</th>
                   {% for c in components %}
-                    <td>{% get_field c.basedata field %}</td>
+                    <td>{% get_field c field %}</td>
                   {% endfor %}
                 </tr>
               {% endfor %}
-              {% list_field_names components.0.applicationprofile as fields %}
-              {% for name, field in fields %}
+              {% for field in applicationprofile_fields %}
+                {% get_verbose_field_name components.0 field as name %}
                 <tr>
                   <th>{{ name }}</th>
                   {% for c in components %}
-                    <td>{% get_field c.applicationprofile field %}</td>
+                    <td>{% get_field c field %}</td>
                   {% endfor %}
                 </tr>
               {% endfor %}
-              {% list_field_names components.0.use as fields %}
-              {% for name, field in fields %}
+              {% for field in use_fields %}
+                {% get_verbose_field_name components.0 field as name %}
                 <tr>
                   <th>{{ name }}</th>
                   {% for c in components %}
-                    <td>{% get_field c.use field %}</td>
+                    <td>{% get_field c field %}</td>
                   {% endfor %}
                 </tr>
               {% endfor %}
-              {% list_field_names components.0.requirements as fields %}
-              {% for name, field in fields %}
+              {% for field in requirements_fields %}
+                {% get_verbose_field_name components.0 field as name %}
                 <tr>
                   <th>{{ name }}</th>
                   {% for c in components %}
-                    <td>{% get_field c.requirements field %}</td>
+                    <td>{% get_field c field %}</td>
                   {% endfor %}
                 </tr>
               {% endfor %}
-              {% list_field_names components.0.technicalspecification as fields %}
-              {% for name, field in fields %}
+              {% for field in technicalspecification_fields %}
+                {% get_verbose_field_name components.0 field as name %}
                 <tr>
                   <th>{{ name }}</th>
                   {% for c in components %}
-                    <td>{% get_field c.technicalspecification field %}</td>
+                    <td>{% get_field c field %}</td>
                   {% endfor %}
                 </tr>
               {% endfor %}
