@@ -20,17 +20,17 @@ def get_related_fields(m: models.Model) -> List[models.ForeignObjectRel]:
 
 @register.simple_tag
 def list_fields(
-    m: models.Model,
+    m: models.Model, field_filter: List[str]
 ) -> Iterable[Union[str, List[str], QuerySet]]:
-    """Extract all field names and values for a model."""
-    for field in get_fields(m):
+    """Extract model field names and values for the given field list."""
+    for field in [f for f in get_fields(m) if f.name in field_filter]:
         if field.choices:
             choice = [c for i, c in field.choices if i == field.value_from_object(m)][0]
             yield field.verbose_name, choice
         else:
             yield field.verbose_name, field.value_to_string(m)
     # display multi-value after single
-    for field in get_related_fields(m):
+    for field in [f for f in get_related_fields(m) if f.name in field_filter]:
         yield field.related_model._meta.verbose_name, getattr(
             m, field.name + "_set"
         ).all()

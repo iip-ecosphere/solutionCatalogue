@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -160,5 +162,42 @@ class Component(
     lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
     published = models.BooleanField("Veröffentlicht", default=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "{} {} - {}".format(self._meta.verbose_name, self.id, self.name)
+
+    def get_basedata(self) -> Tuple[str, List[str]]:
+        return (
+            BaseData._meta.verbose_name,
+            [x.name for x in BaseData._meta.get_fields()] + ["task"],
+        )
+
+    def get_application_profile(self) -> Tuple[str, List[str]]:
+        return ApplicationProfile._meta.verbose_name, [
+            x.name for x in ApplicationProfile._meta.get_fields()
+        ] + [
+            "corporatedivision",
+            "hierarchylevel",
+            "process",
+            "branchproven",
+            "branchapplicable",
+        ]
+
+    def get_use(self) -> Tuple[str, List[str]]:
+        return Use._meta.verbose_name, [x.name for x in Use._meta.get_fields()] + [
+            "kpi"
+        ]
+
+    def get_requirements(self) -> Tuple[str, List[str]]:
+        return Requirements._meta.verbose_name, [
+            x.name for x in Requirements._meta.get_fields()
+        ]
+
+    def get_technical_specification(self) -> Tuple[str, List[str]]:
+        return (
+            TechnicalSpecification._meta.verbose_name,
+            [x.name for x in TechnicalSpecification._meta.get_fields()]
+            + ["aimethod", "dataanalysisprocess", "licenses"],
+        )
+
+    def get_source(self) -> Tuple[str, List[str]]:
+        return Source._meta.verbose_name, [x.name for x in Source._meta.get_fields()]
