@@ -50,86 +50,32 @@
   </section>
   <section id="tab1" class="section tab">
     <div class="container is-max-widescreen">
-      {% check_category_empty component applicationprofile_fields as is_empty %}
-      {% if not is_empty %}
-        <h3 class="title is-4">{{ applicationprofile_name }}</h3>
-        {% for field in applicationprofile_fields %}
-          {% get_verbose_field_name component field as title %}
-          {% get_field component field as val %}
-          {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-        {% endfor %}
-
-        {% get_related_field component "corporatedivision" as val %}
-        {% verbose_name component.corporatedivision_set as title %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-
-        {% get_related_field component "hierarchylevel" as val %}
-        {% verbose_name component.hierarchylevel_set as title %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-
-        {% get_related_field component "process" as val %}
-        {% verbose_name component.process_set as title %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-
-        {% get_related_field component "branchproven" as val %}
-        {% verbose_name component.branchproven_set as title %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-
-        {% get_related_field component "branchapplicable" as val %}
-        {% verbose_name component.branchapplicable_set as title %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-        <hr>
-      {% endif %}
-      {% check_category_empty component use_fields as is_empty %}
-      {% if not is_empty or component.kpi %}
-        <h3 class="title is-4">{{ use_name }}</h3>
-        {% for field in use_fields %}
-          {% get_verbose_field_name component field as title %}
-          {% get_field component field as val %}
-          {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-        {% endfor %}
-
-        {% get_related_field component "kpi" as val %}
-        {% verbose_name component.kpi_set as title %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-        <hr>
-      {% endif %}
+      <h3 class="title is-4">{{ component.get_application_profile.0 }}</h3>
+      {% list_fields component component.get_application_profile.1 as fields %}
+      {% for field, val in fields %}
+        {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
+      {% endfor %}
+      <hr>
+      <h3 class="title is-4">{{ component.get_use.0 }}</h3>
+      {% list_fields component component.get_use.1 as fields %}
+      {% for field, val in fields %}
+        {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
+      {% endfor %}
     </div>
   </section>
   <section id="tab2" class="section tab" style="display: none">
     <div class="container is-max-widescreen">
-      {% check_category_empty component requirements_fields as is_empty %}
-      {% if not is_empty %}
-        <h3 class="title is-4">{{ requirements_name }}</h3>
-        {% for field in requirements_fields %}
-          {% get_verbose_field_name component field as title %}
-          {% get_field component field as val %}
-          {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-        {% endfor %}
-        <hr>
-      {% endif %}
-      {% check_category_empty component technicalspecification_fields as is_empty %}
-      {% if not is_empty or component.licenses_set or component.aimethod_set or component.dataanalysisprocess_set %}
-        <h3 class="title is-4">{{ technicalspecification_name }}</h3>
-        {% for field in technicalspecification_fields %}
-          {% get_verbose_field_name component field as title %}
-          {% get_field component field as val %}
-          {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-        {% endfor %}
-
-        {% get_related_field component "aimethod" as val %}
-        {% verbose_name component.aimethod_set as title %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-
-        {% get_related_field component "dataanalysisprocess" as val %}
-        {% verbose_name component.dataanalysisprocess_set as title %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-
-        {% get_related_field component "licenses" as val %}
-        {% verbose_name component.licenses_set as title %}
-        {% include "catalogue/includes/component-detail-columns.html" with title=title value=val only %}
-        <hr>
-      {% endif %}
+      <h3 class="title is-4">{{ component.get_requirements.0 }}</h3>
+      {% list_fields component component.get_requirements.1 as fields %}
+      {% for field, val in fields %}
+        {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
+      {% endfor %}
+      <hr>
+      <h3 class="title is-4">{{ component.get_technical_specification.0 }}</h3>
+      {% list_fields component component.get_technical_specification.1 as fields %}
+      {% for field, val in fields %}
+        {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
+      {% endfor %}
     </div>
   </section>
   <section id="contact" class="section bg-bubble-gradient">

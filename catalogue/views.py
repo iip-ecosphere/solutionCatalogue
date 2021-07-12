@@ -80,12 +80,6 @@ class DetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = InquiryForm()
-        for parent in Component.__bases__:
-            context[parent.__name__.lower() + "_name"] = parent._meta.verbose_name
-            context[parent.__name__.lower() + "_fields"] = [
-                x.name for x in parent._meta.get_fields()
-            ]
-
         return context
 
 
@@ -127,12 +121,3 @@ class ComparisonView(FilterView):
     template_name = "catalogue/compare.html"
     context_object_name = "components"
     filterset_class = ComponentComparisonFilter
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        for parent in Component.__bases__:
-            context[parent.__name__.lower() + "_fields"] = [
-                x.name for x in parent._meta.get_fields()
-            ]
-
-        return context
