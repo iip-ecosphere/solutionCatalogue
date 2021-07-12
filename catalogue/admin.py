@@ -125,7 +125,7 @@ class ComponentAdmin(admin.ModelAdmin):
             },
         ),
         (None, {"classes": ("placeholder", "task_set-group"), "fields": ()}),
-        # Application
+        # Application Profile
         (ApplicationProfile._meta.verbose_name, {"fields": ("product",)}),
         (None, {"classes": ("placeholder", "branchproven_set-group"), "fields": ()}),
         (
@@ -141,18 +141,7 @@ class ComponentAdmin(admin.ModelAdmin):
         # Use
         (Use._meta.verbose_name, {"fields": ("scenarios",)}),
         (None, {"classes": ("placeholder", "kpi_set-group"), "fields": ()}),
-        # Source
-        (
-            Source._meta.verbose_name,
-            {
-                "fields": (
-                    "manufacturer",
-                    "contact",
-                    "additional_info",
-                )
-            },
-        ),
-        # Technical
+        # Technical Spec
         (
             TechnicalSpecification._meta.verbose_name,
             {
@@ -177,6 +166,17 @@ class ComponentAdmin(admin.ModelAdmin):
                     "it_environment",
                     "hardware_requirements",
                     "devices",
+                )
+            },
+        ),
+        # Source
+        (
+            Source._meta.verbose_name,
+            {
+                "fields": (
+                    "manufacturer",
+                    "contact",
+                    "additional_info",
                 )
             },
         ),
