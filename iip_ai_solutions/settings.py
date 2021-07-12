@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.gitlab",
     "allauth.socialaccount.providers.twitter",
-    "allauth.socialaccount.providers.linkedin",
 ]
 
 MIDDLEWARE = [
@@ -168,6 +167,7 @@ ACCOUNT_EMAIL_VERIFICATION = (
     os.getenv("ACCOUNT_EMAIL_VERIFICATION", "optional" if DEBUG else "mandatory"),
 )
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http" if DEBUG else "https"
 
 SOCIALACCOUNT_PROVIDERS = {
     "github": {
@@ -176,7 +176,21 @@ SOCIALACCOUNT_PROVIDERS = {
             "secret": os.getenv("SOCIAL_GITHUB_SECRET", ""),
             "key": "",
         }
-    }
+    },
+    "gitlab": {
+        "APP": {
+            "client_id": os.getenv("SOCIAL_GITLAB_CLIENT_ID", ""),
+            "secret": os.getenv("SOCIAL_GITLAB_SECRET", ""),
+            "key": "",
+        }
+    },
+    "twitter": {
+        "APP": {
+            "client_id": os.getenv("SOCIAL_TWITTER_CLIENT_ID", ""),
+            "secret": os.getenv("SOCIAL_TWITTER_SECRET", ""),
+            "key": "",
+        }
+    },
 }
 
 SENDER_EMAIL_MESSAGE = os.getenv("SENDER_EMAIL_MESSAGE", "noreply@example.com")
