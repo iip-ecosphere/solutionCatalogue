@@ -35,7 +35,7 @@
               </tr>
               </thead>
               <tbody>
-              {% for field in basedata_fields %}
+              {% for field in components.0.get_basedata.1 %}
                 {% get_verbose_field_name components.0 field as name %}
                 <tr>
                   <th>{{ name }}</th>
@@ -44,7 +44,7 @@
                   {% endfor %}
                 </tr>
               {% endfor %}
-              {% for field in applicationprofile_fields %}
+              {% for field in components.0.get_application_profile.1 %}
                 {% get_verbose_field_name components.0 field as name %}
                 <tr>
                   <th>{{ name }}</th>
@@ -53,7 +53,7 @@
                   {% endfor %}
                 </tr>
               {% endfor %}
-              {% for field in use_fields %}
+              {% for field in components.0.get_use.1 %}
                 {% get_verbose_field_name components.0 field as name %}
                 <tr>
                   <th>{{ name }}</th>
@@ -62,7 +62,7 @@
                   {% endfor %}
                 </tr>
               {% endfor %}
-              {% for field in requirements_fields %}
+              {% for field in components.0.get_requirements.1 %}
                 {% get_verbose_field_name components.0 field as name %}
                 <tr>
                   <th>{{ name }}</th>
@@ -71,7 +71,7 @@
                   {% endfor %}
                 </tr>
               {% endfor %}
-              {% for field in technicalspecification_fields %}
+              {% for field in components.0.get_technical_specification.1 %}
                 {% get_verbose_field_name components.0 field as name %}
                 <tr>
                   <th>{{ name }}</th>
