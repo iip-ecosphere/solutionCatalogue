@@ -1,6 +1,39 @@
-<button class="button is-primary is-light is-rounded">
-    <span class="icon">
-      <i class="fab fa-twitter"></i>
-    </span>
-    <span>@jgthms</span>
-  </button>
+{% load list_fields %}
+<div class="dropdown is-up compare-button">
+  <div class="dropdown-trigger">
+    <button class="button is-success is-rounded" aria-haspopup="true" aria-controls="dropdown-menu7">
+      <span class="bellnumbers">
+        {{ products.count }}
+      </span>
+      <span class="icon">
+        <i class="fas fa-chart-pie"></i>
+      </span>
+      <span>Vergleich anzeigen</span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu7" role="menu">
+    <div class="dropdown-content">
+      <div class="dropdown-item">
+        {% for p in products %}
+        <div class="tags has-addons">
+          <span class="tag is-success">{{ p.name }}</span>
+          <a class="tag is-delete"></a>
+        </div>
+        {% endfor %}
+        {% if products.count > 1 %}
+        {% create_query_params products as params %}
+        <a href="{% url 'catalogue:compare' %}{{ params }}">Zum Vergleich</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var dropdown = document.querySelector('.dropdown');
+  dropdown.addEventListener('click', function(event) {
+    event.stopPropagation();
+    dropdown.classList.toggle('is-active');
+  });
+</script>
+

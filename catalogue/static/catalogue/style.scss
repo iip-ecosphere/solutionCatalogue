@@ -170,3 +170,28 @@ div.control li {
   top: 70%;
   z-index: 100;
 }
+
+/* compare button */
+.compare-button {
+  position: fixed;
+  right:    0;
+  bottom:   0;
+  margin: 20px;
+  z-index: 100;
+}
+
+
+.bellnumbers {
+  font-size:12px;
+  background-color:#f11382;
+  width:16px;
+  line-height: 16px;
+  text-align: center;
+  color:#fff;
+  z-index: 2;
+  border-radius: 3px;
+  position: fixed;
+  right:    0;
+  bottom:   40;
+  margin: 20px;
+}

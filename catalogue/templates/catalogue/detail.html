@@ -11,11 +11,15 @@
           <h1 class="title is-3 has-text-white">
             {{ component.name }}
             <span>
-            <button class="button is-small is-success is-light is-rounded">
+            <button class="button is-small is-success is-light is-rounded"
+              hx-post="{% url 'catalogue:add_cart' component.id %}"
+              hx-target="#shopping_card"
+              hx-swap="innerHTML"
+            >
               <span class="icon">
-                <i class="fas fa-chart-pie"  ></i>
+                <i class="fas fa-plus"  ></i>
               </span>
-              <span>Jetzt Vergleichen</span>
+              <span>Vergleichen</span>
             </button>
             </span>
           </h1>
@@ -116,6 +120,14 @@
       </div>
     </div>
   </section>
+  <div
+  id="shopping_card"
+  hx-trigger="load"
+  hx-get="{% url 'catalogue:get_cart' %}"
+  hx-target="#shopping_card"
+  hx-swap="innerHTML"
+  >
+  </div>
 {% endblock %}
 {% block script %}
   <script>
