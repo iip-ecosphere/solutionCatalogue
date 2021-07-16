@@ -1,5 +1,6 @@
 {% load list_fields %}
-<div class="dropdown is-up compare-button">
+{% if products.count > 0 %}
+<div class="dropdown is-up compare-button" dropdown-menu-min-width="20rem">
   <div class="dropdown-trigger">
     <button class="button is-success is-rounded" aria-haspopup="true" aria-controls="dropdown-menu7">
       <span class="bellnumbers">
@@ -12,22 +13,54 @@
     </button>
   </div>
   <div class="dropdown-menu" id="dropdown-menu7" role="menu">
-    <div class="dropdown-content">
-      <div class="dropdown-item">
-        {% for p in products %}
-        <div class="tags has-addons">
-          <span class="tag is-success">{{ p.name }}</span>
-          <a class="tag is-delete"></a>
+    <div class="dropdown-item">
+      <nav class="panel is-success">
+        <p class="panel-heading">
+          Produkte
+        </p>
+          {% for p in products %}
+          <label class="panel-block" style="background-color: white;">
+            <span>
+              <button
+              class="delete is-small"
+              hx-delete="{% url 'catalogue:delete_cart' p.id %}?c={{ c_pk }}"
+              hx-target="#shopping_card"
+              hx-swap="innerHTML"
+              >
+              </button>
+              {{ p.name }}
+            </span>
+          </label>
+          {% endfor %}
+        </a>
+        <div class="panel-block" style="background-color: white;">
+          {% if products.count > 1 %}
+            {% create_query_params products as params %}
+            <a class="button is-success" href="{% url 'catalogue:compare' %}{{ params }}">
+              <span>Zum Vergleich</span>
+              <span class="icon">
+                <i class="fas fa-arrow-right"></i>
+              </span>
+            </a>
+          {% endif %}
         </div>
-        {% endfor %}
-        {% if products.count > 1 %}
-        {% create_query_params products as params %}
-        <a href="{% url 'catalogue:compare' %}{{ params }}">Zum Vergleich</a>
-        {% endif %}
-      </div>
+      </nav>
     </div>
   </div>
 </div>
+{% endif %}
+<!-- We need to know if the current component is in the cart. Therefore we need context from the detail view (c_pk) -->
+{% if c_pk != -1 and c_pk not in request.session.cart %}
+      <button id="addButton" class="addButtonDetail button is-success"
+        hx-post="{% url 'catalogue:add_cart' c_pk %}?c={{ c_pk }}"
+        hx-target="#shopping_card"
+        hx-swap="innerHTML"
+      >
+        <span class="icon">
+          <i class="fas fa-plus"  ></i>
+        </span>
+      </button>
+{% endif %}
 
 <script>
   var dropdown = document.querySelector('.dropdown');
