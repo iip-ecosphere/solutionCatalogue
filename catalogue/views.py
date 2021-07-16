@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.views import generic
+from django.views import generic, View
 
 from django_filters.views import FilterView
 from django.shortcuts import render
@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
+from django.http import HttpResponse
 
 from . import COMPONENT_RELATED_FIELDS
 from .forms import InquiryForm, FeedbackForm
@@ -133,21 +134,21 @@ class ComparisonView(FilterView):
 
         return context
 
-@require_http_methods(['POST'])
-def add_shopping_cart(request, pk):
-    print(request.session['cart'], len(request.session['cart']))
-    if 'cart' not in request.session:
-        request.session['cart'] = []
-    request.session['cart'].append(pk)
-    products = Component.objects.filter(id__in=request.session['cart'])
-    return render(request, 'catalogue/modals/compare/compare_button.html', {'products': products})
 
+class CartView(View):
 
-@require_http_methods(['GET'])
-def get_shopping_cart(request):
-    if 'cart' in request.session and len(request.session['cart']) > 0:
+    def post(self, request, pk):
+        if pk not in request.session['cart'] and len(request.session['cart']) <= 3:
+            request.session['cart'].append(pk)
+        return self.get(request)
+
+    def delete(self, request, pk):
+        request.session['cart'].remove(pk)
+        return self.get(request)
+
+    def get(self, request):
+        if 'cart' not in request.session:
+            request.session['cart'] = []
+        c_pk = request.GET.get('c', -1) # for detail view add button rendering
         products = Component.objects.filter(id__in=request.session['cart'])
-        return render(request, 'catalogue/modals/compare/compare_button.html', {'products': products})
-    else:
-        view = SearchView.as_view()
-        return view(request, *args, **kwargs)
+        return render(request, 'catalogue/modals/compare/compare_button.html', {'products': products, 'c_pk': int(c_pk)})
