@@ -75,10 +75,3 @@ def check_category_empty(m: models.Model, field_names: List[str]) -> bool:
     return not any(m._meta.get_field(name) for name in field_names)
 
 
-@register.simple_tag
-def create_query_params(items):
-    r = "?"
-    for v in items:
-        r += "id="+str(v.id)+"&"
-    return r
-

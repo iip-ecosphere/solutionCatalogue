@@ -1,66 +1,80 @@
 {% load list_fields %}
-{% if products.count > 0 %}
-<div class="dropdown is-up compare-button" dropdown-menu-min-width="20rem">
-  <div class="dropdown-trigger">
-    <button class="button is-success is-rounded" aria-haspopup="true" aria-controls="dropdown-menu7">
-      <span class="bellnumbers">
-        {{ products.count }}
-      </span>
-      <span class="icon">
-        <i class="fas fa-chart-pie"></i>
-      </span>
-      <span>Vergleich anzeigen</span>
-    </button>
-  </div>
-  <div class="dropdown-menu" id="dropdown-menu7" role="menu">
-    <div class="dropdown-item">
-      <nav class="panel is-success">
-        <p class="panel-heading">
-          Produkte
-        </p>
-          {% for p in products %}
-          <label class="panel-block" style="background-color: white;">
-            <span>
-              <button
-              class="delete is-small"
-              hx-delete="{% url 'catalogue:delete_cart' p.id %}?c={{ c_pk }}"
-              hx-target="#shopping_card"
-              hx-swap="innerHTML"
-              >
-              </button>
-              {{ p.name }}
-            </span>
-          </label>
-          {% endfor %}
-        </a>
-        <div class="panel-block" style="background-color: white;">
-          {% if products.count > 1 %}
-            {% create_query_params products as params %}
-            <a class="button is-success" href="{% url 'catalogue:compare' %}{{ params }}">
-              <span>Zum Vergleich</span>
-              <span class="icon">
-                <i class="fas fa-arrow-right"></i>
+
+<div class="compare-button" style="display: flex; flex-direction:row;">
+  {% if products.count %}
+  <div class="dropdown is-up" dropdown-menu-min-width="20rem" style="flex: 1 1 auto;">
+    <div class="dropdown-trigger">
+      <button class="button is-success" aria-haspopup="true" aria-controls="dropdown-menu7">
+        <span class="bellnumbers">
+          {{ products.count }}
+        </span>
+        <span class="icon">
+          <i class="fas fa-chart-pie"></i>
+        </span>
+        {% if products.count < 4 %}
+        <span>Vergleich anzeigen</span>
+        {% else %}
+        <span>Warenkorb voll</span>
+        {% endif %}
+      </button>
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu7" role="menu">
+      <div class="dropdown-item">
+        <nav class="panel is-success">
+          <p class="panel-heading">
+            Produkte
+          </p>
+            {% for p in products %}
+            <p class="panel-block" style="background-color: white;">
+              <span>
+                <button
+                class="delete panel-icon"
+                hx-delete="{% url 'catalogue:delete_cart' p.id %}?c={{ c_pk }}"
+                hx-target="#shopping_card"
+                hx-swap="innerHTML"
+                >
+                </button>
+                <a href="{% url 'catalogue:detail' p.id %}">{{ p.name }}</a>
               </span>
-            </a>
-          {% endif %}
-        </div>
-      </nav>
+            </p>
+            {% endfor %}
+          </a>
+          <div class="panel-block" style="background-color: white;">
+            {% if products.count > 1 %}
+              <a class="button is-success" href="{% url 'catalogue:compare' %}?{% for v in products %}id={{ v.id }}&{% endfor %}">
+                <span>Zum Vergleich</span>
+                <span class="icon">
+                  <i class="fas fa-arrow-right"></i>
+                </span>
+              </a>
+            {% endif %}
+          </div>
+        </nav>
+      </div>
     </div>
   </div>
+  {% endif %}
+  <!-- We need to know if the current component is in the cart. Therefore we need context from the detail view (c_pk) -->
+  {% if not in_cart %}
+        {% if products.count %}
+          <!--<div class="divider is-vertical is-left" style="margin-left: -10px; margin-right: -5px; z-index: 102;"></div>-->
+        {% endif %}
+        <button id="addButton" class="button is-success"  style="flex: 1 1 auto; margin-left: -5px; border-left: 2px solid white; border-radius: 0;"
+          hx-post="{% url 'catalogue:add_cart' c_pk %}?c={{ c_pk }}"
+          hx-target="#shopping_card"
+          hx-swap="innerHTML"
+        >
+        <div class="icon-text">
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+          {% if not products.count %}
+            <span>Vergleichen</span>
+          {% endif %}
+        </div>
+        </button>
+  {% endif %}
 </div>
-{% endif %}
-<!-- We need to know if the current component is in the cart. Therefore we need context from the detail view (c_pk) -->
-{% if c_pk != -1 and c_pk not in request.session.cart %}
-      <button id="addButton" class="addButtonDetail button is-success"
-        hx-post="{% url 'catalogue:add_cart' c_pk %}?c={{ c_pk }}"
-        hx-target="#shopping_card"
-        hx-swap="innerHTML"
-      >
-        <span class="icon">
-          <i class="fas fa-plus"  ></i>
-        </span>
-      </button>
-{% endif %}
 
 <script>
   var dropdown = document.querySelector('.dropdown');

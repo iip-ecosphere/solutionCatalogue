@@ -40,8 +40,7 @@
         </div>
         <button
           id="addComponent"
-          class="button is-light"
-          style="position: absolute; right: 0; bottom: 0;"
+          class="button is-light level-right"
           hx-post="{% url 'catalogue:add_cart' c.id %}"
           hx-target="#shopping_card"
           hx-swap="innerHTML"

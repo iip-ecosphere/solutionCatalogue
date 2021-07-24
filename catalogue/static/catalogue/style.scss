@@ -190,10 +190,9 @@ div.control li {
   color:#fff;
   z-index: 2;
   border-radius: 20px;
-  position: fixed;
-  right:    200px;
-  bottom:   25px;
-  margin: 20px;
+  position: absolute;
+  left:    -5px;
+  top:   -5px;
 }
 
 .addButtonDetail {
@@ -205,6 +204,7 @@ div.control li {
 }
 
 /* show add button when hover on component card */
+/*
 .card #addComponent {
   visibility: hidden;
 }
@@ -212,3 +212,4 @@ div.control li {
 .card:hover #addComponent {
   visibility: visible;
 }
+*/
