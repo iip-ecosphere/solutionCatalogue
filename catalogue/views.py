@@ -151,6 +151,6 @@ class CartView(View):
         if 'cart' not in request.session:
             request.session['cart'] = []
         c_pk = int(request.GET.get('c', -1)) # current component
-        in_cart = True if c_pk in request.session['cart'] or c_pk == -1 else False
-        products = Component.objects.filter(id__in=request.session['cart'])
-        return render(request, 'catalogue/modals/compare/compare_button.html', {'products': products, 'c_pk': c_pk, 'in_cart': in_cart})
+        in_cart = (c_pk in request.session['cart'] or c_pk == -1)
+        components = Component.objects.filter(id__in=request.session['cart'])
+        return render(request, 'catalogue/modals/compare/compare_button.html', {'components': components, 'c_pk': c_pk, 'in_cart': in_cart})
