@@ -114,7 +114,7 @@ class ComponentAdmin(admin.ModelAdmin):
     list_editable = ("published", "allow_email")
     fieldsets = (
         (None, {"fields": ("published",)}),
-         (None, {"fields": ("allow_email",)}),
+        (None, {"fields": ("allow_email",)}),
         # Base
         (
             BaseData._meta.verbose_name,

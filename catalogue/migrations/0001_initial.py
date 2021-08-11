@@ -45,7 +45,6 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Erstellt')),
                 ('lastmodified_at', models.DateTimeField(auto_now=True, verbose_name='Zuletzt bearbeitet')),
                 ('published', models.BooleanField(default=False, verbose_name='Veröffentlicht')),
-                ('allow_email', models.BooleanField(default=True, verbose_name='Erlaube Kontaktaufnahme per Mail')),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
