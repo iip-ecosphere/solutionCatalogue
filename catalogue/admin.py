@@ -26,7 +26,7 @@ from .models import (
     KPI,
 )
 from .models.users import Profile
-from .models.messages import Inquiry, Feedback
+from .models.messages import Inquiry, Feedback, Report
 
 
 def is_admin(request):
@@ -292,6 +292,28 @@ class FeedbackAdmin(admin.ModelAdmin):
     @admin.display(description=Feedback._meta.get_field("search_url").verbose_name)
     def get_search_url(self, obj):
         return mark_safe(f"""<a href='{obj.search_url}'>{obj.search_url}</a>""")
+
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    list_display = (
+        "created",
+        "name",
+        "mail",
+        "message_short",
+        "component",
+    )
+    readonly_fields = (
+        "created",
+        "name",
+        "mail",
+        "message",
+        "component",
+    )
+
+    @admin.display(description=Report._meta.get_field("message").verbose_name)
+    def message_short(self, obj):
+        return Truncator(obj.message).chars(40)
 
 
 class ProfileInline(admin.StackedInline):
