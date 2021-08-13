@@ -1,0 +1,7 @@
+{% block content %}
+Der Nutzer {{ name }} hat die Komponente {{ component.name }} gemeldet.
+Er begründet die Meldung folgendermaßen:
+{{ message }}
+
+Die Email dieses Nutzers lautet: {{ email }}
+{% endblock content %}

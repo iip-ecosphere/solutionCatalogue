@@ -16,4 +16,7 @@ urlpatterns = [
     path(
         "component/<int:pk>/contact", views.SendInquiry.as_view(), name="send_inquiry"
     ),
+    path(
+        "component/<int:pk>/report", views.ReportView.as_view(), name="report_component"
+    ),
 ]

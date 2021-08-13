@@ -26,7 +26,7 @@ from .models import (
     KPI,
 )
 from .models.users import Profile
-from .models.messages import Inquiry, Feedback
+from .models.messages import Inquiry, Feedback, Report
 
 
 def is_admin(request):
@@ -294,6 +294,29 @@ class FeedbackAdmin(admin.ModelAdmin):
     get_search_url.short_description = Feedback._meta.get_field(
         "search_url"
     ).verbose_name
+
+    message_short.short_description = Feedback._meta.get_field("message").verbose_name
+
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    list_display = (
+        "created",
+        "name",
+        "mail",
+        "message_short",
+        "component",
+    )
+    readonly_fields = (
+        "created",
+        "name",
+        "mail",
+        "message",
+        "component",
+    )
+
+    def message_short(self, obj):
+        return Truncator(obj.message).chars(40)
 
     message_short.short_description = Feedback._meta.get_field("message").verbose_name
 

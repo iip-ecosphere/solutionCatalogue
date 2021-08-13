@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 
 from . import COMPONENT_RELATED_FIELDS
-from .forms import InquiryForm, FeedbackForm
+from .forms import InquiryForm, FeedbackForm, ReportForm
 from .filters import (
     ComponentFilter,
     ComponentFilterFrontPage,
@@ -54,8 +54,8 @@ class SearchFeedbackView(generic.edit.FormView):
 
     def send_mail_feedback(self, form):
         User = get_user_model()
-        admin_emails = (
-            User.objects.filter(is_superuser=True).values_list("email", flat=True)
+        admin_emails = User.objects.filter(is_superuser=True).values_list(
+            "email", flat=True
         )
 
         context = {
@@ -121,3 +121,46 @@ class ComparisonView(FilterView):
     template_name = "catalogue/compare.html"
     context_object_name = "components"
     filterset_class = ComponentComparisonFilter
+
+
+class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
+    template_name = "catalogue/modals/report/form.html"
+    success_template = "catalogue/modals/report/success.html"
+    form_class = ReportForm
+    model = Component
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().post(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.request = request
+        self.object = self.get_object()
+        return super().post(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        report = form.save(commit=False)
+        report.component = self.object
+        report.save()
+        self.send_mail_report(report)
+        return render(self.request, self.success_template, self.get_context_data())
+
+    def send_mail_report(self, form):
+        User = get_user_model()
+        admin_emails = User.objects.filter(is_superuser=True).values_list(
+            "email", flat=True
+        )
+
+        context = {
+            "name": form.name,
+            "message": form.message,
+            "email": form.mail,
+            "component": form.component,
+        }
+        content = render_to_string("catalogue/emails/email_report.txt", context)
+        send_mail(
+            subject="IIP Ecosphere Lösungskatalog: Report",
+            message=content,
+            from_email=settings.SENDER_EMAIL_FEEDBACK,
+            recipient_list=admin_emails,
+        )
