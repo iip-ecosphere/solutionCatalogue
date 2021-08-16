@@ -89,6 +89,7 @@
           <p class="has-text-white">Kontakt: {{ component.contact }}</p>
           <p class="has-text-white">{{ component.additional_info }}</p>
         </div>
+        {% if component.allow_email %}
         <div class="column is-half">
           <div class="card">
             <div class="card-content">
@@ -105,6 +106,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
   </section>
