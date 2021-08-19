@@ -89,12 +89,15 @@
           <p class="has-text-white">Kontakt: {{ component.contact }}</p>
           <p class="has-text-white">{{ component.additional_info }}</p>
           <div id="reportModal"></div>
-          <button class="button is-danger is-rounded" hx-get="{% url 'catalogue:report_component' component.id %}"
-          hx-target="#reportModal" style="margin-top:30px;">
+          <div class="mt-6">
+          <a class="has-text-danger" hx-get="{% url 'catalogue:report_component' component.id %}"
+          hx-target="#reportModal">
+          Report
             <span class="icon is-small">
               <i class="fas fa-flag"></i>
             </span>
-          </button>
+          </a>
+        </div>
         </div>
         <div class="column is-half">
           <div class="card">
@@ -134,11 +137,6 @@
         x[i].style.display = "none";
       }
       document.getElementById(tabName).style.display = "block";
-    }
-
-    function closeModal() {
-      var container = document.getElementById("reportModal");
-      container.removeChild(container.childNodes[0]);
     }
   </script>
 {% endblock %}

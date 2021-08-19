@@ -131,7 +131,7 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        return super().post(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.request = request
