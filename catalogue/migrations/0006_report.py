@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Erstellt')),
                 ('name', models.CharField(max_length=50, verbose_name='Name')),
                 ('mail', models.EmailField(max_length=254, verbose_name='E-Mail-Adresse')),
-                ('message', models.TextField(help_text='Ihre Nachricht an die Admins', max_length=2000, verbose_name='Warum möchten Sie diese Komponente melden?')),
+                ('message', models.TextField(help_text='Ihre Nachricht', max_length=2000, verbose_name='Warum möchten Sie diese Komponente melden?')),
                 ('component', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='catalogue.component', verbose_name='KI Komponente')),
             ],
             options={

@@ -1,11 +1,11 @@
 {% load bulma_tags %}
 <div class="modal is-active">
-  <div class="modal-background" onclick="closeModal()"></div>
+  <div class="modal-background" onclick="closeReportModal()"></div>
   <div class="modal-content">
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">Komponente '{{ component.name }}' melden</p>
-        <button class="delete" aria-label="close" onclick="closeModal()"></button>
+        <button class="delete" aria-label="close" onclick="closeReportModal()"></button>
       </header>
       <form hx-post="{% url 'catalogue:report_component' component.id %}" hx-swap="outerHTML">
         <section class="modal-card-body">
@@ -23,3 +23,10 @@
     </div>
   </div>
 </div>
+
+<script>
+  function closeReportModal() {
+    var container = document.getElementById("reportModal");
+    container.removeChild(container.childNodes[0]);
+  }
+</script>

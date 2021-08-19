@@ -69,7 +69,7 @@ class Report(SenderInfo):
 
     message = models.TextField(
         "Warum möchten Sie diese Komponente melden?",
-        help_text="Ihre Nachricht an die Admins",
+        help_text="Ihre Nachricht",
         max_length=2000,
     )
 
