@@ -47,12 +47,8 @@
     </div>
   </div>
   {% endif %}
-  <!-- We need to know if the current component is in the cart. Therefore we need context from the detail view (c_pk) -->
   {% if not in_cart %}
-        {% if components.count %}
-          <!--<div class="divider is-vertical is-left" style="margin-left: -10px; margin-right: -5px; z-index: 102;"></div>-->
-        {% endif %}
-        <button id="addButton" class="button is-success"  style="margin-left: -5px; border-left: 2px solid white; border-radius: 0;"
+        <button id="addButton" class="button is-success" title="Füge Komponente in den Warenkorb hinzu" style="margin-left: -5px; border-left: 2px solid white; border-radius: 0;"
           hx-post="{% url 'catalogue:add_cart' c_pk %}?c={{ c_pk }}"
           hx-target="#shopping_card"
           hx-swap="innerHTML"

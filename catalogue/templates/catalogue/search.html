@@ -59,7 +59,7 @@
           <div class="columns is-flex-wrap-wrap">
             {% for c in components %}
               <div class="column is-half-desktop is-one-third-fullhd">
-                {% include "catalogue/includes/component-card.html" with c=c only %}
+                {% include "catalogue/includes/component-card.html" with c=c showAdd=True only %}
               </div>
             {% empty %}
               <div class="column has-text-centered">
