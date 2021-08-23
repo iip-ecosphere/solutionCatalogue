@@ -26,6 +26,7 @@ from .models import (
     AIMethod,
     Licenses,
     KPI,
+    DeletedComponent,
 )
 from .models.users import Profile
 from .models.messages import Inquiry, Feedback, Report
