@@ -61,3 +61,17 @@ def get_field(m: models.Model, field_name: str) -> str:
         return choice
     else:
         return field.value_to_string(m)
+
+
+@register.simple_tag
+def get_related_field(m: models.Model, field: str) -> QuerySet:
+    """Return related objects for a field in a model"""
+    return getattr(m, field + "_set").all()
+
+
+@register.simple_tag
+def check_category_empty(m: models.Model, field_names: List[str]) -> bool:
+    """Check if all given fields are empty"""
+    return not any(m._meta.get_field(name) for name in field_names)
+
+

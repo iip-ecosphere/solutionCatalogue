@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.views import generic
+from django.views import generic, View
 
 from django_filters.views import FilterView
 from django.shortcuts import render
@@ -7,6 +7,8 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.views.decorators.http import require_http_methods
+from django.http import HttpResponse
 
 from . import COMPONENT_RELATED_FIELDS
 from .forms import InquiryForm, FeedbackForm
@@ -83,6 +85,7 @@ class DetailView(generic.DetailView):
         return context
 
 
+
 class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
     http_method_names = ["post"]
     template_name = "catalogue/modals/contact/success.html"
@@ -121,3 +124,33 @@ class ComparisonView(FilterView):
     template_name = "catalogue/compare.html"
     context_object_name = "components"
     filterset_class = ComponentComparisonFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for parent in Component.__bases__:
+            context[parent.__name__.lower() + "_fields"] = [
+                x.name for x in parent._meta.get_fields()
+            ]
+
+        return context
+
+
+class CartView(View):
+
+    def post(self, request, pk):
+        if pk not in request.session['cart'] and len(request.session['cart']) <= 3:
+            request.session['cart'].append(pk)
+        return self.get(request)
+
+    def delete(self, request, pk):
+        print(int(request.GET.get('c', -1)))
+        request.session['cart'].remove(pk)
+        return self.get(request)
+
+    def get(self, request):
+        if 'cart' not in request.session:
+            request.session['cart'] = []
+        c_pk = int(request.GET.get('c', -1)) # current component
+        in_cart = (c_pk in request.session['cart'] or c_pk == -1)
+        components = Component.objects.filter(id__in=request.session['cart'])
+        return render(request, 'catalogue/modals/compare/compare_button.html', {'components': components, 'c_pk': c_pk, 'in_cart': in_cart})

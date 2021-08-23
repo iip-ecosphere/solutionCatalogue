@@ -110,6 +110,13 @@
       </div>
     </div>
   </section>
+    <div
+      id="shopping_card"
+      hx-trigger="load"
+      hx-get="{% url 'catalogue:get_cart' %}?c={{ component.id }}"
+      hx-swap="innerHTML"
+      >
+    </div>
 {% endblock %}
 {% block script %}
   <script>
