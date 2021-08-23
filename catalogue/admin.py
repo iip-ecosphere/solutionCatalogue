@@ -201,6 +201,10 @@ class ComponentAdmin(admin.ModelAdmin):
         LicensesInline,
     ]
 
+    @admin.display(
+        description=Component._meta.get_field("created_by").verbose_name,
+        ordering="created_by",
+    )
     def get_created_by(self, obj):
         return mark_safe(
             f"""
@@ -210,16 +214,14 @@ class ComponentAdmin(admin.ModelAdmin):
         """
         )
 
-    get_created_by.short_description = Component._meta.get_field(
-        "created_by"
-    ).verbose_name
-    get_created_by.admin_order_field = "created_by"
-
     def get_queryset(self, request):
         if is_admin_or_mod(request):
             return Component.objects.all()
         return Component.objects.filter(created_by=request.user)
 
+    @admin.display(
+        description=Component._meta.get_field("name").verbose_name, ordering="name"
+    )
     def get_name(self, obj):
         return mark_safe(
             f"""
@@ -228,9 +230,6 @@ class ComponentAdmin(admin.ModelAdmin):
             </a>
         """
         )
-
-    get_name.short_description = "Name"
-    get_name.admin_order_field = "name"
 
     def save_model(self, request, obj, form, change):
         if not hasattr(obj, "created_by"):
@@ -262,10 +261,9 @@ class InquiryAdmin(admin.ModelAdmin):
             return Inquiry.objects.all()
         return Inquiry.objects.filter(recipient=request.user)
 
+    @admin.display(description=Inquiry._meta.get_field("message").verbose_name)
     def message_short(self, obj):
         return Truncator(obj.message).chars(40)
-
-    message_short.short_description = Inquiry._meta.get_field("message").verbose_name
 
 
 @admin.register(Feedback)
@@ -274,43 +272,26 @@ class FeedbackAdmin(admin.ModelAdmin):
         "created",
         "name",
         "mail",
-        "message_short",
         "sentiment",
+        "message_short",
         "get_search_url",
     )
     readonly_fields = (
         "created",
         "name",
         "mail",
-        "message",
         "sentiment",
+        "message",
         "search_url",
     )
 
+    @admin.display(description=Feedback._meta.get_field("message").verbose_name)
     def message_short(self, obj):
         return Truncator(obj.message).chars(40)
 
+    @admin.display(description=Feedback._meta.get_field("search_url").verbose_name)
     def get_search_url(self, obj):
         return mark_safe(f"""<a href='{obj.search_url}'>{obj.search_url}</a>""")
-
-    get_search_url.short_description = Feedback._meta.get_field(
-        "search_url"
-    ).verbose_name
-
-    message_short.short_description = Feedback._meta.get_field("message").verbose_name
-
-
-# @admin.register(User)
-# class ModeratorUserAdmin(UserAdmin):
-#     def get_readonly_fields(self, request, obj=None):
-#         if not request.user.is_superuser:
-#             return ["username", "date_joined", "last_login", "is_superuser", "is_staff", "user_permissions"]
-#         return []
-#
-#     def get_queryset(self, request):
-#         if request.user.is_superuser:
-#             return User.objects.all()
-#         return User.objects.filter(groups__name__in=['Autoren'])
 
 
 class ProfileInline(admin.StackedInline):
@@ -336,24 +317,23 @@ class CustomUserAdmin(UserAdmin):
     list_select_related = ("profile",)
     inlines = (ProfileInline,)
 
+    @admin.display(description="Gruppen")
     def get_groups(self, obj):
         r = sorted([str(g) for g in obj.groups.all()])
         if obj.user_permissions.count():
             r += ["+"]
         return mark_safe("<nobr>{}</nobr>".format(", ".join(r)))
 
-    get_groups.short_description = "Gruppen"
-
+    @admin.display(
+        description=Profile._meta.get_field("company").verbose_name,
+        ordering="profile__company",
+    )
     def get_company(self, obj):
         return obj.profile.company
 
-    get_company.short_description = Profile._meta.get_field("company").verbose_name
-    get_company.admin_order_field = "profile__company"
-
+    @admin.display(description=Component._meta.verbose_name_plural)
     def get_component_count(self, obj):
         return obj.profile.component_count
-
-    get_component_count.short_description = "Komponenten"
 
     def get_inline_instances(self, request, obj=None):
         if not obj:

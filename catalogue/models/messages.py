@@ -50,7 +50,7 @@ class Feedback(SenderInfo):
         default=CHOICES[0][0],
     )
     message = models.TextField("Nachricht", help_text="Ihr Feedback", max_length=2000)
-    search_url = models.TextField(default=None)
+    search_url = models.TextField("Such-URL", default=None)
 
     def __str__(self):
         return "{} {}".format(self._meta.verbose_name, self.id)
