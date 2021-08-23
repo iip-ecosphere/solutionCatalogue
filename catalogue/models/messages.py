@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.fields import URLField
 
 from .users import User
 from .component import Component
