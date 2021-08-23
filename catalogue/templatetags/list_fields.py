@@ -73,5 +73,3 @@ def get_related_field(m: models.Model, field: str) -> QuerySet:
 def check_category_empty(m: models.Model, field_names: List[str]) -> bool:
     """Check if all given fields are empty"""
     return not any(m._meta.get_field(name) for name in field_names)
-
-

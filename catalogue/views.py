@@ -56,8 +56,8 @@ class SearchFeedbackView(generic.edit.FormView):
 
     def send_mail_feedback(self, form):
         User = get_user_model()
-        admin_emails = (
-            User.objects.filter(is_superuser=True).values_list("email", flat=True)
+        admin_emails = User.objects.filter(is_superuser=True).values_list(
+            "email", flat=True
         )
 
         context = {
@@ -83,7 +83,6 @@ class DetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context["form"] = InquiryForm()
         return context
-
 
 
 class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
@@ -136,21 +135,24 @@ class ComparisonView(FilterView):
 
 
 class CartView(View):
-
     def post(self, request, pk):
-        if pk not in request.session['cart'] and len(request.session['cart']) <= 3:
-            request.session['cart'].append(pk)
+        if pk not in request.session["cart"] and len(request.session["cart"]) <= 3:
+            request.session["cart"].append(pk)
         return self.get(request)
 
     def delete(self, request, pk):
-        print(int(request.GET.get('c', -1)))
-        request.session['cart'].remove(pk)
+        print(int(request.GET.get("c", -1)))
+        request.session["cart"].remove(pk)
         return self.get(request)
 
     def get(self, request):
-        if 'cart' not in request.session:
-            request.session['cart'] = []
-        c_pk = int(request.GET.get('c', -1)) # current component
-        in_cart = (c_pk in request.session['cart'] or c_pk == -1)
-        components = Component.objects.filter(id__in=request.session['cart'])
-        return render(request, 'catalogue/modals/compare/compare_button.html', {'components': components, 'c_pk': c_pk, 'in_cart': in_cart})
+        if "cart" not in request.session:
+            request.session["cart"] = []
+        c_pk = int(request.GET.get("c", -1))  # current component
+        in_cart = c_pk in request.session["cart"] or c_pk == -1
+        components = Component.objects.filter(id__in=request.session["cart"])
+        return render(
+            request,
+            "catalogue/modals/compare/compare_button.html",
+            {"components": components, "c_pk": c_pk, "in_cart": in_cart},
+        )
