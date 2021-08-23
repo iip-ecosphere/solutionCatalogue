@@ -165,7 +165,6 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.request = request
         self.object = self.get_object()
         return super().post(request, *args, **kwargs)
 
@@ -177,11 +176,6 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
         return render(self.request, self.success_template, self.get_context_data())
 
     def send_mail_report(self, form):
-        User = get_user_model()
-        admin_emails = User.objects.filter(is_superuser=True).values_list(
-            "email", flat=True
-        )
-
         context = {
             "name": form.name,
             "message": form.message,
@@ -189,6 +183,9 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             "component": form.component,
         }
         content = render_to_string("catalogue/emails/email_report.txt", context)
+        admin_emails = get_user_model().objects.filter(is_superuser=True).values_list(
+            "email", flat=True
+        )
         send_mail(
             subject="IIP Ecosphere Lösungskatalog: Report",
             message=content,
