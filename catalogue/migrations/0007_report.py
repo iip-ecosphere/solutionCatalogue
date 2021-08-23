@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalogue', '0005_feedback'),
+        ('catalogue', '0006_component_allow_email'),
     ]
 
     operations = [

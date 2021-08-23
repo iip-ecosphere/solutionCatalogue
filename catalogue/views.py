@@ -47,16 +47,7 @@ class SearchFeedbackView(generic.edit.FormView):
         self.send_mail_feedback(feedback)
         return render(self.request, self.success_template, self.get_context_data())
 
-<<<<<<< HEAD
-    def send_mail_feedback(self, form):
-        User = get_user_model()
-        admin_emails = User.objects.filter(is_superuser=True).values_list(
-            "email", flat=True
-        )
-
-=======
     def send_mail_feedback(self, feedback: Feedback):
->>>>>>> upstream/main
         context = {
             "name": feedback.name,
             "message": feedback.message,
@@ -122,7 +113,6 @@ class ComparisonView(FilterView):
     context_object_name = "components"
     filterset_class = ComponentComparisonFilter
 
-<<<<<<< HEAD
 
 class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
     template_name = "catalogue/modals/report/form.html"
@@ -135,7 +125,6 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.request = request
         self.object = self.get_object()
         return super().post(request, *args, **kwargs)
 
@@ -165,7 +154,6 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             from_email=settings.SENDER_EMAIL_FEEDBACK,
             recipient_list=admin_emails,
         )
-=======
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         for parent in Component.__bases__:
@@ -206,4 +194,3 @@ class CartView(generic.TemplateView):
             or context["current_id"] == -1
         )
         return context
->>>>>>> upstream/main
