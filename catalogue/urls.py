@@ -16,7 +16,6 @@ urlpatterns = [
     path(
         "component/<int:pk>/contact", views.SendInquiry.as_view(), name="send_inquiry"
     ),
-    path("compare/add/<int:pk>/", views.CartView.as_view(), name="add_cart"),
-    path("compare/get/", views.CartView.as_view(), name="get_cart"),
-    path("compare/delete/<int:pk>/", views.CartView.as_view(), name="delete_cart"),
+    path("cart/<int:pk>/", views.CartView.as_view(), name="edit_cart"),
+    path("cart/", views.CartView.as_view(), name="get_cart"),
 ]

@@ -1,5 +1,4 @@
-from django.urls import reverse
-from django.views import generic, View
+from django.views import generic
 
 from django_filters.views import FilterView
 from django.shortcuts import render
@@ -134,25 +133,33 @@ class ComparisonView(FilterView):
         return context
 
 
-class CartView(View):
+class CartView(generic.TemplateView):
+    template_name = "catalogue/modals/comparison_cart.html"
+
     def post(self, request, pk):
-        if pk not in request.session["cart"] and len(request.session["cart"]) <= 3:
-            request.session["cart"].append(pk)
+        """Add item to cart"""
+        cart_content = request.session.get("cart", [])
+        if pk not in cart_content and len(cart_content) <= 3:
+            request.session["cart"] = cart_content + [pk]
         return self.get(request)
 
     def delete(self, request, pk):
-        print(int(request.GET.get("c", -1)))
-        request.session["cart"].remove(pk)
+        """Remove item from cart"""
+        try:
+            request.session["cart"].remove(pk)
+        except (KeyError, ValueError):
+            pass
         return self.get(request)
 
-    def get(self, request):
-        if "cart" not in request.session:
-            request.session["cart"] = []
-        c_pk = int(request.GET.get("c", -1))  # current component
-        in_cart = c_pk in request.session["cart"] or c_pk == -1
-        components = Component.objects.filter(id__in=request.session["cart"])
-        return render(
-            request,
-            "catalogue/modals/compare/compare_button.html",
-            {"components": components, "c_pk": c_pk, "in_cart": in_cart},
+    def get_context_data(self, **kwargs):
+        """Fetch current cart content"""
+        context = super().get_context_data(**kwargs)
+        context["components"] = Component.objects.filter(
+            id__in=self.request.session.get("cart", [])
         )
+        context["current_id"] = int(self.request.GET.get("c", -1))
+        context["in_cart"] = (
+            context["current_id"] in self.request.session.get("cart", [])
+            or context["current_id"] == -1
+        )
+        return context

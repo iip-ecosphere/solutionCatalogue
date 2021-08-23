@@ -43,7 +43,7 @@
           id="addComponent"
           class="button is-light"
           style="position: absolute; right: 0; bottom: 0;"
-          hx-post="{% url 'catalogue:add_cart' c.id %}"
+          hx-post="{% url 'catalogue:edit_cart' c.id %}"
           hx-target="#shopping_card"
           hx-swap="innerHTML"
         >
