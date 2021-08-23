@@ -161,6 +161,7 @@ class Component(
     )
     lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
     published = models.BooleanField("Veröffentlicht", default=False)
+    allow_email = models.BooleanField("Erlaube Kontaktaufnahme per Mail", default=True)
 
     def __str__(self) -> str:
         return "{} {} - {}".format(self._meta.verbose_name, self.id, self.name)

@@ -38,6 +38,20 @@
             Learn More
           </a>
         </div>
+        {% if showAdd %}
+        <button
+          id="addComponent"
+          class="button is-light"
+          style="position: absolute; right: 0; bottom: 0;"
+          hx-post="{% url 'catalogue:edit_cart' c.id %}"
+          hx-target="#shopping_card"
+          hx-swap="innerHTML"
+        >
+          <span>
+            <i class="fas fa-plus-circle"></i>
+          </span>
+        </button>
+        {% endif %}
       </div>
     </div>
   </div>

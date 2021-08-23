@@ -7,23 +7,21 @@ from catalogue.models import messages
 CATALOGUE_PERMS = {
     cls: ["add", "change", "delete", "view"]
     for cls in [
-        models.AIMethod,
-        models.ApplicationProfile,
-        models.BaseData,
-        models.BranchApplicable,
-        models.BranchProven,
         models.Component,
-        models.CorporateDivision,
-        models.DataAnalysisProcess,
-        models.HierarchyLevel,
-        models.KPI,
-        models.Licenses,
-        models.Process,
-        models.Requirements,
-        models.Source,
+        # Basedata
         models.Task,
-        models.Use,
-        models.TechnicalSpecification,
+        # Application Profile
+        models.CorporateDivision,
+        models.HierarchyLevel,
+        models.Process,
+        models.BranchProven,
+        models.BranchApplicable,
+        # Technical Specification
+        models.AIMethod,
+        models.DataAnalysisProcess,
+        models.Licenses,
+        # Use
+        models.KPI,
     ]
 }
 GROUPS_PERMISSIONS = {

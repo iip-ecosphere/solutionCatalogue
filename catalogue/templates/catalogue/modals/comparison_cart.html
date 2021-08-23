@@ -1,0 +1,77 @@
+{% load list_fields %}
+
+<div class="compare-button">
+  {% if components.count %}
+    <div class="dropdown is-up">
+      <div class="dropdown-trigger">
+        <button class="button is-success" aria-haspopup="true" aria-controls="dropdown-comps">
+        <span class="bellnumbers">
+          {{ components.count }}
+        </span>
+          <span class="icon">
+          <i class="fas fa-chart-pie"></i>
+        </span>
+          {% if components.count < 4 %}
+            <span>Vergleich anzeigen</span>
+          {% else %}
+            <span>Warenkorb voll</span>
+          {% endif %}
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-comps" role="menu">
+        <div class="dropdown-content">
+          {% for c in components %}
+            <div class="dropdown-item">
+              <button
+                  class="delete panel-icon"
+                  hx-delete="{% url 'catalogue:edit_cart' c.id %}?c={{ current_id }}"
+                  hx-target="#shopping_card"
+                  hx-swap="innerHTML"
+              >
+              </button>
+              <a href="{% url 'catalogue:detail' c.id %}">{{ c.name }}</a>
+            </div>
+          {% endfor %}
+          </a>
+          {% if components.count > 1 %}
+            <div class="dropdown-item">
+              <a class="button is-fullwidth is-success is-small"
+                 href="{% url 'catalogue:compare' %}?{% for c in components %}id={{ c.id }}&{% endfor %}">
+                <span>Zum Vergleich</span>
+                <span class="icon">
+                  <i class="fas fa-arrow-right"></i>
+                </span>
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if not in_cart %}
+    <button id="addButton" class="button is-success" title="Füge Komponente in den Warenkorb hinzu"
+            style="margin-left: -5px; border-left: 2px solid white; border-radius: 0;"
+            hx-post="{% url 'catalogue:edit_cart' current_id %}?c={{ current_id }}"
+            hx-target="#shopping_card"
+            hx-swap="innerHTML"
+    >
+      <div class="icon-text">
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+        {% if not components.count %}
+          <span>Vergleichen</span>
+        {% endif %}
+      </div>
+    </button>
+  {% endif %}
+</div>
+
+<script>
+  var dropdown = document.querySelector('.dropdown');
+  dropdown.addEventListener('click', function (event) {
+    event.stopPropagation();
+    dropdown.classList.toggle('is-active');
+  });
+</script>
+

@@ -99,6 +99,7 @@
           </a>
         </div>
         </div>
+        {% if component.allow_email %}
         <div class="column is-half">
           <div class="card">
             <div class="card-content">
@@ -115,9 +116,17 @@
             </div>
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
   </section>
+    <div
+      id="shopping_card"
+      hx-trigger="load"
+      hx-get="{% url 'catalogue:get_cart' %}?c={{ component.id }}"
+      hx-swap="innerHTML"
+      >
+    </div>
 {% endblock %}
 {% block script %}
   <script>

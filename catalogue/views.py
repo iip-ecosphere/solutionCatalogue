@@ -1,4 +1,3 @@
-from django.urls import reverse
 from django.views import generic
 
 from django_filters.views import FilterView
@@ -16,10 +15,10 @@ from .filters import (
     ComponentComparisonFilter,
 )
 from .models import *
+from .models.messages import Inquiry, Feedback
 
 
 class IndexView(FilterView):
-    # queryset = Component.objects.filter(published=True)
     template_name = "catalogue/index.html"
     context_object_name = "components"
     filterset_class = ComponentFilterFrontPage
@@ -41,30 +40,35 @@ class SearchFeedbackView(generic.edit.FormView):
     success_template = "catalogue/modals/search-feedback/success.html"
     form_class = FeedbackForm
 
-    def post(self, request, *args, **kwargs):
-        self.request = request
-        return super().post(request, *args, **kwargs)
-
-    def form_valid(self, form):
+    def form_valid(self, form: FeedbackForm):
         feedback = form.save(commit=False)
         feedback.search_url = self.request.META["HTTP_REFERER"]
         feedback.save()
         self.send_mail_feedback(feedback)
         return render(self.request, self.success_template, self.get_context_data())
 
+<<<<<<< HEAD
     def send_mail_feedback(self, form):
         User = get_user_model()
         admin_emails = User.objects.filter(is_superuser=True).values_list(
             "email", flat=True
         )
 
+=======
+    def send_mail_feedback(self, feedback: Feedback):
+>>>>>>> upstream/main
         context = {
-            "name": form.name,
-            "message": form.message,
-            "email": form.mail,
-            "sentiment": form.sentiment,
+            "name": feedback.name,
+            "message": feedback.message,
+            "email": feedback.mail,
+            "sentiment": feedback.sentiment,
         }
         content = render_to_string("catalogue/emails/email_feedback.txt", context)
+        admin_emails = (
+            get_user_model()
+            .objects.filter(is_superuser=True)
+            .values_list("email", flat=True)
+        )
         send_mail(
             subject="IIP Ecosphere Lösungskatalog: Feedback",
             message=content,
@@ -89,31 +93,27 @@ class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
     form_class = InquiryForm
     model = Component
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        return super().post(request, *args, **kwargs)
-
-    def form_valid(self, form):
+    def form_valid(self, form: InquiryForm):
         inquiry = form.save(commit=False)
-        inquiry.component = self.object
-        inquiry.recipient = self.object.created_by
+        inquiry.component = self.get_object()
+        inquiry.recipient = inquiry.component.created_by
         inquiry.save()
-        self.send_mail_customer(inquiry, self.object)
+        self.send_mail_customer(inquiry)
         return render(self.request, self.template_name)
 
-    def send_mail_customer(self, form, obj):
+    def send_mail_customer(self, inquiry: Inquiry):
         context = {
-            "name": form.name,
-            "message": form.message,
-            "email": form.mail,
-            "comp": obj,
+            "name": inquiry.name,
+            "message": inquiry.message,
+            "email": inquiry.mail,
+            "comp": inquiry.component,
         }
         content = render_to_string("catalogue/emails/email_message.txt", context)
         send_mail(
             subject="IIP Ecosphere Lösungskatalog: Anfrage",
             message=content,
             from_email=settings.SENDER_EMAIL_MESSAGE,
-            recipient_list=[obj.created_by.email],
+            recipient_list=[inquiry.recipient.email],
         )
 
 
@@ -122,6 +122,7 @@ class ComparisonView(FilterView):
     context_object_name = "components"
     filterset_class = ComponentComparisonFilter
 
+<<<<<<< HEAD
 
 class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
     template_name = "catalogue/modals/report/form.html"
@@ -164,3 +165,45 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             from_email=settings.SENDER_EMAIL_FEEDBACK,
             recipient_list=admin_emails,
         )
+=======
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for parent in Component.__bases__:
+            context[parent.__name__.lower() + "_fields"] = [
+                x.name for x in parent._meta.get_fields()
+            ]
+
+        return context
+
+
+class CartView(generic.TemplateView):
+    template_name = "catalogue/modals/comparison_cart.html"
+
+    def post(self, request, pk: int):
+        """Add item to cart"""
+        cart_content = request.session.get("cart", [])
+        if pk not in cart_content and len(cart_content) <= 3:
+            request.session["cart"] = cart_content + [pk]
+        return self.get(request)
+
+    def delete(self, request, pk: int):
+        """Remove item from cart"""
+        try:
+            request.session["cart"].remove(pk)
+        except (KeyError, ValueError):
+            pass
+        return self.get(request)
+
+    def get_context_data(self, **kwargs):
+        """Fetch current cart content"""
+        context = super().get_context_data(**kwargs)
+        context["components"] = Component.objects.filter(
+            id__in=self.request.session.get("cart", [])
+        )
+        context["current_id"] = int(self.request.GET.get("c", -1))
+        context["in_cart"] = (
+            context["current_id"] in self.request.session.get("cart", [])
+            or context["current_id"] == -1
+        )
+        return context
+>>>>>>> upstream/main

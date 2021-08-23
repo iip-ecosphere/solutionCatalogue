@@ -11749,3 +11749,45 @@ div.control li {
   top: 70%;
   z-index: 100;
 }
+
+/* compare button */
+.compare-button {
+  position: fixed;
+  right: 20px;
+  bottom: 0;
+  margin: 20px;
+  z-index: 100;
+}
+
+.bellnumbers {
+  font-size: 15px;
+  background-color: #f11382;
+  width: 20px;
+  line-height: 20px;
+  text-align: center;
+  color: #fff;
+  z-index: 2;
+  border-radius: 20px;
+  position: absolute;
+  left: -5px;
+  top: -5px;
+}
+
+.addButtonDetail {
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  margin: 20px;
+  z-index: 101;
+}
+
+/* show add button when hover on component card */
+/*
+.card #addComponent {
+  visibility: hidden;
+}
+
+.card:hover #addComponent {
+  visibility: visible;
+}
+*/

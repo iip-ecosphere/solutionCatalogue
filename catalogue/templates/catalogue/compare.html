@@ -4,18 +4,16 @@
 {% load verbose_name %}
 {% block title %}Vergleich{% endblock %}
 {% block body %}
-  <section class="section has-background-primary">
-    <div class="columns">
-      <div class="column is-half is-offset-one-quarter">
-        <div class="card">
-          <div class="card-content">
-            <form method="get">
-              {{ filter.form|bulma }}
-              <div class="has-text-centered">
-                <button class="button is-rounded is-link">Compare</button>
-              </div>
-            </form>
-          </div>
+  <section class="section has-background-primary has-text-white">
+    <div class="container is-max-widescreen">
+      <div class="media">
+        <div class="media-content">
+          <h1 class="title is-3 has-text-white">
+            Komponenten Vergleich
+          </h1>
+          <h2 class="subtitle is-5 has-text-white">
+            Hier können Sie Ihre ausgewählten Komponenten im Direktvergleich sehen
+          </h2>
         </div>
       </div>
     </div>

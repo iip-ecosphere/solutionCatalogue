@@ -34,6 +34,7 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = DEBUG
+SESSION_SAVE_EVERY_REQUEST = True
 
 # Application definition
 
