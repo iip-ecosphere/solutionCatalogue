@@ -13,8 +13,8 @@ from .filters import (
     ComponentFilterFrontPage,
     ComponentComparisonFilter,
 )
-from .models import *
-from .models.messages import Inquiry, Feedback
+from .models import Component
+from .models.messages import Inquiry, Feedback, Report
 
 
 class IndexView(FilterView):
@@ -175,12 +175,12 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
         self.send_mail_report(report)
         return render(self.request, self.success_template, self.get_context_data())
 
-    def send_mail_report(self, form):
+    def send_mail_report(self, report: Report):
         context = {
-            "name": form.name,
-            "message": form.message,
-            "email": form.mail,
-            "component": form.component,
+            "name": report.name,
+            "message": report.message,
+            "email": report.mail,
+            "component": report.component,
         }
         content = render_to_string("catalogue/emails/email_report.txt", context)
         admin_emails = get_user_model().objects.filter(is_superuser=True).values_list(
