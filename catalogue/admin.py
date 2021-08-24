@@ -103,18 +103,27 @@ class LicensesInline(SubNestedBase, admin.StackedInline):
 class ComponentAdmin(admin.ModelAdmin):
     exclude = ("created_by",)
     list_display = (
-        "id",
-        "get_name",
+        "name",
         "published",
         "allow_email",
+        "trl",
+        "description_short",
         "get_created_by",
         "created",
         "lastmodified_at",
     )
+    list_display_links = ("name",)
     list_editable = ("published", "allow_email")
     fieldsets = (
-        (None, {"fields": ("published",)}),
-        (None, {"fields": ("allow_email",)}),
+        (
+            "Optionen",
+            {
+                "fields": (
+                    "published",
+                    "allow_email",
+                )
+            },
+        ),
         # Base
         (
             BaseData._meta.verbose_name,
@@ -214,22 +223,14 @@ class ComponentAdmin(admin.ModelAdmin):
         """
         )
 
+    @admin.display(description=Component._meta.get_field("description").verbose_name)
+    def description_short(self, obj):
+        return Truncator(obj.description).chars(40)
+
     def get_queryset(self, request):
         if is_admin_or_mod(request):
             return Component.objects.all()
         return Component.objects.filter(created_by=request.user)
-
-    @admin.display(
-        description=Component._meta.get_field("name").verbose_name, ordering="name"
-    )
-    def get_name(self, obj):
-        return mark_safe(
-            f"""
-            <a href='{reverse('admin:catalogue_component_change', args=(obj.id,))}'>
-            {obj.name}
-            </a>
-        """
-        )
 
     def save_model(self, request, obj, form, change):
         if not hasattr(obj, "created_by"):
@@ -241,16 +242,16 @@ class ComponentAdmin(admin.ModelAdmin):
 class InquiryAdmin(admin.ModelAdmin):
     list_display = (
         "created",
+        "component_link",
         "recipient",
-        "component",
         "name",
         "mail",
         "message_short",
     )
     readonly_fields = (
         "created",
-        "recipient",
         "component",
+        "recipient",
         "name",
         "mail",
         "message",
@@ -264,6 +265,16 @@ class InquiryAdmin(admin.ModelAdmin):
     @admin.display(description=Inquiry._meta.get_field("message").verbose_name)
     def message_short(self, obj):
         return Truncator(obj.message).chars(40)
+
+    @admin.display(description=Component._meta.verbose_name, ordering="component__name")
+    def component_link(self, obj):
+        return mark_safe(
+            f"""
+            <a href='{reverse('admin:catalogue_component_change', args=(obj.component.id,))}'>
+            {obj.component.name}
+            </a>
+        """
+        )
 
 
 @admin.register(Feedback)
@@ -298,10 +309,10 @@ class FeedbackAdmin(admin.ModelAdmin):
 class ReportAdmin(admin.ModelAdmin):
     list_display = (
         "created",
+        "component_link",
         "name",
         "mail",
         "message_short",
-        "component",
     )
     readonly_fields = (
         "created",
@@ -314,6 +325,16 @@ class ReportAdmin(admin.ModelAdmin):
     @admin.display(description=Report._meta.get_field("message").verbose_name)
     def message_short(self, obj):
         return Truncator(obj.message).chars(40)
+
+    @admin.display(description=Component._meta.verbose_name, ordering="component__name")
+    def component_link(self, obj):
+        return mark_safe(
+            f"""
+            <a href='{reverse('admin:catalogue_component_change', args=(obj.component.id,))}'>
+            {obj.component.name}
+            </a>
+        """
+        )
 
 
 class ProfileInline(admin.StackedInline):

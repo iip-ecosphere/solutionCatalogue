@@ -38,8 +38,8 @@ class Inquiry(SenderInfo):
 
 class Feedback(SenderInfo):
     class Meta:
-        verbose_name = "Feedback"
-        verbose_name_plural = "Feedbacks"
+        verbose_name = "Such-Feedback"
+        verbose_name_plural = "Such-Feedback"
 
     CHOICES = [("positive", "Positiv"), ("neutral", "Neutral"), ("negativ", "Negativ")]
     sentiment = models.CharField(
@@ -57,8 +57,8 @@ class Feedback(SenderInfo):
 
 class Report(SenderInfo):
     class Meta:
-        verbose_name = "Report"
-        verbose_name_plural = "Report"
+        verbose_name = "Meldung"
+        verbose_name_plural = "Meldungen"
 
     component = models.ForeignKey(
         Component,
