@@ -7,14 +7,14 @@ from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
 from django.conf import settings
 
-from .forms import InquiryForm, FeedbackForm
+from .forms import InquiryForm, FeedbackForm, ReportForm
 from .filters import (
     ComponentFilter,
     ComponentFilterFrontPage,
     ComponentComparisonFilter,
 )
-from .models import *
-from .models.messages import Inquiry, Feedback
+from .models import Component
+from .models.messages import Inquiry, Feedback, Report
 
 
 class IndexView(FilterView):
@@ -152,3 +152,43 @@ class CartView(generic.TemplateView):
             or context["current_id"] == -1
         )
         return context
+
+
+class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
+    template_name = "catalogue/modals/report/form.html"
+    success_template = "catalogue/modals/report/success.html"
+    form_class = ReportForm
+    model = Component
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().post(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        report = form.save(commit=False)
+        report.component = self.object
+        report.save()
+        self.send_mail_report(report)
+        return render(self.request, self.success_template, self.get_context_data())
+
+    def send_mail_report(self, report: Report):
+        context = {
+            "name": report.name,
+            "message": report.message,
+            "email": report.mail,
+            "component": report.component,
+        }
+        content = render_to_string("catalogue/emails/email_report.txt", context)
+        admin_emails = get_user_model().objects.filter(is_superuser=True).values_list(
+            "email", flat=True
+        )
+        send_mail(
+            subject="IIP Ecosphere Lösungskatalog: Report",
+            message=content,
+            from_email=settings.SENDER_EMAIL_FEEDBACK,
+            recipient_list=admin_emails,
+        )

@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('mail', models.EmailField(max_length=254, verbose_name='E-Mail-Adresse')),
                 ('message', models.TextField(help_text='Ihr Feedback', max_length=2000, verbose_name='Nachricht')),
                 ('sentiment', models.CharField(choices=[('positive', 'Positiv'), ('neutral', 'Neutral'), ('negativ', 'Negativ')], default='positive', max_length=8, verbose_name='Wie zufieden sind Sie mit der Suche?')),
-                ('search_url', models.TextField(default=None)),
+                ('search_url', models.TextField(default=None, verbose_name='Such-URL')),
             ],
             options={
                 'verbose_name': 'Feedback',

@@ -1,0 +1,32 @@
+{% load bulma_tags %}
+<div class="modal is-active">
+  <div class="modal-background" onclick="closeReportModal()"></div>
+  <div class="modal-content">
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Komponente '{{ component.name }}' melden</p>
+        <button class="delete" aria-label="close" onclick="closeReportModal()"></button>
+      </header>
+      <form hx-post="{% url 'catalogue:report_component' component.id %}" hx-swap="outerHTML">
+        <section class="modal-card-body">
+          {% csrf_token %}
+          {{ form|bulma }}
+        </section>
+        <footer class="modal-card-foot">
+          <div class="field">
+            <div class="control">
+              <button class="button is-danger">Senden</button>
+            </div>
+          </div>
+        </footer>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function closeReportModal() {
+    var container = document.getElementById("reportModal");
+    container.removeChild(container.childNodes[0]);
+  }
+</script>

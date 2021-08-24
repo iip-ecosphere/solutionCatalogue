@@ -90,33 +90,41 @@
           <p class="has-text-white">{{ component.additional_info }}</p>
         </div>
         {% if component.allow_email %}
-        <div class="column is-half">
-          <div class="card">
-            <div class="card-content">
-              <p class="title is-3">Kontaktanfrage</p>
-              <form hx-post="{% url 'catalogue:send_inquiry' component.id %}" hx-swap="outerHTML">
-                {% csrf_token %}
-                {{ form|bulma }}
-                <div class="field">
-                  <div class="control">
-                    <button class="button is-link is-rounded">Senden</button>
+          <div class="column is-half">
+            <div class="card">
+              <div class="card-content">
+                <p class="title is-3">Kontaktanfrage</p>
+                <form hx-post="{% url 'catalogue:send_inquiry' component.id %}" hx-swap="outerHTML">
+                  {% csrf_token %}
+                  {{ form|bulma }}
+                  <div class="field">
+                    <div class="control">
+                      <button class="button is-link is-rounded">Senden</button>
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
         {% endif %}
       </div>
+      <a class="is-pulled-right has-text-danger" hx-get="{% url 'catalogue:report_component' component.id %}"
+         hx-target="#reportModal">
+        Melden
+        <span class="icon is-small">
+          <i class="fas fa-flag"></i>
+        </span>
+      </a>
+      <div id="reportModal"></div>
     </div>
   </section>
-    <div
+  <div
       id="shopping_card"
       hx-trigger="load"
       hx-get="{% url 'catalogue:get_cart' %}?c={{ component.id }}"
       hx-swap="innerHTML"
-      >
-    </div>
+  >
+  </div>
 {% endblock %}
 {% block script %}
   <script>

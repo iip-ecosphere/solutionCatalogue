@@ -53,3 +53,25 @@ class Feedback(SenderInfo):
 
     def __str__(self):
         return "{} {}".format(self._meta.verbose_name, self.id)
+
+
+class Report(SenderInfo):
+    class Meta:
+        verbose_name = "Report"
+        verbose_name_plural = "Report"
+
+    component = models.ForeignKey(
+        Component,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=Component._meta.verbose_name,
+    )
+
+    message = models.TextField(
+        "Warum möchten Sie diese Komponente melden?",
+        help_text="Ihre Nachricht",
+        max_length=2000,
+    )
+
+    def __str__(self):
+        return "{} {}".format(self._meta.verbose_name, self.id)
