@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalogue', '0006_component_allow_email'),
+        ('catalogue', '0007_report'),
     ]
 
     operations = [
@@ -14,10 +14,5 @@ class Migration(migrations.Migration):
             model_name='component',
             name='approved',
             field=models.BooleanField(default=False),
-        ),
-        migrations.AlterField(
-            model_name='feedback',
-            name='search_url',
-            field=models.TextField(default=None, verbose_name='Such-URL'),
         ),
     ]

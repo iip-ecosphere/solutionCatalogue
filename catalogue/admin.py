@@ -235,6 +235,11 @@ class ComponentAdmin(admin.ModelAdmin):
             </a>
         """
         )
+
+    @admin.display(description=Component._meta.get_field("description").verbose_name)
+    def description_short(self, obj):
+        return Truncator(obj.description).chars(40)
+
     def get_queryset(self, request):
         if is_admin_or_mod(request):
             return Component.objects.all()

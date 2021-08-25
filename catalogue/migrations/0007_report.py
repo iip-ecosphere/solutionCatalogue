@@ -22,8 +22,8 @@ class Migration(migrations.Migration):
                 ('component', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='catalogue.component', verbose_name='KI Komponente')),
             ],
             options={
-                'verbose_name': 'Report',
-                'verbose_name_plural': 'Report',
+                'verbose_name': 'Meldung',
+                'verbose_name_plural': 'Meldungen',
             },
         ),
     ]
