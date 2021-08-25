@@ -212,9 +212,10 @@ class Component(
 
 @receiver(signals.pre_save, sender=Component)
 def init_unapproved_state(sender, instance, *args, **kwargs):
-    previous = Component.objects.get(id=instance.id)
-    if previous.approved == instance.approved:
+    previous = Component.objects.filter(id=instance.id).first()
+    if previous and previous.approved == instance.approved:
         instance.approved = False
+    if not previous or previous.approved == instance.approved:
         context = {
             "comp": instance,
         }
