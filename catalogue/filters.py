@@ -76,6 +76,7 @@ class ComponentFilterBase(django_filters.FilterSet):
         return (
             super()
             .qs.filter(published=True)
+            .filter(approved=True)
             .prefetch_related(
                 "task_set",
                 "process_set",

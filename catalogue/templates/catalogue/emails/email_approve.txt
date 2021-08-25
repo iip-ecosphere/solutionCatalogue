@@ -1,0 +1,4 @@
+{% block content %}
+Eine Komponente wurde neu erstellt oder verändert und muss moderiert.
+Name der Komponente: {{ comp }}
+{% endblock content %}

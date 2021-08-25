@@ -2,6 +2,12 @@ from typing import List, Tuple
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import signals
+from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.contrib.auth import get_user_model
+from django.conf import settings
 
 from ..choices import TRLChoices, RealtimeChoices
 
@@ -162,6 +168,7 @@ class Component(
     lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
     published = models.BooleanField("Veröffentlicht", default=False)
     allow_email = models.BooleanField("Erlaube Kontaktaufnahme per Mail", default=True)
+    approved = models.BooleanField(default=False, editable=True)
 
     def __str__(self) -> str:
         return "{} {} - {}".format(self._meta.verbose_name, self.id, self.name)
@@ -202,3 +209,24 @@ class Component(
 
     def get_source(self) -> Tuple[str, List[str]]:
         return Source._meta.verbose_name, [x.name for x in Source._meta.get_fields()]
+
+@receiver(signals.pre_save, sender=Component)
+def init_unapproved_state(sender, instance, *args, **kwargs):
+    previous = Component.objects.get(id=instance.id)
+    if previous.approved == instance.approved:
+        instance.approved = False
+        context = {
+            "comp": instance,
+        }
+        content = render_to_string("catalogue/emails/email_approve.txt", context)
+        admin_emails = (
+                get_user_model()
+                .objects.filter(groups__name__in=["Moderatoren"])
+                .values_list("email", flat=True)
+            )
+        send_mail(
+            subject="IIP Ecosphere Lösungskatalog: Komponente muss moderiert werden",
+            message=content,
+            from_email=settings.SENDER_EMAIL_APPROVE,
+            recipient_list=admin_emails,
+        )
