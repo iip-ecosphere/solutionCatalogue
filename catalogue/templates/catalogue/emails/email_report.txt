@@ -1,7 +1,9 @@
 {% block content %}
-Der Nutzer {{ name }} hat die Komponente {{ component.name }} gemeldet.
-Er begründet die Meldung folgendermaßen:
+Ein Besucher hat die KI Lösung "{{ component.name }}" gemeldet:
 {{ message }}
 
-Die Email dieses Nutzers lautet: {{ email }}
+
+Absender:
+{{ name }}
+{{ email }}
 {% endblock content %}

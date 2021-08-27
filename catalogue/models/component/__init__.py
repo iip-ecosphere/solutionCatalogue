@@ -150,8 +150,8 @@ class Component(
     ApplicationProfile, BaseData, Requirements, Source, Use, TechnicalSpecification
 ):
     class Meta:
-        verbose_name = "KI Komponente"
-        verbose_name_plural = "KI Komponenten"
+        verbose_name = "KI Lösung"
+        verbose_name_plural = "KI Lösungen"
 
     created = models.DateTimeField("Erstellt", auto_now_add=True)
     created_by = models.ForeignKey(
