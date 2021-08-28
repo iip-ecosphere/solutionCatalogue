@@ -152,6 +152,11 @@ class Requirements(models.Model):
         return ""
 
 
+class ApprovedManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(approved=True)
+
+
 class Component(
     ApplicationProfile, BaseData, Requirements, Source, Use, TechnicalSpecification
 ):
@@ -159,16 +164,25 @@ class Component(
         verbose_name = "KI Komponente"
         verbose_name_plural = "KI Komponenten"
 
+    objects = models.Manager()
+    approved_objects = ApprovedManager()
+
     created = models.DateTimeField("Erstellt", auto_now_add=True)
     created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         verbose_name="Erstellt von",
     )
+    last_modified_by = models.ForeignKey(
+        User,
+        related_name="modified_by",
+        on_delete=models.CASCADE,
+        verbose_name="Zuletzt bearbeitet von",
+    )
     lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
     published = models.BooleanField("Veröffentlicht", default=False)
     allow_email = models.BooleanField("Erlaube Kontaktaufnahme per Mail", default=True)
-    approved = models.BooleanField(default=False, editable=True)
+    approved = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return "{} {} - {}".format(self._meta.verbose_name, self.id, self.name)
@@ -210,12 +224,16 @@ class Component(
     def get_source(self) -> Tuple[str, List[str]]:
         return Source._meta.verbose_name, [x.name for x in Source._meta.get_fields()]
 
+
 @receiver(signals.pre_save, sender=Component)
 def init_unapproved_state(sender, instance, *args, **kwargs):
-    previous = Component.objects.filter(id=instance.id).first()
-    if previous and previous.approved == instance.approved:
+    if instance.last_modified_by.groups.filter(name="Autoren").exists():
         instance.approved = False
-    if not previous or previous.approved == instance.approved:
+
+
+@receiver(signals.post_save, sender=Component)
+def send_approve_notification(sender, instance, *args, **kwargs):
+    if instance.last_modified_by.groups.filter(name="Autoren").exists():
         context = {
             "comp": instance,
         }

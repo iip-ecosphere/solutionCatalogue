@@ -20,12 +20,14 @@ from .models.messages import Inquiry, Feedback, Report
 class IndexView(FilterView):
     template_name = "catalogue/index.html"
     context_object_name = "components"
+    queryset = Component.approved_objects.all()
     filterset_class = ComponentFilterFrontPage
 
 
 class SearchView(FilterView):
     template_name = "catalogue/search.html"
     context_object_name = "components"
+    queryset = Component.approved_objects.all()
     filterset_class = ComponentFilter
 
     def get_context_data(self, **kwargs):
@@ -68,7 +70,7 @@ class SearchFeedbackView(generic.edit.FormView):
 
 
 class DetailView(generic.DetailView):
-    queryset = Component.objects.filter(published=True)
+    queryset = Component.approved_objects.filter(published=True)
     template_name = "catalogue/detail.html"
 
     def get_context_data(self, **kwargs):

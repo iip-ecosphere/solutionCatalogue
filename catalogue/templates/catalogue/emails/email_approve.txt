@@ -1,4 +1,4 @@
 {% block content %}
-Eine Komponente wurde neu erstellt oder verändert und muss moderiert.
-Name der Komponente: {{ comp }}
+Eine Lösung wurde neu erstellt oder verändert und muss moderiert werden.
+Name der Lösung: {{ comp }}
 {% endblock content %}

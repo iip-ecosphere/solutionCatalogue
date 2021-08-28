@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
 from django.urls import reverse
-from django.forms import ModelForm
 
 from .models import (
     Component,
@@ -116,16 +115,6 @@ class ComponentAdmin(admin.ModelAdmin):
     )
     list_display_links = ("name",)
     list_editable = ("published", "allow_email")
-    """
-    def get_list_editable(self, request):
-        if is_admin_or_mod(request):
-            return ("published", "allow_email", "approved")
-        else: return ("published", "allow_email")
-
-    def changelist_view(self, request, extra_context=None):
-        self.list_editable = self.get_list_editable(request)
-        return super().changelist_view(request, extra_context)
-    """
     fieldsets = (
         (
             "Optionen",
@@ -248,6 +237,7 @@ class ComponentAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if not hasattr(obj, "created_by"):
             obj.created_by = request.user
+        obj.last_modified_by = request.user
         super().save_model(request, obj, form, change)
 
     def get_readonly_fields(self, request, obj=None):
