@@ -70,7 +70,7 @@ class SearchFeedbackView(generic.edit.FormView):
 
 
 class DetailView(generic.DetailView):
-    queryset = Component.public_objects.filter(published=True)
+    queryset = Component.public_objects.all()
     template_name = "catalogue/detail.html"
 
     def get_context_data(self, **kwargs):

@@ -241,9 +241,9 @@ class ComponentAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if not hasattr(obj, "created_by"):
             obj.created_by = request.user
-        if request.user.groups.filter(name="Autoren").exists():
+        if not is_admin_or_mod(request):
             if not change or obj.approved == True:
-                send_approve_notification(obj)
+                self.send_approve_notification(obj)
             obj.approved = False
         super().save_model(request, obj, form, change)
 
@@ -253,23 +253,22 @@ class ComponentAdmin(admin.ModelAdmin):
         else:
             return ("approved",)
 
-
-def send_approve_notification(instance):
-    context = {
-        "comp": instance,
-    }
-    content = render_to_string("catalogue/emails/email_approve.txt", context)
-    admin_emails = (
-        get_user_model()
-        .objects.filter(groups__name__in=["Moderatoren"])
-        .values_list("email", flat=True)
-    )
-    send_mail(
-        subject="IIP Ecosphere Lösungskatalog: Komponente muss moderiert werden",
-        message=content,
-        from_email=settings.SENDER_EMAIL_APPROVE,
-        recipient_list=admin_emails,
-    )
+    def send_approve_notification(self, instance):
+        context = {
+            "comp": instance,
+        }
+        content = render_to_string("catalogue/emails/email_approve.txt", context)
+        mod_emails = (
+            get_user_model()
+            .objects.filter(groups__name__in=["Moderatoren"])
+            .values_list("email", flat=True)
+        )
+        send_mail(
+            subject="IIP Ecosphere Lösungskatalog: Komponente muss moderiert werden",
+            message=content,
+            from_email=settings.SENDER_EMAIL_APPROVE,
+            recipient_list=mod_emails,
+        )
 
 
 @admin.register(Inquiry)
