@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='component',
             name='approved',
-            field=models.BooleanField(default=False),
+            field=models.BooleanField(verbose_name='Freigegeben', default=False),
         ),
     ]

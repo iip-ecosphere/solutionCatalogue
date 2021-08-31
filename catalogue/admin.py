@@ -108,6 +108,7 @@ class ComponentAdmin(admin.ModelAdmin):
     exclude = ("created_by",)
     list_display = (
         "name",
+        "approved",
         "published",
         "allow_email",
         "trl",
@@ -115,7 +116,6 @@ class ComponentAdmin(admin.ModelAdmin):
         "get_created_by",
         "created",
         "lastmodified_at",
-        "approved",
     )
     list_display_links = ("name",)
     list_editable = ("published", "allow_email")
@@ -124,9 +124,9 @@ class ComponentAdmin(admin.ModelAdmin):
             "Optionen",
             {
                 "fields": (
+                    "approved",
                     "published",
                     "allow_email",
-                    "approved",
                 )
             },
         ),
@@ -242,9 +242,11 @@ class ComponentAdmin(admin.ModelAdmin):
         if not hasattr(obj, "created_by"):
             obj.created_by = request.user
         if not is_admin_or_mod(request):
-            if not change or obj.approved == True:
-                self.send_approve_notification(obj)
+            if not change or obj.approved:
+                self.send_approve_notification_admin(obj, request)
             obj.approved = False
+        elif obj.approved:
+            self.send_approve_notification_user(obj, request)
         super().save_model(request, obj, form, change)
 
     def get_readonly_fields(self, request, obj=None):
@@ -253,11 +255,12 @@ class ComponentAdmin(admin.ModelAdmin):
         else:
             return ("approved",)
 
-    def send_approve_notification(self, instance):
+    def send_approve_notification_admin(self, instance, request):
         context = {
             "comp": instance,
+            "link": request.build_absolute_uri()
         }
-        content = render_to_string("catalogue/emails/email_approve.txt", context)
+        content = render_to_string("catalogue/emails/email_approve_admin.txt", context)
         mod_emails = (
             get_user_model()
             .objects.filter(groups__name__in=["Moderatoren"])
@@ -268,6 +271,19 @@ class ComponentAdmin(admin.ModelAdmin):
             message=content,
             from_email=settings.SENDER_EMAIL_APPROVE,
             recipient_list=mod_emails,
+        )
+
+    def send_approve_notification_user(self, instance, request):
+        context = {
+            "comp": instance,
+            "link": request.build_absolute_uri()
+        }
+        content = render_to_string("catalogue/emails/email_approve_user.txt", context)
+        send_mail(
+            subject="IIP Ecosphere Lösungskatalog: Komponente wurde freigegeben",
+            message=content,
+            from_email=settings.SENDER_EMAIL_APPROVE,
+            recipient_list=[instance.created_by.email],
         )
 
 

@@ -1,4 +1,5 @@
 {% block content %}
 Eine Lösung wurde neu erstellt oder verändert und muss moderiert werden.
 Name der Lösung: {{ comp }}
+Link zur Lösung: {{ link }}
 {% endblock content %}
