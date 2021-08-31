@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
 from django.urls import reverse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.contrib.auth import get_user_model
+from django.conf import settings
 
 from .models import (
     Component,
@@ -111,7 +115,7 @@ class ComponentAdmin(admin.ModelAdmin):
         "get_created_by",
         "created",
         "lastmodified_at",
-        "approved"
+        "approved",
     )
     list_display_links = ("name",)
     list_editable = ("published", "allow_email")
@@ -237,7 +241,10 @@ class ComponentAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if not hasattr(obj, "created_by"):
             obj.created_by = request.user
-        obj.last_modified_by = request.user
+        if request.user.groups.filter(name="Autoren").exists():
+            if not change or obj.approved == True:
+                send_approve_notification(obj)
+            obj.approved = False
         super().save_model(request, obj, form, change)
 
     def get_readonly_fields(self, request, obj=None):
@@ -245,6 +252,24 @@ class ComponentAdmin(admin.ModelAdmin):
             return ()
         else:
             return ("approved",)
+
+
+def send_approve_notification(instance):
+    context = {
+        "comp": instance,
+    }
+    content = render_to_string("catalogue/emails/email_approve.txt", context)
+    admin_emails = (
+        get_user_model()
+        .objects.filter(groups__name__in=["Moderatoren"])
+        .values_list("email", flat=True)
+    )
+    send_mail(
+        subject="IIP Ecosphere Lösungskatalog: Komponente muss moderiert werden",
+        message=content,
+        from_email=settings.SENDER_EMAIL_APPROVE,
+        recipient_list=admin_emails,
+    )
 
 
 @admin.register(Inquiry)

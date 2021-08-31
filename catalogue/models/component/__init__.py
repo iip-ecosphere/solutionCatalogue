@@ -2,12 +2,6 @@ from typing import List, Tuple
 
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import signals
-from django.dispatch import receiver
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.contrib.auth import get_user_model
-from django.conf import settings
 
 from ..choices import TRLChoices, RealtimeChoices
 
@@ -152,9 +146,9 @@ class Requirements(models.Model):
         return ""
 
 
-class ApprovedManager(models.Manager):
+class PublicComponentManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(approved=True)
+        return super().get_queryset().filter(approved=True).filter(published=True)
 
 
 class Component(
@@ -165,19 +159,13 @@ class Component(
         verbose_name_plural = "KI Komponenten"
 
     objects = models.Manager()
-    approved_objects = ApprovedManager()
+    public_objects = PublicComponentManager()
 
     created = models.DateTimeField("Erstellt", auto_now_add=True)
     created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         verbose_name="Erstellt von",
-    )
-    last_modified_by = models.ForeignKey(
-        User,
-        related_name="modified_by",
-        on_delete=models.CASCADE,
-        verbose_name="Zuletzt bearbeitet von",
     )
     lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
     published = models.BooleanField("Veröffentlicht", default=False)
@@ -223,29 +211,3 @@ class Component(
 
     def get_source(self) -> Tuple[str, List[str]]:
         return Source._meta.verbose_name, [x.name for x in Source._meta.get_fields()]
-
-
-@receiver(signals.pre_save, sender=Component)
-def init_unapproved_state(sender, instance, *args, **kwargs):
-    if instance.last_modified_by.groups.filter(name="Autoren").exists():
-        instance.approved = False
-
-
-@receiver(signals.post_save, sender=Component)
-def send_approve_notification(sender, instance, *args, **kwargs):
-    if instance.last_modified_by.groups.filter(name="Autoren").exists():
-        context = {
-            "comp": instance,
-        }
-        content = render_to_string("catalogue/emails/email_approve.txt", context)
-        admin_emails = (
-                get_user_model()
-                .objects.filter(groups__name__in=["Moderatoren"])
-                .values_list("email", flat=True)
-            )
-        send_mail(
-            subject="IIP Ecosphere Lösungskatalog: Komponente muss moderiert werden",
-            message=content,
-            from_email=settings.SENDER_EMAIL_APPROVE,
-            recipient_list=admin_emails,
-        )

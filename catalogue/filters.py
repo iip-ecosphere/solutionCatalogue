@@ -73,13 +73,9 @@ class ComponentFilterBase(django_filters.FilterSet):
 
     @property
     def qs(self):
-        return (
-            super()
-            .qs.filter(published=True)
-            .prefetch_related(
-                "task_set",
-                "process_set",
-            )
+        return super().qs.prefetch_related(
+            "task_set",
+            "process_set",
         )
 
     @staticmethod

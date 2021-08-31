@@ -20,14 +20,14 @@ from .models.messages import Inquiry, Feedback, Report
 class IndexView(FilterView):
     template_name = "catalogue/index.html"
     context_object_name = "components"
-    queryset = Component.approved_objects.all()
+    queryset = Component.public_objects.all()
     filterset_class = ComponentFilterFrontPage
 
 
 class SearchView(FilterView):
     template_name = "catalogue/search.html"
     context_object_name = "components"
-    queryset = Component.approved_objects.all()
+    queryset = Component.public_objects.all()
     filterset_class = ComponentFilter
 
     def get_context_data(self, **kwargs):
@@ -70,7 +70,7 @@ class SearchFeedbackView(generic.edit.FormView):
 
 
 class DetailView(generic.DetailView):
-    queryset = Component.approved_objects.filter(published=True)
+    queryset = Component.public_objects.filter(published=True)
     template_name = "catalogue/detail.html"
 
     def get_context_data(self, **kwargs):
@@ -185,8 +185,10 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             "component": report.component,
         }
         content = render_to_string("catalogue/emails/email_report.txt", context)
-        admin_emails = get_user_model().objects.filter(is_superuser=True).values_list(
-            "email", flat=True
+        admin_emails = (
+            get_user_model()
+            .objects.filter(is_superuser=True)
+            .values_list("email", flat=True)
         )
         send_mail(
             subject="IIP Ecosphere Lösungskatalog: Report",
