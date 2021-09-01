@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
 from django.urls import reverse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.contrib.auth import get_user_model
+from django.conf import settings
 
 from .models import (
     Component,
@@ -104,6 +108,7 @@ class ComponentAdmin(admin.ModelAdmin):
     exclude = ("created_by",)
     list_display = (
         "name",
+        "approved",
         "published",
         "allow_email",
         "trl",
@@ -119,6 +124,7 @@ class ComponentAdmin(admin.ModelAdmin):
             "Optionen",
             {
                 "fields": (
+                    "approved",
                     "published",
                     "allow_email",
                 )
@@ -235,7 +241,50 @@ class ComponentAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if not hasattr(obj, "created_by"):
             obj.created_by = request.user
+        if not is_admin_or_mod(request):
+            if not change or obj.approved:
+                self.send_approve_notification_admin(obj, request)
+            obj.approved = False
+        elif obj.approved:
+            self.send_approve_notification_user(obj, request)
         super().save_model(request, obj, form, change)
+
+    def get_readonly_fields(self, request, obj=None):
+        if is_admin_or_mod(request):
+            return ()
+        else:
+            return ("approved",)
+
+    def send_approve_notification_admin(self, instance, request):
+        context = {
+            "comp": instance,
+            "link": request.build_absolute_uri()
+        }
+        content = render_to_string("catalogue/emails/email_approve_admin.txt", context)
+        mod_emails = (
+            get_user_model()
+            .objects.filter(groups__name__in=["Moderatoren"])
+            .values_list("email", flat=True)
+        )
+        send_mail(
+            subject="IIP Ecosphere Lösungskatalog: Komponente muss moderiert werden",
+            message=content,
+            from_email=settings.SENDER_EMAIL_APPROVE,
+            recipient_list=mod_emails,
+        )
+
+    def send_approve_notification_user(self, instance, request):
+        context = {
+            "comp": instance,
+            "link": request.build_absolute_uri()
+        }
+        content = render_to_string("catalogue/emails/email_approve_user.txt", context)
+        send_mail(
+            subject="IIP Ecosphere Lösungskatalog: Komponente wurde freigegeben",
+            message=content,
+            from_email=settings.SENDER_EMAIL_APPROVE,
+            recipient_list=[instance.created_by.email],
+        )
 
 
 @admin.register(Inquiry)

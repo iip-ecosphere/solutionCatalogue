@@ -22,8 +22,8 @@ class Migration(migrations.Migration):
                 ('search_url', models.TextField(default=None, verbose_name='Such-URL')),
             ],
             options={
-                'verbose_name': 'Feedback',
-                'verbose_name_plural': 'Feedbacks',
+                'verbose_name': 'Such-Feedback',
+                'verbose_name_plural': 'Such-Feedback',
             },
         ),
     ]

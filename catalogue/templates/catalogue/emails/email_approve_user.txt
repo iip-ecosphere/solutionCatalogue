@@ -1,0 +1,5 @@
+{% block content %}
+Ihre Lösung wurde freigegeben!
+Name der Lösung: {{ comp }}
+Link zur Lösung: {{ link }}
+{% endblock content %}

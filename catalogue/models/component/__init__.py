@@ -146,12 +146,20 @@ class Requirements(models.Model):
         return ""
 
 
+class PublicComponentManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(approved=True).filter(published=True)
+
+
 class Component(
     ApplicationProfile, BaseData, Requirements, Source, Use, TechnicalSpecification
 ):
     class Meta:
         verbose_name = "KI Lösung"
         verbose_name_plural = "KI Lösungen"
+
+    objects = models.Manager()
+    public_objects = PublicComponentManager()
 
     created = models.DateTimeField("Erstellt", auto_now_add=True)
     created_by = models.ForeignKey(
@@ -162,6 +170,7 @@ class Component(
     lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
     published = models.BooleanField("Veröffentlicht", default=False)
     allow_email = models.BooleanField("Erlaube Kontaktaufnahme per Mail", default=True)
+    approved = models.BooleanField("Freigegeben", default=False)
 
     def __str__(self) -> str:
         return "{} {} - {}".format(self._meta.verbose_name, self.id, self.name)
