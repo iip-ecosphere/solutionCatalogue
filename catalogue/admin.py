@@ -105,7 +105,7 @@ class LicensesInline(SubNestedBase, admin.StackedInline):
 
 @admin.register(Component)
 class ComponentAdmin(admin.ModelAdmin):
-    exclude = ("created_by",)
+    #exclude = ("created_by",)
     list_display = (
         "name",
         "approved",
@@ -117,6 +117,7 @@ class ComponentAdmin(admin.ModelAdmin):
         "created",
         "lastmodified_at",
     )
+    raw_id_fields = ("created_by",)
     list_display_links = ("name",)
     list_editable = ("published", "allow_email")
     fieldsets = (
@@ -126,7 +127,7 @@ class ComponentAdmin(admin.ModelAdmin):
                 "fields": (
                     "approved",
                     "published",
-                    "allow_email",
+                    "allow_email"
                 )
             },
         ),
@@ -254,6 +255,15 @@ class ComponentAdmin(admin.ModelAdmin):
             return ()
         else:
             return ("approved",)
+
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = super(ComponentAdmin, self).get_fieldsets(request, obj)
+        admin_only = ["created_by"]
+        if not is_admin_or_mod(request):
+            fieldsets[0][1]['fields'] = tuple(x for x in fieldsets[0][1]['fields'] if x not in admin_only)
+        elif not all(x in fieldsets[0][1]['fields'] for x in admin_only):
+            fieldsets[0][1]['fields'] += tuple(admin_only)
+        return fieldsets
 
     def send_approve_notification_admin(self, instance, request):
         context = {
