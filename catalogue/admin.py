@@ -258,7 +258,7 @@ class ComponentAdmin(admin.ModelAdmin):
         return fieldsets
 
     def changelist_view(self, request, extra_context=None):
-        list_display = (
+        list_display = [
             "name",
             "approved",
             "published",
@@ -268,11 +268,11 @@ class ComponentAdmin(admin.ModelAdmin):
             "get_created_by",
             "created",
             "lastmodified_at",
-        )
+        ]
         list_display_links = ("name",)
-        list_editable = ("published", "allow_email")
+        list_editable = ("published", "allow_email",)
         if is_admin_or_mod(request):
-            list_display = list_display[:1] + ("frontpage", ) +list_display[1:]
+            list_display.insert(1, 'frontpage')
             list_editable += ("frontpage", )
 
         self.list_display = list_display
