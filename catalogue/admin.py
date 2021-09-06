@@ -120,85 +120,6 @@ class ComponentAdmin(admin.ModelAdmin):
     raw_id_fields = ("created_by",)
     list_display_links = ("name",)
     list_editable = ("published", "allow_email")
-    fieldsets = (
-        (
-            "Optionen",
-            {
-                "fields": (
-                    "approved",
-                    "published",
-                    "allow_email"
-                )
-            },
-        ),
-        # Base
-        (
-            BaseData._meta.verbose_name,
-            {
-                "fields": (
-                    "name",
-                    "trl",
-                    "description",
-                )
-            },
-        ),
-        (None, {"classes": ("placeholder", "task_set-group"), "fields": ()}),
-        # Application Profile
-        (ApplicationProfile._meta.verbose_name, {"fields": ("product",)}),
-        (None, {"classes": ("placeholder", "branchproven_set-group"), "fields": ()}),
-        (
-            None,
-            {"classes": ("placeholder", "branchapplicable_set-group"), "fields": ()},
-        ),
-        (
-            None,
-            {"classes": ("placeholder", "corporatedivision_set-group"), "fields": ()},
-        ),
-        (None, {"classes": ("placeholder", "hierarchylevel_set-group"), "fields": ()}),
-        (None, {"classes": ("placeholder", "process_set-group"), "fields": ()}),
-        # Use
-        (Use._meta.verbose_name, {"fields": ("scenarios",)}),
-        (None, {"classes": ("placeholder", "kpi_set-group"), "fields": ()}),
-        # Technical Spec
-        (
-            TechnicalSpecification._meta.verbose_name,
-            {
-                "fields": (
-                    "realtime_processing",
-                    "data_formats",
-                )
-            },
-        ),
-        (None, {"classes": ("placeholder", "aimethod_set-group"), "fields": ()}),
-        (
-            None,
-            {"classes": ("placeholder", "dataanalysisprocess_set-group"), "fields": ()},
-        ),
-        (None, {"classes": ("placeholder", "licenses_set-group"), "fields": ()}),
-        # Requirements
-        (
-            Requirements._meta.verbose_name,
-            {
-                "fields": (
-                    "protocols",
-                    "it_environment",
-                    "hardware_requirements",
-                    "devices",
-                )
-            },
-        ),
-        # Source
-        (
-            Source._meta.verbose_name,
-            {
-                "fields": (
-                    "manufacturer",
-                    "contact",
-                    "additional_info",
-                )
-            },
-        ),
-    )
 
     inlines = [
         # BaseData
@@ -257,11 +178,87 @@ class ComponentAdmin(admin.ModelAdmin):
             return ("approved",)
 
     def get_fieldsets(self, request, obj=None):
-        fieldsets = super(ComponentAdmin, self).get_fieldsets(request, obj)
+        fieldsets = (
+            (
+                "Optionen",
+                {
+                    "fields": (
+                        "approved",
+                        "published",
+                        "allow_email"
+                    )
+                },
+            ),
+            # Base
+            (
+                BaseData._meta.verbose_name,
+                {
+                    "fields": (
+                        "name",
+                        "trl",
+                        "description",
+                    )
+                },
+            ),
+            (None, {"classes": ("placeholder", "task_set-group"), "fields": ()}),
+            # Application Profile
+            (ApplicationProfile._meta.verbose_name, {"fields": ("product",)}),
+            (None, {"classes": ("placeholder", "branchproven_set-group"), "fields": ()}),
+            (
+                None,
+                {"classes": ("placeholder", "branchapplicable_set-group"), "fields": ()},
+            ),
+            (
+                None,
+                {"classes": ("placeholder", "corporatedivision_set-group"), "fields": ()},
+            ),
+            (None, {"classes": ("placeholder", "hierarchylevel_set-group"), "fields": ()}),
+            (None, {"classes": ("placeholder", "process_set-group"), "fields": ()}),
+            # Use
+            (Use._meta.verbose_name, {"fields": ("scenarios",)}),
+            (None, {"classes": ("placeholder", "kpi_set-group"), "fields": ()}),
+            # Technical Spec
+            (
+                TechnicalSpecification._meta.verbose_name,
+                {
+                    "fields": (
+                        "realtime_processing",
+                        "data_formats",
+                    )
+                },
+            ),
+            (None, {"classes": ("placeholder", "aimethod_set-group"), "fields": ()}),
+            (
+                None,
+                {"classes": ("placeholder", "dataanalysisprocess_set-group"), "fields": ()},
+            ),
+            (None, {"classes": ("placeholder", "licenses_set-group"), "fields": ()}),
+            # Requirements
+            (
+                Requirements._meta.verbose_name,
+                {
+                    "fields": (
+                        "protocols",
+                        "it_environment",
+                        "hardware_requirements",
+                        "devices",
+                    )
+                },
+            ),
+            # Source
+            (
+                Source._meta.verbose_name,
+                {
+                    "fields": (
+                        "manufacturer",
+                        "contact",
+                        "additional_info",
+                    )
+                },
+            ),
+        )
         admin_only = ["created_by"]
-        if not is_admin_or_mod(request):
-            fieldsets[0][1]['fields'] = tuple(x for x in fieldsets[0][1]['fields'] if x not in admin_only)
-        elif not all(x in fieldsets[0][1]['fields'] for x in admin_only):
+        if is_admin_or_mod(request):
             fieldsets[0][1]['fields'] += tuple(admin_only)
         return fieldsets
 
