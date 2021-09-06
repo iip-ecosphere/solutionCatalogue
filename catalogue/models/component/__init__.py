@@ -171,6 +171,7 @@ class Component(
     published = models.BooleanField("Veröffentlicht", default=False)
     allow_email = models.BooleanField("Erlaube Kontaktaufnahme per Mail", default=True)
     approved = models.BooleanField("Freigegeben", default=False)
+    frontpage = models.BooleanField("Auf der Startseite anzeigen?", default=False)
 
     def __str__(self) -> str:
         return "{} {} - {}".format(self._meta.verbose_name, self.id, self.name)

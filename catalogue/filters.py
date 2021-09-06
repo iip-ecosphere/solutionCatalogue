@@ -90,7 +90,7 @@ class ComponentFilterBase(django_filters.FilterSet):
 class ComponentFilterFrontPage(ComponentFilterBase):
     @property
     def qs(self):
-        return super().qs[:3]
+        return super().qs.filter(frontpage=True)
 
 
 class ComponentFilter(ComponentFilterBase):

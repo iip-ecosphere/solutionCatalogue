@@ -48,8 +48,8 @@ class Migration(migrations.Migration):
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'verbose_name': 'KI Komponente',
-                'verbose_name_plural': 'KI Komponenten',
+                'verbose_name': 'KI Lösung',
+                'verbose_name_plural': 'KI Lösungen',
             },
         ),
         migrations.CreateModel(
@@ -171,7 +171,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=50, verbose_name='Name')),
                 ('mail', models.EmailField(max_length=254, verbose_name='E-Mail-Adresse')),
                 ('message', models.TextField(help_text='Ihre Nachricht an den Anbieter', max_length=2000, verbose_name='Nachricht')),
-                ('component', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='catalogue.component', verbose_name='KI Komponente')),
+                ('component', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='catalogue.component', verbose_name='KI Lösung')),
                 ('recipient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Adressat')),
             ],
             options={
