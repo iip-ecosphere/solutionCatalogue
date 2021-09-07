@@ -147,13 +147,17 @@ class ComponentAdmin(admin.ModelAdmin):
         return Component.objects.filter(created_by=request.user)
 
     def save_model(self, request, obj, form, change):
-        if not hasattr(obj, "created_by"):
+        # add component owner on creation
+        if not change:
             obj.created_by = request.user
         if not is_admin_or_mod(request):
             if not change or obj.approved:
-                self.send_approve_notification_admin(obj, request)
+                # send notification on new or previously approved components
+                self.send_approve_notification_mods(obj, request)
+            # reset approval on change by user
             obj.approved = False
-        elif obj.approved:
+        elif change and obj.approved and not Component.objects.get(id=obj.id).approved:
+            # send notification to user that a component was newly approved
             self.send_approve_notification_user(obj, request)
         super().save_model(request, obj, form, change)
 
@@ -252,6 +256,7 @@ class ComponentAdmin(admin.ModelAdmin):
                 },
             ),
         )
+        # display certain fields for admins/mods only
         admin_only = ("created_by",)
         if is_admin_or_mod(request):
             fieldsets[0][1]["fields"] += admin_only
@@ -281,7 +286,8 @@ class ComponentAdmin(admin.ModelAdmin):
 
         return super().changelist_view(request, extra_context)
 
-    def send_approve_notification_admin(self, instance, request):
+    def send_approve_notification_mods(self, instance, request):
+        """Send email notification to mods for component requiring approval."""
         context = {"comp": instance, "link": request.build_absolute_uri()}
         content = render_to_string("catalogue/emails/email_approve_admin.txt", context)
         mod_emails = (
@@ -297,6 +303,7 @@ class ComponentAdmin(admin.ModelAdmin):
         )
 
     def send_approve_notification_user(self, instance, request):
+        """Send email notification to user that a component was approved."""
         context = {"comp": instance, "link": request.build_absolute_uri()}
         content = render_to_string("catalogue/emails/email_approve_user.txt", context)
         send_mail(
