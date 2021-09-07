@@ -105,7 +105,6 @@ class LicensesInline(SubNestedBase, admin.StackedInline):
 
 @admin.register(Component)
 class ComponentAdmin(admin.ModelAdmin):
-    #exclude = ("created_by",)
     list_display = (
         "name",
         "approved",
@@ -181,13 +180,7 @@ class ComponentAdmin(admin.ModelAdmin):
         fieldsets = (
             (
                 "Optionen",
-                {
-                    "fields": (
-                        "approved",
-                        "published",
-                        "allow_email"
-                    )
-                },
+                {"fields": ("approved", "published", "allow_email")},
             ),
             # Base
             (
@@ -203,16 +196,28 @@ class ComponentAdmin(admin.ModelAdmin):
             (None, {"classes": ("placeholder", "task_set-group"), "fields": ()}),
             # Application Profile
             (ApplicationProfile._meta.verbose_name, {"fields": ("product",)}),
-            (None, {"classes": ("placeholder", "branchproven_set-group"), "fields": ()}),
             (
                 None,
-                {"classes": ("placeholder", "branchapplicable_set-group"), "fields": ()},
+                {"classes": ("placeholder", "branchproven_set-group"), "fields": ()},
             ),
             (
                 None,
-                {"classes": ("placeholder", "corporatedivision_set-group"), "fields": ()},
+                {
+                    "classes": ("placeholder", "branchapplicable_set-group"),
+                    "fields": (),
+                },
             ),
-            (None, {"classes": ("placeholder", "hierarchylevel_set-group"), "fields": ()}),
+            (
+                None,
+                {
+                    "classes": ("placeholder", "corporatedivision_set-group"),
+                    "fields": (),
+                },
+            ),
+            (
+                None,
+                {"classes": ("placeholder", "hierarchylevel_set-group"), "fields": ()},
+            ),
             (None, {"classes": ("placeholder", "process_set-group"), "fields": ()}),
             # Use
             (Use._meta.verbose_name, {"fields": ("scenarios",)}),
@@ -230,7 +235,10 @@ class ComponentAdmin(admin.ModelAdmin):
             (None, {"classes": ("placeholder", "aimethod_set-group"), "fields": ()}),
             (
                 None,
-                {"classes": ("placeholder", "dataanalysisprocess_set-group"), "fields": ()},
+                {
+                    "classes": ("placeholder", "dataanalysisprocess_set-group"),
+                    "fields": (),
+                },
             ),
             (None, {"classes": ("placeholder", "licenses_set-group"), "fields": ()}),
             # Requirements
@@ -257,16 +265,13 @@ class ComponentAdmin(admin.ModelAdmin):
                 },
             ),
         )
-        admin_only = ["created_by"]
+        admin_only = ("created_by",)
         if is_admin_or_mod(request):
-            fieldsets[0][1]['fields'] += tuple(admin_only)
+            fieldsets[0][1]["fields"] += admin_only
         return fieldsets
 
     def send_approve_notification_admin(self, instance, request):
-        context = {
-            "comp": instance,
-            "link": request.build_absolute_uri()
-        }
+        context = {"comp": instance, "link": request.build_absolute_uri()}
         content = render_to_string("catalogue/emails/email_approve_admin.txt", context)
         mod_emails = (
             get_user_model()
@@ -281,10 +286,7 @@ class ComponentAdmin(admin.ModelAdmin):
         )
 
     def send_approve_notification_user(self, instance, request):
-        context = {
-            "comp": instance,
-            "link": request.build_absolute_uri()
-        }
+        context = {"comp": instance, "link": request.build_absolute_uri()}
         content = render_to_string("catalogue/emails/email_approve_user.txt", context)
         send_mail(
             subject="IIP Ecosphere Lösungskatalog: Komponente wurde freigegeben",
