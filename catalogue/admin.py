@@ -105,20 +105,7 @@ class LicensesInline(SubNestedBase, admin.StackedInline):
 
 @admin.register(Component)
 class ComponentAdmin(admin.ModelAdmin):
-    list_display = (
-        "name",
-        "approved",
-        "published",
-        "allow_email",
-        "trl",
-        "description_short",
-        "get_created_by",
-        "created",
-        "lastmodified_at",
-    )
     raw_id_fields = ("created_by",)
-    list_display_links = ("name",)
-    list_editable = ("published", "allow_email")
 
     inlines = [
         # BaseData
@@ -269,6 +256,30 @@ class ComponentAdmin(admin.ModelAdmin):
         if is_admin_or_mod(request):
             fieldsets[0][1]["fields"] += admin_only
         return fieldsets
+
+    def changelist_view(self, request, extra_context=None):
+        self.list_display = [
+            "name",
+            "approved",
+            "published",
+            "allow_email",
+            "trl",
+            "description_short",
+            "get_created_by",
+            "created",
+            "lastmodified_at",
+        ]
+        self.list_display_links = ("name",)
+        self.list_editable = (
+            "published",
+            "allow_email",
+        )
+        # moderators can choose components for frontpage
+        if is_admin_or_mod(request):
+            self.list_display.insert(1, "frontpage")
+            self.list_editable += ("frontpage",)
+
+        return super().changelist_view(request, extra_context)
 
     def send_approve_notification_admin(self, instance, request):
         context = {"comp": instance, "link": request.build_absolute_uri()}
