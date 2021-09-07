@@ -258,7 +258,7 @@ class ComponentAdmin(admin.ModelAdmin):
         return fieldsets
 
     def changelist_view(self, request, extra_context=None):
-        list_display = [
+        self.list_display = [
             "name",
             "approved",
             "published",
@@ -269,15 +269,13 @@ class ComponentAdmin(admin.ModelAdmin):
             "created",
             "lastmodified_at",
         ]
-        list_display_links = ("name",)
-        list_editable = ("published", "allow_email",)
+        self.list_display_links = ("name",)
+        self.list_editable = ("published", "allow_email",)
+        # moderators can choose components for frontpage
         if is_admin_or_mod(request):
-            list_display.insert(1, 'frontpage')
-            list_editable += ("frontpage", )
+            self.list_display.insert(1, "frontpage")
+            self.list_editable += ("frontpage", )
 
-        self.list_display = list_display
-        self.list_display_links = list_display_links
-        self.list_editable = list_editable
         return super().changelist_view(request, extra_context)
 
     def send_approve_notification_admin(self, instance, request):
