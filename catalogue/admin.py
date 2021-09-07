@@ -270,11 +270,14 @@ class ComponentAdmin(admin.ModelAdmin):
             "lastmodified_at",
         ]
         self.list_display_links = ("name",)
-        self.list_editable = ("published", "allow_email",)
+        self.list_editable = (
+            "published",
+            "allow_email",
+        )
         # moderators can choose components for frontpage
         if is_admin_or_mod(request):
             self.list_display.insert(1, "frontpage")
-            self.list_editable += ("frontpage", )
+            self.list_editable += ("frontpage",)
 
         return super().changelist_view(request, extra_context)
 
