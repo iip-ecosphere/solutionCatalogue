@@ -28,4 +28,4 @@ jobs:
         pipenv install --dev
     - name: black
       run: |
-        pipenv run black . --check
+        pipenv run black . --check --exclude "/migrations/.*\.py$"
