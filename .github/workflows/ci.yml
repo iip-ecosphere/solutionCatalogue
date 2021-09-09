@@ -29,3 +29,6 @@ jobs:
     - name: black
       run: |
         pipenv run black . --check --exclude "/migrations/.*\.py$"
+    - name: flake8
+      run: |
+        pipenv run flake8

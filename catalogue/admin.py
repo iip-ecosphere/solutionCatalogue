@@ -13,7 +13,6 @@ from .models import (
     Component,
     BaseData,
     ApplicationProfile,
-    TechnicalSpecification,
     Use,
     Source,
     Requirements,
