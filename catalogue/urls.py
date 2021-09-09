@@ -12,9 +12,7 @@ urlpatterns = [
         "search/feedback/", views.SearchFeedbackView.as_view(), name="search_feedback"
     ),
     path("solution/<int:pk>/", views.DetailView.as_view(), name="detail"),
-    path(
-        "solution/<int:pk>/contact", views.SendInquiry.as_view(), name="send_inquiry"
-    ),
+    path("solution/<int:pk>/contact", views.SendInquiry.as_view(), name="send_inquiry"),
     path(
         "solution/<int:pk>/report", views.ReportView.as_view(), name="report_component"
     ),
