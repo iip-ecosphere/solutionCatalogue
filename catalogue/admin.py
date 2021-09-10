@@ -8,7 +8,6 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
 from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
 
 from .models import (
     Component,
@@ -162,8 +161,8 @@ class ComponentAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
     def view_on_site(self, obj):
-        url = reverse('catalogue:detail', kwargs={'pk': obj.id})
-        return url + '?preview=True'
+        url = reverse("catalogue:detail", kwargs={"pk": obj.id})
+        return url + "?preview=True"
 
     def get_readonly_fields(self, request, obj=None):
         if is_admin_or_mod(request):

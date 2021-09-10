@@ -74,7 +74,7 @@ class DetailView(generic.DetailView):
     template_name = "catalogue/detail.html"
 
     def get_queryset(self):
-        if self.request.GET.get('preview', None):
+        if self.request.GET.get("preview", None):
             queryset = Component.objects.all()
         else:
             queryset = Component.public_objects.all()
