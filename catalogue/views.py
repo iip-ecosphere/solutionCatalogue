@@ -73,6 +73,13 @@ class DetailView(generic.DetailView):
     queryset = Component.public_objects.all()
     template_name = "catalogue/detail.html"
 
+    def get_queryset(self):
+        if self.request.GET.get('preview', None):
+            queryset = Component.objects.all()
+        else:
+            queryset = Component.public_objects.all()
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = InquiryForm()
