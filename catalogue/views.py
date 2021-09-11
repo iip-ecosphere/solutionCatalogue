@@ -85,12 +85,9 @@ class DetailView(generic.DetailView):
                 user == comp.created_by
                 or user.groups.filter(name="Moderatoren").exists()
             ):
-                queryset = Component.objects.all()
-            else:
-                queryset = Component.objects.none()
-        else:
-            queryset = Component.public_objects.all()
-        return queryset
+                return Component.objects.all()
+
+        return Component.public_objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
