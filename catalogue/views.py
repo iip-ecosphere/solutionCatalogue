@@ -73,9 +73,21 @@ class DetailView(generic.DetailView):
     queryset = Component.public_objects.all()
     template_name = "catalogue/detail.html"
 
+    def get(self, request, pk: int, *args, **kwargs):
+        self.pk = pk
+        return super().get(request, *args, **kwargs)
+
     def get_queryset(self):
         if self.request.GET.get("preview", None):
-            queryset = Component.objects.all()
+            user = self.request.user
+            comp = Component.objects.get(id=self.pk)
+            if (
+                user == comp.created_by
+                or user.groups.filter(name="Moderatoren").exists()
+            ):
+                queryset = Component.objects.all()
+            else:
+                queryset = Component.objects.none()
         else:
             queryset = Component.public_objects.all()
         return queryset
