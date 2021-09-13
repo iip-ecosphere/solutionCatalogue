@@ -29,7 +29,7 @@
                   hx-swap="innerHTML"
               >
               </button>
-              <a href="{% url 'catalogue:detail' c.id %}">{{ c.name }}</a>
+              <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
             </div>
           {% endfor %}
           </a>

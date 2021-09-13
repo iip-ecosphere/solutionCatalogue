@@ -4,7 +4,7 @@
     <div class="media">
       <div class="media-content">
         <p class="title is-4">
-          <a href="{% url 'catalogue:detail' c.id %}">{{ c.name }}</a>
+          <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
         </p>
         <p class="subtitle is-6">
           {{ c.manufacturer }}
@@ -34,7 +34,7 @@
       {% endif %}
       <div class="level">
         <div class="level-item has-text-centered">
-          <a class="button is-rounded is-primary is-center" href="{% url 'catalogue:detail' c.id %}">
+          <a class="button is-rounded is-primary is-center" href="{{ c.get_absolute_url }}">
             Learn More
           </a>
         </div>

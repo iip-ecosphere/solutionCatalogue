@@ -28,7 +28,7 @@
               <tr>
                 <th></th>
                 {% for c in components %}
-                  <th><a href="{% url 'catalogue:detail' c.id %}">{{ c.name }}</a></th>
+                  <th><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></th>
                 {% endfor %}
               </tr>
               </thead>

@@ -2,6 +2,7 @@ from typing import List, Tuple
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 from ..choices import TRLChoices, RealtimeChoices
 
@@ -212,3 +213,6 @@ class Component(
 
     def get_source(self) -> Tuple[str, List[str]]:
         return Source._meta.verbose_name, [x.name for x in Source._meta.get_fields()]
+
+    def get_absolute_url(self):
+        return reverse("catalogue:detail", kwargs={"pk": self.pk})
