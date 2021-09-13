@@ -6,7 +6,6 @@ from django.utils.text import Truncator
 from django.urls import reverse
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.contrib.auth import get_user_model
 from django.conf import settings
 
 from .models import (
@@ -30,7 +29,7 @@ from .models import (
 )
 from .models.users import Profile
 from .models.messages import Inquiry, Feedback, Report
-from .utils import is_admin, is_admin_or_mod
+from .utils import is_admin, is_admin_or_mod, get_mod_emails
 
 
 class TopNestedBase:
@@ -281,16 +280,11 @@ class ComponentAdmin(admin.ModelAdmin):
         """Send email notification to mods for component requiring approval."""
         context = {"comp": instance, "link": request.build_absolute_uri()}
         content = render_to_string("catalogue/emails/email_approve_admin.txt", context)
-        mod_emails = (
-            get_user_model()
-            .objects.filter(groups__name__in=["Moderatoren"])
-            .values_list("email", flat=True)
-        )
         send_mail(
             subject="IIP Ecosphere Lösungskatalog: Komponente muss moderiert werden",
             message=content,
             from_email=settings.SENDER_EMAIL_APPROVE,
-            recipient_list=mod_emails,
+            recipient_list=get_mod_emails(),
         )
 
     def send_approve_notification_user(self, instance, request):

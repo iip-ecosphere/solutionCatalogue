@@ -4,7 +4,6 @@ from django_filters.views import FilterView
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.contrib.auth import get_user_model
 from django.conf import settings
 
 from .forms import InquiryForm, FeedbackForm, ReportForm
@@ -15,7 +14,7 @@ from .filters import (
 )
 from .models import Component
 from .models.messages import Inquiry, Feedback, Report
-from .utils import is_admin_or_mod
+from .utils import is_admin_or_mod, get_admin_emails
 
 
 class IndexView(FilterView):
@@ -57,16 +56,11 @@ class SearchFeedbackView(generic.edit.FormView):
             "sentiment": feedback.sentiment,
         }
         content = render_to_string("catalogue/emails/email_feedback.txt", context)
-        admin_emails = (
-            get_user_model()
-            .objects.filter(is_superuser=True)
-            .values_list("email", flat=True)
-        )
         send_mail(
             subject="IIP Ecosphere Lösungskatalog: Feedback",
             message=content,
             from_email=settings.SENDER_EMAIL_FEEDBACK,
-            recipient_list=admin_emails,
+            recipient_list=get_admin_emails(),
         )
 
 
@@ -199,14 +193,9 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             "component": report.component,
         }
         content = render_to_string("catalogue/emails/email_report.txt", context)
-        admin_emails = (
-            get_user_model()
-            .objects.filter(is_superuser=True)
-            .values_list("email", flat=True)
-        )
         send_mail(
             subject="IIP Ecosphere Lösungskatalog: Report",
             message=content,
             from_email=settings.SENDER_EMAIL_FEEDBACK,
-            recipient_list=admin_emails,
+            recipient_list=get_admin_emails(),
         )
