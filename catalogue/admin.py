@@ -30,18 +30,7 @@ from .models import (
 )
 from .models.users import Profile
 from .models.messages import Inquiry, Feedback, Report
-
-
-def is_admin(request):
-    return request.user.is_superuser
-
-
-def is_mod(request):
-    return request.user.groups.filter(name="Moderatoren").exists()
-
-
-def is_admin_or_mod(request):
-    return is_admin(request) or is_mod(request)
+from .utils import is_admin, is_admin_or_mod
 
 
 class TopNestedBase:
@@ -161,8 +150,7 @@ class ComponentAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
     def view_on_site(self, obj):
-        url = reverse("catalogue:detail", kwargs={"pk": obj.id})
-        return url + "?preview=True"
+        return f'{reverse("catalogue:detail", kwargs={"pk": obj.pk})}?preview=True'
 
     def get_readonly_fields(self, request, obj=None):
         if is_admin_or_mod(request):

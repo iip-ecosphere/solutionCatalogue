@@ -15,6 +15,7 @@ from .filters import (
 )
 from .models import Component
 from .models.messages import Inquiry, Feedback, Report
+from .utils import is_admin_or_mod
 
 
 class IndexView(FilterView):
@@ -70,22 +71,19 @@ class SearchFeedbackView(generic.edit.FormView):
 
 
 class DetailView(generic.DetailView):
-    queryset = Component.public_objects.all()
     template_name = "catalogue/detail.html"
 
-    def get(self, request, pk: int, *args, **kwargs):
-        self.pk = pk
+    def get(self, request, *args, **kwargs):
+        self.pk = self.kwargs.get(self.pk_url_kwarg)
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        if self.request.GET.get("preview", None):
-            user = self.request.user
-            comp = Component.objects.get(id=self.pk)
-            if (
-                user == comp.created_by
-                or user.groups.filter(name="Moderatoren").exists()
-            ):
-                return Component.objects.all()
+        comp = Component.objects.get(id=self.pk)
+        if self.request.GET.get("preview", None) and (
+            comp.created_by == self.request.user or is_admin_or_mod(self.request)
+        ):
+            # allow preview of components for owners or mods
+            return Component.objects.all()
 
         return Component.public_objects.all()
 
