@@ -8,11 +8,6 @@ from ..choices import TRLChoices, RealtimeChoices
 
 
 class BaseData(models.Model):
-    class Meta:
-        abstract = True
-        verbose_name = "Grunddaten"
-        verbose_name_plural = verbose_name
-
     name = models.CharField(
         "Name",
         max_length=200,
@@ -32,43 +27,43 @@ class BaseData(models.Model):
         "Kurzbeschreibung", help_text="Kurze Beschreibung der Komponente"
     )
 
+    class Meta:
+        abstract = True
+        verbose_name = "Grunddaten"
+        verbose_name_plural = verbose_name
+
     def __str__(self):
         return f"{self.name} - TRL {self.trl}"
 
 
 class ApplicationProfile(models.Model):
+    product = models.TextField("Produkt", help_text="Hergestelltes Produkt")
+
     class Meta:
         abstract = True
         verbose_name = "Anwendungsprofil"
         verbose_name_plural = verbose_name
-
-    product = models.TextField("Produkt", help_text="Hergestelltes Produkt")
 
     def __str__(self):
         return self.product
 
 
 class Use(models.Model):
-    class Meta:
-        abstract = True
-        verbose_name = "Nutzen"
-        verbose_name_plural = verbose_name
-
     scenarios = models.TextField(
         "Szenarien / Use cases",
         help_text="Beschreibung von Szenarien, in denen die Komponente bereits erfolgreich eingesetzt wurde",
     )
+
+    class Meta:
+        abstract = True
+        verbose_name = "Nutzen"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.scenarios
 
 
 class Source(models.Model):
-    class Meta:
-        abstract = True
-        verbose_name = "Quelle"
-        verbose_name_plural = verbose_name
-
     manufacturer = models.CharField(
         "Hersteller",
         help_text="Entwickler und/oder Hersteller der Komponente",
@@ -83,16 +78,16 @@ class Source(models.Model):
         "Zusatzinformationen", help_text="Zusatzinformation zur Komponente", blank=True
     )
 
+    class Meta:
+        abstract = True
+        verbose_name = "Quelle"
+        verbose_name_plural = verbose_name
+
     def __str__(self):
         return ""
 
 
 class TechnicalSpecification(models.Model):
-    class Meta:
-        abstract = True
-        verbose_name = "Technische Spezifikation"
-        verbose_name_plural = verbose_name
-
     realtime_processing = models.IntegerField(
         "Echtzeitverarbeitung",
         help_text="Klassifizierung der Komponente in Bezug auf ihre Echtzeitfähigkeit",
@@ -109,16 +104,16 @@ class TechnicalSpecification(models.Model):
     # machine_readable_spec = models.CharField("Maschinenlesbare Spezifikation",
     # help_text="Beschreibung der Schnittstellen in maschinenlesbarer Form, um automatische Integration zu unterstützen")
 
+    class Meta:
+        abstract = True
+        verbose_name = "Technische Spezifikation"
+        verbose_name_plural = verbose_name
+
     def __str__(self):
         return ""
 
 
 class Requirements(models.Model):
-    class Meta:
-        abstract = True
-        verbose_name = "Vorraussetzungen"
-        verbose_name_plural = verbose_name
-
     protocols = models.CharField(
         "Protokolle/Schnittstellen",
         help_text="Schnittstellen und/oder Protokolle, die von der Kompomente unterstützt werden",
@@ -143,6 +138,11 @@ class Requirements(models.Model):
         max_length=1000,
     )
 
+    class Meta:
+        abstract = True
+        verbose_name = "Vorraussetzungen"
+        verbose_name_plural = verbose_name
+
     def __str__(self):
         return ""
 
@@ -155,10 +155,6 @@ class PublicComponentManager(models.Manager):
 class Component(
     ApplicationProfile, BaseData, Requirements, Source, Use, TechnicalSpecification
 ):
-    class Meta:
-        verbose_name = "KI Lösung"
-        verbose_name_plural = "KI Lösungen"
-
     objects = models.Manager()
     public_objects = PublicComponentManager()
 
@@ -173,6 +169,10 @@ class Component(
     allow_email = models.BooleanField("Erlaube Kontaktaufnahme per Mail", default=True)
     approved = models.BooleanField("Freigegeben", default=False)
     frontpage = models.BooleanField("Auf der Startseite anzeigen?", default=False)
+
+    class Meta:
+        verbose_name = "KI Lösung"
+        verbose_name_plural = "KI Lösungen"
 
     def __str__(self) -> str:
         return "{} {} - {}".format(self._meta.verbose_name, self.id, self.name)

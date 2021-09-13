@@ -8,7 +8,7 @@ class InquiryForm(ModelForm):
         widgets = {
             "message": Textarea(attrs={"rows": 4, "cols": 15}),
         }
-        exclude = ["created", "recipient", "component"]
+        fields = ("name", "mail", "message")
 
 
 class FeedbackForm(ModelForm):
@@ -17,7 +17,7 @@ class FeedbackForm(ModelForm):
         widgets = {
             "message": Textarea(attrs={"rows": 4, "cols": 15}),
         }
-        exclude = ["created", "recipient", "search_url"]
+        fields = ("name", "mail", "sentiment", "message")
 
 
 class ReportForm(ModelForm):
@@ -26,4 +26,4 @@ class ReportForm(ModelForm):
         widgets = {
             "message": Textarea(attrs={"rows": 4, "cols": 15}),
         }
-        exclude = ["created", "component"]
+        fields = ("name", "mail", "message")

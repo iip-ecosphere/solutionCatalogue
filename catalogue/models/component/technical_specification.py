@@ -5,10 +5,6 @@ from ..choices import DAProcessChoices, LicenseChoices
 
 
 class AIMethod(models.Model):
-    class Meta:
-        verbose_name = "KI-Methode"
-        verbose_name_plural = verbose_name
-
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         help_text="Angabe der verwendeten KI-Methode (z.B. Deep Learning)",
@@ -16,15 +12,15 @@ class AIMethod(models.Model):
         blank=True,
     )
 
+    class Meta:
+        verbose_name = "KI-Methode"
+        verbose_name_plural = verbose_name
+
     def __str__(self):
         return self.name
 
 
 class DataAnalysisProcess(models.Model):
-    class Meta:
-        verbose_name = "Datenanalyse-Prozess"
-        verbose_name_plural = verbose_name
-
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         choices=DAProcessChoices.choices,
@@ -35,15 +31,15 @@ class DataAnalysisProcess(models.Model):
 
     # FIXME: "einzelne Schritte des Prozesses erklären"
 
+    class Meta:
+        verbose_name = "Datenanalyse-Prozess"
+        verbose_name_plural = verbose_name
+
     def __str__(self):
         return self.get_name_display()
 
 
 class Licenses(models.Model):
-    class Meta:
-        verbose_name = "Lizenz"
-        verbose_name_plural = "Lizenzen"
-
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     type = models.CharField(
         "Typ",
@@ -57,6 +53,10 @@ class Licenses(models.Model):
         max_length=1000,
         blank=True,
     )
+
+    class Meta:
+        verbose_name = "Lizenz"
+        verbose_name_plural = "Lizenzen"
 
     def __str__(self):
         if self.name:

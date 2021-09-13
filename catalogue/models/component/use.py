@@ -6,10 +6,6 @@ from . import Component
 
 
 class KPI(models.Model):
-    class Meta:
-        verbose_name = "KPI"
-        verbose_name_plural = verbose_name
-
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     # TODO: Hierarchy
     type = models.CharField(
@@ -23,6 +19,10 @@ class KPI(models.Model):
         ),
         blank=True,
     )
+
+    class Meta:
+        verbose_name = "KPI"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.get_type_display()

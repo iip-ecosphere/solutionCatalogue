@@ -5,10 +5,6 @@ from ..choices import TaskChoices
 
 
 class Task(models.Model):
-    class Meta:
-        verbose_name = "Task"
-        verbose_name_plural = "Tasks"
-
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         choices=TaskChoices.choices,
@@ -19,6 +15,10 @@ class Task(models.Model):
         ),
         blank=True,
     )
+
+    class Meta:
+        verbose_name = "Task"
+        verbose_name_plural = "Tasks"
 
     def __str__(self):
         return self.get_name_display()

@@ -11,10 +11,6 @@ from . import Component
 
 
 class CorporateDivision(models.Model):
-    class Meta:
-        verbose_name = "Unternehmensbereich"
-        verbose_name_plural = verbose_name
-
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         help_text="Bereich des produzierenden Unternehmens, für den die Komponenten entwickelt wurde",
@@ -23,15 +19,15 @@ class CorporateDivision(models.Model):
         blank=True,
     )
 
+    class Meta:
+        verbose_name = "Unternehmensbereich"
+        verbose_name_plural = verbose_name
+
     def __str__(self):
         return self.get_name_display()
 
 
 class HierarchyLevel(models.Model):
-    class Meta:
-        verbose_name = "Hierarchie-Ebene"
-        verbose_name_plural = verbose_name
-
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         choices=HierarchyLevelChoices.choices,
@@ -40,15 +36,15 @@ class HierarchyLevel(models.Model):
         blank=True,
     )
 
+    class Meta:
+        verbose_name = "Hierarchie-Ebene"
+        verbose_name_plural = verbose_name
+
     def __str__(self):
         return self.get_name_display()
 
 
 class Process(models.Model):
-    class Meta:
-        verbose_name = "Prozess"
-        verbose_name_plural = verbose_name
-
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         choices=ProcessChoices.choices,
@@ -57,15 +53,15 @@ class Process(models.Model):
         blank=True,
     )
 
+    class Meta:
+        verbose_name = "Prozess"
+        verbose_name_plural = verbose_name
+
     def __str__(self):
         return self.get_name_display()
 
 
 class BranchProven(models.Model):
-    class Meta:
-        verbose_name = "Branche (erprobt)"
-        verbose_name_plural = verbose_name
-
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         help_text="Branche(n) für die die Komponente bereits erfolgreich erprobt wurde; belegte Anwendung",
@@ -74,15 +70,15 @@ class BranchProven(models.Model):
         blank=True,
     )
 
+    class Meta:
+        verbose_name = "Branche (erprobt)"
+        verbose_name_plural = verbose_name
+
     def __str__(self):
         return self.get_name_display()
 
 
 class BranchApplicable(models.Model):
-    class Meta:
-        verbose_name = "Branche (anwendbar)"
-        verbose_name_plural = verbose_name
-
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         help_text="Branche, in denen die Komponenten anwendbar ist",
@@ -90,6 +86,10 @@ class BranchApplicable(models.Model):
         max_length=3,
         blank=True,
     )
+
+    class Meta:
+        verbose_name = "Branche (anwendbar)"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.get_name_display()
