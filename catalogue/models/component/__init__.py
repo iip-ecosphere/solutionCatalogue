@@ -2,12 +2,7 @@ from typing import List, Tuple
 
 from django.db import models
 from django.contrib.auth.models import User
-<<<<<<< HEAD
 from django.urls import reverse
-=======
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
->>>>>>> current state
 
 from ..choices import TRLChoices, RealtimeChoices
 
@@ -174,6 +169,7 @@ class Component(
     allow_email = models.BooleanField("Erlaube Kontaktaufnahme per Mail", default=True)
     approved = models.BooleanField("Freigegeben", default=False)
     frontpage = models.BooleanField("Auf der Startseite anzeigen?", default=False)
+    is_deleted = models.BooleanField("Gelöscht", default=False)
 
     class Meta:
         verbose_name = "KI Lösung"
