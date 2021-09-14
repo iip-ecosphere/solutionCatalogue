@@ -131,7 +131,9 @@ class ComponentAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         if is_admin_or_mod(request):
             return Component.objects.all()
-        return Component.objects.filter(created_by=request.user).filter(is_deleted=False)
+        return Component.objects.filter(created_by=request.user).filter(
+            is_deleted=False
+        )
 
     def save_model(self, request, obj, form, change):
         # add component owner on creation
@@ -158,7 +160,6 @@ class ComponentAdmin(admin.ModelAdmin):
     def delete_queryset(self, request, queryset):
         for obj in queryset:
             self.delete_model(request, obj)
-
 
     def view_on_site(self, obj):
         return f'{reverse("catalogue:detail", kwargs={"pk": obj.pk})}?preview=True'
@@ -259,7 +260,10 @@ class ComponentAdmin(admin.ModelAdmin):
             ),
         )
         # display certain fields for admins/mods only
-        admin_only = ("is_deleted", "created_by",)
+        admin_only = (
+            "is_deleted",
+            "created_by",
+        )
         if is_admin_or_mod(request):
             fieldsets[0][1]["fields"] += admin_only
         return fieldsets
