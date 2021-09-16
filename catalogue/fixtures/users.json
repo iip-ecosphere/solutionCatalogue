@@ -5,6 +5,7 @@
     "fields": {
       "username": "mod",
       "password": "pbkdf2_sha256$216000$2baU0OYpxQB8$0oB/ObBKs//iwaHObCTHdQl6sb8xoyfTGIOSthZLZuY=",
+      "email": "example.com",
       "is_superuser": false,
       "is_staff": true,
       "is_active": true,
@@ -17,6 +18,7 @@
     "fields": {
       "username": "user",
       "password": "pbkdf2_sha256$216000$2baU0OYpxQB8$0oB/ObBKs//iwaHObCTHdQl6sb8xoyfTGIOSthZLZuY=",
+      "email": "example.com",
       "is_superuser": false,
       "is_staff": true,
       "is_active": true,
