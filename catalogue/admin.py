@@ -285,11 +285,13 @@ class ComponentAdmin(admin.ModelAdmin):
             "published",
             "allow_email",
         )
+        self.list_filter = ()
         # moderators can choose components for frontpage
         if is_admin_or_mod(request):
             self.list_display.insert(2, "frontpage")
             self.list_display.insert(1, "is_deleted")
             self.list_editable += ("frontpage",)
+            self.list_filter += ("is_deleted",)
 
         return super().changelist_view(request, extra_context)
 

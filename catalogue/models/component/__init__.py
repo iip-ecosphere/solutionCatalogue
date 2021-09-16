@@ -149,7 +149,13 @@ class Requirements(models.Model):
 
 class PublicComponentManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(approved=True).filter(published=True)
+        return (
+            super()
+            .get_queryset()
+            .filter(approved=True)
+            .filter(published=True)
+            .filter(is_deleted=False)
+        )
 
 
 class Component(
