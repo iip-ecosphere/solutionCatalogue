@@ -149,7 +149,13 @@ class Requirements(models.Model):
 
 class PublicComponentManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(approved=True).filter(published=True)
+        return (
+            super()
+            .get_queryset()
+            .filter(approved=True)
+            .filter(published=True)
+            .filter(is_deleted=False)
+        )
 
 
 class Component(
@@ -169,6 +175,7 @@ class Component(
     allow_email = models.BooleanField("Erlaube Kontaktaufnahme per Mail", default=True)
     approved = models.BooleanField("Freigegeben", default=False)
     frontpage = models.BooleanField("Auf der Startseite anzeigen?", default=False)
+    is_deleted = models.BooleanField("Gelöscht", default=False)
 
     class Meta:
         verbose_name = "KI Lösung"

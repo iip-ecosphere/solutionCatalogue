@@ -93,6 +93,8 @@ class LicensesInline(SubNestedBase, admin.StackedInline):
 @admin.register(Component)
 class ComponentAdmin(admin.ModelAdmin):
     raw_id_fields = ("created_by",)
+    change_list_template = "admin/change_list_filter_sidebar.html"
+    change_list_filter_template = "admin/filter_listing.html"
 
     inlines = [
         # BaseData
@@ -131,7 +133,9 @@ class ComponentAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         if is_admin_or_mod(request):
             return Component.objects.all()
-        return Component.objects.filter(created_by=request.user)
+        return Component.objects.filter(created_by=request.user).filter(
+            is_deleted=False
+        )
 
     def save_model(self, request, obj, form, change):
         # add component owner on creation
@@ -147,6 +151,17 @@ class ComponentAdmin(admin.ModelAdmin):
             # send notification to user that a component was newly approved
             self.send_approve_notification_user(obj, request)
         super().save_model(request, obj, form, change)
+
+    def delete_model(self, request, obj):
+        if is_admin_or_mod(request):
+            super().delete_model(request, obj)
+            return
+        obj.is_deleted = True
+        super().save_model(request, obj, None, True)
+
+    def delete_queryset(self, request, queryset):
+        for obj in queryset:
+            self.delete_model(request, obj)
 
     def view_on_site(self, obj):
         return f'{reverse("catalogue:detail", kwargs={"pk": obj.pk})}?preview=True'
@@ -247,7 +262,10 @@ class ComponentAdmin(admin.ModelAdmin):
             ),
         )
         # display certain fields for admins/mods only
-        admin_only = ("created_by",)
+        admin_only = (
+            "is_deleted",
+            "created_by",
+        )
         if is_admin_or_mod(request):
             fieldsets[0][1]["fields"] += admin_only
         return fieldsets
@@ -269,10 +287,13 @@ class ComponentAdmin(admin.ModelAdmin):
             "published",
             "allow_email",
         )
+        self.list_filter = ()
         # moderators can choose components for frontpage
         if is_admin_or_mod(request):
-            self.list_display.insert(1, "frontpage")
+            self.list_display.insert(2, "frontpage")
+            self.list_display.insert(1, "is_deleted")
             self.list_editable += ("frontpage",)
+            self.list_filter += ("is_deleted",)
 
         return super().changelist_view(request, extra_context)
 
