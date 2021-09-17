@@ -20,10 +20,13 @@ jobs:
     - id: cache-pipenv
       uses: actions/cache@v1
       with:
-        path: ~/.local/share/virtualenvs
+        path: ./.venv
         key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile') }}
+        restore-keys: ${{ runner.os }}-pipenv
     - name: Install dependencies
       if: steps.cache-pipenv.outputs.cache-hit != 'true'
+      env:
+        PIPENV_VENV_IN_PROJECT: 'true'
       run: |
         pipenv install --dev
     - name: black
