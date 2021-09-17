@@ -18,8 +18,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade pipenv wheel
     - name: Install dependencies
-      env:
-        PIPENV_VENV_IN_PROJECT: 'true'
       run: |
         pipenv install --dev
     - name: black
