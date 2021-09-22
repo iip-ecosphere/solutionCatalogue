@@ -14,7 +14,7 @@ from .filters import (
 )
 from .models import Component
 from .models.messages import Inquiry, Feedback, Report
-from .utils import is_admin_or_mod, get_admin_emails
+from .utils import is_admin_or_mod, get_admin_emails, get_mod_emails
 
 
 class IndexView(FilterView):
@@ -197,5 +197,5 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             subject="IIP Ecosphere Lösungskatalog: Report",
             message=content,
             from_email=settings.SENDER_EMAIL_FEEDBACK,
-            recipient_list=get_admin_emails(),
+            recipient_list=get_mod_emails(),
         )

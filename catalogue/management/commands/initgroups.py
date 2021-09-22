@@ -30,6 +30,7 @@ GROUPS_PERMISSIONS = {
         User: ["change", "delete", "view"],
         models.Profile: ["change", "delete", "view"],
         models.messages.Inquiry: ["view", "delete"],
+        models.messages.Report: ["view", "delete"],
         **CATALOGUE_PERMS,
     },
 }
@@ -44,7 +45,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print(CATALOGUE_PERMS)
         for group_name in GROUPS_PERMISSIONS:
-            group, created = Group.objects.get_or_create(name=group_name)
+            group, _created = Group.objects.get_or_create(name=group_name)
             for model_cls in GROUPS_PERMISSIONS[group_name]:
                 for _perm_index, perm_name in enumerate(
                     GROUPS_PERMISSIONS[group_name][model_cls]
