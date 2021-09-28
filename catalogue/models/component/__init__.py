@@ -128,6 +128,56 @@ class Requirements(models.Model):
         verbose_name = "Vorraussetzungen"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return ""
+
+class Contact(models.Model):
+    # Contact Information
+    contact_person_surname = models.CharField(
+        "Vorname",
+        help_text="Vorname des zuständigen Mitarbeiters",
+        max_length=1000,
+    )
+    contact_person_lastname = models.CharField(
+        "Nachname",
+        help_text="Nachname des zuständigen Mitarbeiters",
+        max_length=1000,
+    )
+    contact_adress_land = models.CharField(
+        "Land",
+        help_text="Land in welchem sich der Anbieter befindet",
+        max_length=1000,
+    )
+    contact_adress_zip = models.CharField(
+        "PLZ",
+        help_text="PLZ in der sich der Anbieter befindet",
+        max_length=1000,
+    )
+    contact_adress_city = models.CharField(
+        "Stadt",
+        help_text="Stadt in der sich der Anbieter befindet",
+        max_length=1000,
+    )
+    contact_adress_street = models.CharField(
+        "Straße",
+        help_text="Straße des Anbieters",
+        max_length=1000,
+    )
+    contact_email = models.CharField(
+        "Email",
+        help_text="Email Adresse des zuständigen Mitarbeiters",
+        max_length=1000,
+    )
+    contact_phone = models.CharField(
+        "Telefonnummer",
+        help_text="Telefonnummer des zuständigen Mitarbeiters",
+        max_length=1000,
+    )
+
+    class Meta:
+        abstract = True
+        verbose_name = "Kontakt Informationen"
+        verbose_name_plural = verbose_name
 
 class PublicComponentManager(models.Manager):
     def get_queryset(self):
@@ -141,7 +191,7 @@ class PublicComponentManager(models.Manager):
 
 
 class Component(
-    ApplicationProfile, BaseData, Requirements, Source, Use, TechnicalSpecification
+    ApplicationProfile, BaseData, Requirements, Source, Use, TechnicalSpecification, Contact
 ):
     objects = models.Manager()
     public_objects = PublicComponentManager()
@@ -203,5 +253,9 @@ class Component(
     def get_source(self) -> Tuple[str, List[str]]:
         return Source._meta.verbose_name, [x.name for x in Source._meta.get_fields()]
 
+    def get_contact(self) -> Tuple[str, List[str]]:
+         return Contact._meta.verbose_name, [x.name for x in Contact._meta.get_fields()]
+
     def get_absolute_url(self):
         return reverse("catalogue:detail", kwargs={"pk": self.pk})
+
