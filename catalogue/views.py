@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from .forms import InquiryForm, FeedbackForm, ReportForm
 from .filters import (
@@ -14,6 +15,7 @@ from .filters import (
 )
 from .models import Component
 from .models.messages import Inquiry, Feedback, Report
+from .models.logging import SearchLog
 from .utils import is_admin_or_mod, get_admin_emails, get_mod_emails
 
 
@@ -29,6 +31,15 @@ class SearchView(FilterView):
     context_object_name = "components"
     queryset = Component.public_objects.all()
     filterset_class = ComponentFilter
+
+    def get(self, request, *args, **kwargs):
+        # check if user is logged in and save query
+        if isinstance(request.user, User):
+            log = SearchLog()
+            log.query = request.build_absolute_uri()
+            log.user = request.user
+            log.save()
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

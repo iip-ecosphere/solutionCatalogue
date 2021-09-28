@@ -29,6 +29,7 @@ from .models import (
 )
 from .models.users import Profile
 from .models.messages import Inquiry, Feedback, Report
+from .models.logging import SearchLog
 from .utils import is_admin, is_admin_or_mod, get_mod_emails
 
 
@@ -414,6 +415,36 @@ class ReportAdmin(admin.ModelAdmin):
             f"""
             <a href='{reverse('admin:catalogue_component_change', args=(obj.component.id,))}'>
             {obj.component.name}
+            </a>
+        """
+        )
+
+
+@admin.register(SearchLog)
+class SearchLogAdmin(admin.ModelAdmin):
+    list_display = (
+        "created",
+        "get_user",
+        "get_query",
+    )
+    search_fields = ("user__username", "query", "created")
+    list_display_links = None
+
+    def get_queryset(self, request):
+        if is_admin_or_mod(request):
+            return SearchLog.objects.all()
+        return SearchLog.objects.filter(user=request.user)
+
+    @admin.display(description=SearchLog._meta.get_field("query").verbose_name)
+    def get_query(self, obj):
+        return mark_safe(f"""<a href='{obj.query}'>{obj.query}</a>""")
+
+    @admin.display(description=SearchLog._meta.get_field("user").verbose_name)
+    def get_user(self, obj):
+        return mark_safe(
+            f"""
+            <a href='{reverse('admin:auth_user_change', args=(obj.user.id,))}'>
+            {obj.user}
             </a>
         """
         )
