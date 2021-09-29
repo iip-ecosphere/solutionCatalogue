@@ -3,11 +3,7 @@ from django.db import models
 
 
 class SearchLog(models.Model):
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name="Anfrage von",
-    )
+    identifier = models.CharField("Identifier", max_length=1000)
     query = models.CharField("Anfrage", max_length=100, blank=True)
     created = models.DateTimeField("Erstellt", auto_now_add=True)
 

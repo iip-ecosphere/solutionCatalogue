@@ -33,12 +33,13 @@ class SearchView(FilterView):
     filterset_class = ComponentFilter
 
     def get(self, request, *args, **kwargs):
-        # check if user is logged in and save query
-        if isinstance(request.user, User):
-            log = SearchLog()
-            log.query = request.build_absolute_uri()
-            log.user = request.user
-            log.save()
+        # check if user has session and save query
+        if not request.session or not request.session.session_key:
+            request.session.save()
+        log = SearchLog()
+        log.query = request.get_full_path()
+        log.identifier = request.session.session_key
+        log.save()
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

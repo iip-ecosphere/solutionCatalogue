@@ -424,30 +424,15 @@ class ReportAdmin(admin.ModelAdmin):
 class SearchLogAdmin(admin.ModelAdmin):
     list_display = (
         "created",
-        "get_user",
+        "identifier",
         "get_query",
     )
-    search_fields = ("user__username", "query", "created")
+    search_fields = ("query", "created", "identifier")
     list_display_links = None
-
-    def get_queryset(self, request):
-        if is_admin_or_mod(request):
-            return SearchLog.objects.all()
-        return SearchLog.objects.filter(user=request.user)
 
     @admin.display(description=SearchLog._meta.get_field("query").verbose_name)
     def get_query(self, obj):
         return mark_safe(f"""<a href='{obj.query}'>{obj.query}</a>""")
-
-    @admin.display(description=SearchLog._meta.get_field("user").verbose_name)
-    def get_user(self, obj):
-        return mark_safe(
-            f"""
-            <a href='{reverse('admin:auth_user_change', args=(obj.user.id,))}'>
-            {obj.user}
-            </a>
-        """
-        )
 
 
 class ProfileInline(admin.StackedInline):

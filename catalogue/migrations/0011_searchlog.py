@@ -17,9 +17,9 @@ class Migration(migrations.Migration):
             name='SearchLog',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('identifier', models.CharField(max_length=1000, verbose_name='Identifier')),
                 ('query', models.CharField(blank=True, max_length=100, verbose_name='Anfrage')),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Erstellt')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Anfrage von')),
             ],
             options={
                 'verbose_name': 'Suchverlauf',
