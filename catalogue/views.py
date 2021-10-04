@@ -36,10 +36,9 @@ class SearchView(FilterView):
         # check if user has session and save query
         if not request.session or not request.session.session_key:
             request.session.save()
-        log = SearchLog()
-        log.query = request.get_full_path()
-        log.identifier = request.session.session_key
-        log.save()
+        SearchLog(
+            query=request.get_full_path(), identifier=request.session.session_key
+        ).save()
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

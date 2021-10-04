@@ -432,7 +432,7 @@ class SearchLogAdmin(admin.ModelAdmin):
 
     @admin.display(description=SearchLog._meta.get_field("query").verbose_name)
     def get_query(self, obj):
-        return mark_safe(f"""<a href='{obj.query}'>{obj.query}</a>""")
+        return mark_safe(f"<a href='{obj.query}'>{obj.query}</a>")
 
 
 class ProfileInline(admin.StackedInline):

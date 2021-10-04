@@ -3,8 +3,8 @@ from django.db import models
 
 
 class SearchLog(models.Model):
-    identifier = models.CharField("Identifier", max_length=1000)
-    query = models.CharField("Anfrage", max_length=100, blank=True)
+    identifier = models.CharField("Identifier", max_length=100)
+    query = models.CharField("Anfrage", max_length=5000, blank=True)
     created = models.DateTimeField("Erstellt", auto_now_add=True)
 
     class Meta:
