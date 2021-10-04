@@ -87,27 +87,26 @@
           <h4 class="subtitle is-5 has-text-white">{{ component.manufacturer }}</h4>
           <p class="has-text-white">{{ component.get_contact.0 }}:</p>
           {% list_fields component component.get_contact.1 as fields %}
-          {% get_field component "contact_person_surname" as surname %}
-          {% get_field component "contact_person_lastname" as lastname %}
-          <p class="has-text-white">{{  surname }} {{ lastname }}</p>
-          {% get_field component "contact_address_land" as land %}
+          {% get_field component "contact_person_name" as name %}
+          <p class="has-text-white">{{  name }}</p>
           {% get_field component "contact_address_zip" as zip %}
           {% get_field component "contact_address_city" as city %}
           {% get_field component "contact_address_street" as street %}
-          {% if street %}
-            <p class="has-text-white">{{  street }}</p>
-          {% endif %}
-          {% if zip %}
-            <p class="has-text-white">{{  zip }}, {{ city }}</p>
-          {% endif %}
-          <p class="has-text-white">{{  land }}</p>
+          <p class="has-text-white">
+            {% if street %}
+              {{  street }},
+            {% endif %}
+            {% if zip or city %}
+              {{  zip }} {{ city }},
+            {% endif %}
+            Deutschland</p>
           {% get_field component "contact_email" as email %}
           {% get_field component "contact_phone" as phone %}
           {% if email %}
-            <p class="has-text-white">{{  email }}</p>
+            <a class="has-text-white" href="mailto:{{ email }}">{{  email }}</p>
           {% endif %}
           {% if phone %}
-            <p class="has-text-white">{{  phone }}</p>
+            <a class="has-text-white" href="tel:{{ phone }}">{{  phone }}</a>
           {% endif %}
         </div>
         {% if component.allow_email %}

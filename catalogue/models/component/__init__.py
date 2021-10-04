@@ -3,6 +3,7 @@ from typing import List, Tuple
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.validators import RegexValidator
 
 from ..choices import TRLChoices, RealtimeChoices
 
@@ -134,50 +135,44 @@ class Requirements(models.Model):
 
 class Contact(models.Model):
     # Contact Information
-    contact_person_surname = models.CharField(
-        "Vorname",
-        help_text="Vorname des zuständigen Mitarbeiters",
-        max_length=1000,
-    )
-    contact_person_lastname = models.CharField(
-        "Nachname",
-        help_text="Nachname des zuständigen Mitarbeiters",
-        max_length=1000,
-    )
-    contact_address_land = models.CharField(
-        "Land",
-        help_text="Land in welchem sich der Anbieter befindet",
-        max_length=1000,
-        default="Deutschland",
+    contact_person_name = models.CharField(
+        "Name",
+        help_text="Name des zuständigen Mitarbeiters",
+        max_length=100,
     )
     contact_address_zip = models.CharField(
         "PLZ",
         help_text="PLZ in der sich der Anbieter befindet",
-        max_length=1000,
+        max_length=100,
         blank=True,
     )
     contact_address_city = models.CharField(
         "Stadt",
         help_text="Stadt in der sich der Anbieter befindet",
-        max_length=1000,
+        max_length=100,
         blank=True,
     )
     contact_address_street = models.CharField(
         "Straße",
         help_text="Straße des Anbieters",
-        max_length=1000,
+        max_length=100,
         blank=True,
     )
-    contact_email = models.CharField(
+    contact_email = models.EmailField(
         "Email",
         help_text="Email Adresse des zuständigen Mitarbeiters",
-        max_length=1000,
+        max_length=100,
         blank=True,
+    )
+    phone_regex = RegexValidator(
+        regex=r"^\+?1?\d{9,15}$",
+        message="Die Telefonnummer muss folgendes Format ausweisen: '+999999999'.",
     )
     contact_phone = models.CharField(
         "Telefonnummer",
         help_text="Telefonnummer des zuständigen Mitarbeiters",
-        max_length=1000,
+        max_length=17,
+        validators=[phone_regex],
         blank=True,
     )
 

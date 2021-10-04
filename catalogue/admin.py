@@ -266,9 +266,7 @@ class ComponentAdmin(admin.ModelAdmin):
                 Contact._meta.verbose_name,
                 {
                     "fields": (
-                        "contact_person_surname",
-                        "contact_person_lastname",
-                        "contact_address_land",
+                        "contact_person_name",
                         "contact_address_zip",
                         "contact_address_city",
                         "contact_address_street",
