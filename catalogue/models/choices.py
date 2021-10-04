@@ -25,46 +25,46 @@ class TaskChoices(models.TextChoices):
         "VAR",
         "Virtuelle und erweiterte Realität",
     )  # Virtual and augmented reality
-    OTHER = "OTHER", "Sonstiges?"
+    OTHER = "OTHER", "Sonstiges"
     __empty__ = "Bitte Wert auswählen"
 
 
 class BranchChoices(models.TextChoices):
-    C10 = "C10", "Herstellung von Nahrungs- und Futtermitteln (C.10)"
-    C11 = "C11", "Getränkeherstellung (C.11)"
-    C12 = "C12", "Tabakverarbeitung (C.12)"
-    C13 = "C13", "Herstellung von Textilien (C.13)"
-    C14 = "C14", "Herstellung von Bekleidung (C.14)"
-    C15 = "C15", "Herstellung von Leder, Lederwaren und Schuhen (C.15)"
+    C10 = "C10", "Nahrungs- und Futtermittel"
+    C11 = "C11", "Getränke"
+    C12 = "C12", "Tabakverarbeitung"
+    C13 = "C13", "Textilien"
+    C14 = "C14", "Bekleidung"
+    C15 = "C15", "Leder, Lederwaren und Schuhe"
     C16 = (
         "C16",
-        "Herstellung von Holz-, Flecht-, Korb- und Korkwaren (ohne Möbel) (C.16)",
+        "Holz-, Flecht-, Korb- und Korkwaren (ohne Möbel)",
     )
-    C17 = "C17", "Herstellung von Papier, Pappe und Waren daraus (C.17)"
+    C17 = "C17", "Papier, Pappe und Waren daraus"
     C18 = (
         "C18",
-        "Herstellung von Druckerzeugnissen; Vervielfältigung von bespielten Ton-, Bild und Datenträgern (C.18)",
+        "Druckerzeugnisse; Vervielfältigung von bespielten Ton-, Bild und Datenträgern",
     )
-    C19 = "C19", "Kokerei und Mineralölverarbeitung (C.19)"
-    C20 = "C20", "Herstellung von chemischen Erzeugnissen (C.20)"
-    C21 = "C21", "Herstellung von pharmazeutischen Erzeugnissen (C.21)"
-    C22 = "C22", "Herstellung von Gummi- und Kunststoffwaren (C.22)"
+    C19 = "C19", "Kokerei und Mineralölverarbeitung"
+    C20 = "C20", "Chemische Erzeugnisse"
+    C21 = "C21", "Pharmazeutischen Erzeugnisse"
+    C22 = "C22", "Gummi- und Kunststoffwaren"
     C23 = (
         "C23",
-        "Herstellung von Glas und Glaswaren, Keramik, Verarbeitung von Steinen und Erden (C.23)",
+        "Glas und Glaswaren, Keramik, Verarbeitung von Steinen und Erden",
     )
-    C24 = "C24", "Metallerzeugung und –bearbeitung (C.24)"
-    C25 = "C25", "Herstellung von Metallerzeugnissen (C.25)"
+    C24 = "C24", "Metallerzeugung und –bearbeitung"
+    C25 = "C25", "Metallerzeugnisse"
     C26 = (
         "C26",
-        "Herstellung von Datenverarbeitungsgeräten, elektronischen und optischen Erzeugnissen (C.26)",
+        "Datenverarbeitungsgeräte, elektronische und optische Erzeugnisse",
     )
-    C27 = "C27", "Herstellung von elektrischen Ausrüstungen (C.27)"
-    C28 = "C28", "Maschinenbau (C.28)"
-    C29 = "C29", "Herstellung von Kraftwagen und Kraftwagenteilen (C.29)"
-    C30 = "C30", "Sonstiger Fahrzeugbau (C.30)"
-    C31 = "C31", "Herstellung von Möbeln (C.31)"
-    C32 = "C32", "Herstellung von sonstigen Waren (C.32)"
+    C27 = "C27", "Elektrische Ausrüstungen"
+    C28 = "C28", "Maschinenbau"
+    C29 = "C29", "Kraftwagen und Kraftwagenteile"
+    C30 = "C30", "Sonstiger Fahrzeugbau"
+    C31 = "C31", "Möbel"
+    C32 = "C32", "Herstellung von sonstigen Waren"
 
     ALL = "ALL", "Keine / Branchenunabhängig"
 
