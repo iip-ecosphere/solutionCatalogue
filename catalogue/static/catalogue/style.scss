@@ -30,14 +30,19 @@ footer {
     background-color: transparent;
     background-image: none;
   }
+  .navbar-brand {
+    font-family: 'League Spartan Variable', $family-sans-serif;
+    font-weight: bold;
+  }
 }
 
 .input {
   border: 1px solid $grey-lighter;
 }
 
-.title {
-  font-family: Eczar, $family-sans-serif;
+.title,
+h1, h2, h3, h4, h5 {
+  font-family: 'League Spartan Variable', $family-sans-serif;
 }
 
 .clicky {

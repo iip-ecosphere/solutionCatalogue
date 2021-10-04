@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{% endblock %}</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Eczar">
+  <link rel="stylesheet" href="{% static 'webfonts/LeagueSpartan/font.css' %}">
   <link rel="stylesheet" href="{% static 'catalogue/bulma.css' %}">
   <link rel="stylesheet" href="{% static 'catalogue/fas.min.css' %}">
   <link rel="stylesheet" href="{% static 'catalogue/progress-bar/css-circular-prog-bar.css' %}">
@@ -18,7 +18,7 @@
     <div class="navbar-brand">
       <a class="navbar-item" href="{% url 'catalogue:index' %}">
         <img alt="IIP Ecosphere" id="logo" src="{% static 'catalogue/logo/iip_white.svg' %}">
-        <span class="ml-2">IIP-Ecosphere</span>
+        <span class="ml-3">IIP-Ecosphere</span>
       </a>
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
         <span aria-hidden="true"></span>

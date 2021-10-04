@@ -17,7 +17,7 @@
     <div class="content">
       <p>{{ c.description }}</p>
       {% if c.task_set %}
-        <p class="title is-6">{{ c.task_set | verbose_name_plural }}</p>
+        <p class="title is-5">{{ c.task_set | verbose_name_plural }}</p>
         <ul>
           {% for t in c.task_set.all %}
             <li>{{ t.get_name_display }}</li>
@@ -25,7 +25,7 @@
         </ul>
       {% endif %}
       {% if c.process_set %}
-        <p class="title is-6">{{ c.process_set | verbose_name_plural }}</p>
+        <p class="title is-5">{{ c.process_set | verbose_name_plural }}</p>
         <ul>
           {% for t in c.process_set.all %}
             <li>{{ t.get_name_display }}</li>
@@ -35,7 +35,7 @@
       <div class="level">
         <div class="level-item has-text-centered">
           <a class="button is-rounded is-primary is-center" href="{{ c.get_absolute_url }}">
-            Learn More
+            Entdecken
           </a>
         </div>
         {% if showAdd %}

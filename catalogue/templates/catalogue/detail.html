@@ -50,13 +50,13 @@
   </section>
   <section id="tab1" class="section tab">
     <div class="container is-max-widescreen">
-      <h3 class="title is-4">{{ component.get_application_profile.0 }}</h3>
+      <h3 class="title is-3">{{ component.get_application_profile.0 }}</h3>
       {% list_fields component component.get_application_profile.1 as fields %}
       {% for field, val in fields %}
         {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
       {% endfor %}
       <hr>
-      <h3 class="title is-4">{{ component.get_use.0 }}</h3>
+      <h3 class="title is-3">{{ component.get_use.0 }}</h3>
       {% list_fields component component.get_use.1 as fields %}
       {% for field, val in fields %}
         {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
@@ -65,13 +65,13 @@
   </section>
   <section id="tab2" class="section tab" style="display: none">
     <div class="container is-max-widescreen">
-      <h3 class="title is-4">{{ component.get_requirements.0 }}</h3>
+      <h3 class="title is-3">{{ component.get_requirements.0 }}</h3>
       {% list_fields component component.get_requirements.1 as fields %}
       {% for field, val in fields %}
         {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}
       {% endfor %}
       <hr>
-      <h3 class="title is-4">{{ component.get_technical_specification.0 }}</h3>
+      <h3 class="title is-3">{{ component.get_technical_specification.0 }}</h3>
       {% list_fields component component.get_technical_specification.1 as fields %}
       {% for field, val in fields %}
         {% include "catalogue/includes/component-detail-columns.html" with title=field value=val only %}

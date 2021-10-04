@@ -44,11 +44,11 @@
   outline: none;
 }
 
-.pagination-previous[disabled],
-.pagination-next[disabled],
-.pagination-link[disabled],
-.pagination-ellipsis[disabled], .file-cta[disabled],
-.file-name[disabled], .select select[disabled], .textarea[disabled], .input[disabled], .button[disabled], fieldset[disabled] .pagination-previous,
+[disabled].pagination-previous,
+[disabled].pagination-next,
+[disabled].pagination-link,
+[disabled].pagination-ellipsis, [disabled].file-cta,
+[disabled].file-name, .select select[disabled], [disabled].textarea, [disabled].input, [disabled].button, fieldset[disabled] .pagination-previous,
 fieldset[disabled] .pagination-next,
 fieldset[disabled] .pagination-link,
 fieldset[disabled] .pagination-ellipsis, fieldset[disabled] .file-cta,
@@ -1944,19 +1944,19 @@ a.box:active {
   list-style-type: decimal;
 }
 
-.content ol.is-lower-alpha:not([type]) {
+.content ol:not([type]).is-lower-alpha {
   list-style-type: lower-alpha;
 }
 
-.content ol.is-lower-roman:not([type]) {
+.content ol:not([type]).is-lower-roman {
   list-style-type: lower-roman;
 }
 
-.content ol.is-upper-alpha:not([type]) {
+.content ol:not([type]).is-upper-alpha {
   list-style-type: upper-alpha;
 }
 
-.content ol.is-upper-roman:not([type]) {
+.content ol:not([type]).is-upper-roman {
   list-style-type: upper-roman;
 }
 
@@ -2891,95 +2891,95 @@ div.icon-text {
   margin-right: -0.375rem;
 }
 
-.tag.is-white:not(body) {
+.tag:not(body).is-white {
   background-color: #fff;
   color: #253029;
 }
 
-.tag.is-black:not(body) {
+.tag:not(body).is-black {
   background-color: #253029;
   color: #fff;
 }
 
-.tag.is-light:not(body) {
+.tag:not(body).is-light {
   background-color: whitesmoke;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.tag.is-dark:not(body) {
+.tag:not(body).is-dark {
   background-color: #363636;
   color: #fff;
 }
 
-.tag.is-primary:not(body) {
+.tag:not(body).is-primary {
   background-color: #2a6989;
   color: #fff;
 }
 
-.tag.is-primary.is-light:not(body) {
+.tag:not(body).is-primary.is-light {
   background-color: #f6f8fa;
   color: #253029;
 }
 
-.tag.is-link:not(body) {
+.tag:not(body).is-link {
   background-color: #2a6989;
   color: #fff;
 }
 
-.tag.is-link.is-light:not(body) {
+.tag:not(body).is-link.is-light {
   background-color: #eff7fa;
   color: #3990bb;
 }
 
-.tag.is-info:not(body) {
+.tag:not(body).is-info {
   background-color: #ffbe0b;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.tag.is-info.is-light:not(body) {
+.tag:not(body).is-info.is-light {
   background-color: #fffaeb;
   color: #946d00;
 }
 
-.tag.is-success:not(body) {
+.tag:not(body).is-success {
   background-color: #48c774;
   color: #fff;
 }
 
-.tag.is-success.is-light:not(body) {
+.tag:not(body).is-success.is-light {
   background-color: #effaf3;
   color: #257942;
 }
 
-.tag.is-warning:not(body) {
+.tag:not(body).is-warning {
   background-color: #ffbe0b;
   color: rgba(0, 0, 0, 0.7);
 }
 
-.tag.is-warning.is-light:not(body) {
+.tag:not(body).is-warning.is-light {
   background-color: #fffaeb;
   color: #946d00;
 }
 
-.tag.is-danger:not(body) {
+.tag:not(body).is-danger {
   background-color: #f14668;
   color: #fff;
 }
 
-.tag.is-danger.is-light:not(body) {
+.tag:not(body).is-danger.is-light {
   background-color: #feecf0;
   color: #cc0f35;
 }
 
-.tag.is-normal:not(body) {
+.tag:not(body).is-normal {
   font-size: 0.75rem;
 }
 
-.tag.is-medium:not(body) {
+.tag:not(body).is-medium {
   font-size: 1rem;
 }
 
-.tag.is-large:not(body) {
+.tag:not(body).is-large {
   font-size: 1.25rem;
 }
 
@@ -2998,14 +2998,14 @@ div.icon-text {
   margin-right: -0.375em;
 }
 
-.tag.is-delete:not(body) {
+.tag:not(body).is-delete {
   margin-left: 1px;
   padding: 0;
   position: relative;
   width: 2em;
 }
 
-.tag.is-delete:not(body)::before, .tag.is-delete:not(body)::after {
+.tag:not(body).is-delete::before, .tag:not(body).is-delete::after {
   background-color: currentColor;
   content: "";
   display: block;
@@ -3016,25 +3016,25 @@ div.icon-text {
   transform-origin: center center;
 }
 
-.tag.is-delete:not(body)::before {
+.tag:not(body).is-delete::before {
   height: 1px;
   width: 50%;
 }
 
-.tag.is-delete:not(body)::after {
+.tag:not(body).is-delete::after {
   height: 50%;
   width: 1px;
 }
 
-.tag.is-delete:not(body):hover, .tag.is-delete:not(body):focus {
+.tag:not(body).is-delete:hover, .tag:not(body).is-delete:focus {
   background-color: #e8e8e8;
 }
 
-.tag.is-delete:not(body):active {
+.tag:not(body).is-delete:active {
   background-color: #dbdbdb;
 }
 
-.tag.is-rounded:not(body) {
+.tag:not(body).is-rounded {
   border-radius: 290486px;
 }
 
@@ -3229,26 +3229,26 @@ a.tag:hover {
   box-shadow: 0 0 0 0.125em rgba(42, 105, 137, 0.25);
 }
 
-.select select[disabled], .textarea[disabled], .input[disabled], fieldset[disabled] .select select, .select fieldset[disabled] select, fieldset[disabled] .textarea, fieldset[disabled] .input {
+.select select[disabled], [disabled].textarea, [disabled].input, fieldset[disabled] .select select, .select fieldset[disabled] select, fieldset[disabled] .textarea, fieldset[disabled] .input {
   background-color: whitesmoke;
   border-color: whitesmoke;
   box-shadow: none;
   color: #7a7a7a;
 }
 
-.select select[disabled]::-moz-placeholder, .textarea[disabled]::-moz-placeholder, .input[disabled]::-moz-placeholder, fieldset[disabled] .select select::-moz-placeholder, .select fieldset[disabled] select::-moz-placeholder, fieldset[disabled] .textarea::-moz-placeholder, fieldset[disabled] .input::-moz-placeholder {
+.select select[disabled]::-moz-placeholder, [disabled].textarea::-moz-placeholder, [disabled].input::-moz-placeholder, fieldset[disabled] .select select::-moz-placeholder, .select fieldset[disabled] select::-moz-placeholder, fieldset[disabled] .textarea::-moz-placeholder, fieldset[disabled] .input::-moz-placeholder {
   color: rgba(122, 122, 122, 0.3);
 }
 
-.select select[disabled]::-webkit-input-placeholder, .textarea[disabled]::-webkit-input-placeholder, .input[disabled]::-webkit-input-placeholder, fieldset[disabled] .select select::-webkit-input-placeholder, .select fieldset[disabled] select::-webkit-input-placeholder, fieldset[disabled] .textarea::-webkit-input-placeholder, fieldset[disabled] .input::-webkit-input-placeholder {
+.select select[disabled]::-webkit-input-placeholder, [disabled].textarea::-webkit-input-placeholder, [disabled].input::-webkit-input-placeholder, fieldset[disabled] .select select::-webkit-input-placeholder, .select fieldset[disabled] select::-webkit-input-placeholder, fieldset[disabled] .textarea::-webkit-input-placeholder, fieldset[disabled] .input::-webkit-input-placeholder {
   color: rgba(122, 122, 122, 0.3);
 }
 
-.select select[disabled]:-moz-placeholder, .textarea[disabled]:-moz-placeholder, .input[disabled]:-moz-placeholder, fieldset[disabled] .select select:-moz-placeholder, .select fieldset[disabled] select:-moz-placeholder, fieldset[disabled] .textarea:-moz-placeholder, fieldset[disabled] .input:-moz-placeholder {
+.select select[disabled]:-moz-placeholder, [disabled].textarea:-moz-placeholder, [disabled].input:-moz-placeholder, fieldset[disabled] .select select:-moz-placeholder, .select fieldset[disabled] select:-moz-placeholder, fieldset[disabled] .textarea:-moz-placeholder, fieldset[disabled] .input:-moz-placeholder {
   color: rgba(122, 122, 122, 0.3);
 }
 
-.select select[disabled]:-ms-input-placeholder, .textarea[disabled]:-ms-input-placeholder, .input[disabled]:-ms-input-placeholder, fieldset[disabled] .select select:-ms-input-placeholder, .select fieldset[disabled] select:-ms-input-placeholder, fieldset[disabled] .textarea:-ms-input-placeholder, fieldset[disabled] .input:-ms-input-placeholder {
+.select select[disabled]:-ms-input-placeholder, [disabled].textarea:-ms-input-placeholder, [disabled].input:-ms-input-placeholder, fieldset[disabled] .select select:-ms-input-placeholder, .select fieldset[disabled] select:-ms-input-placeholder, fieldset[disabled] .textarea:-ms-input-placeholder, fieldset[disabled] .input:-ms-input-placeholder {
   color: rgba(122, 122, 122, 0.3);
 }
 
@@ -3258,7 +3258,7 @@ a.tag:hover {
   width: 100%;
 }
 
-.textarea[readonly], .input[readonly] {
+[readonly].textarea, [readonly].input {
   box-shadow: none;
 }
 
@@ -3415,7 +3415,7 @@ a.tag:hover {
   color: #363636;
 }
 
-.radio[disabled], .checkbox[disabled], fieldset[disabled] .radio, fieldset[disabled] .checkbox,
+[disabled].radio, [disabled].checkbox, fieldset[disabled] .radio, fieldset[disabled] .checkbox,
 .radio input[disabled],
 .checkbox input[disabled] {
   color: #7a7a7a;
@@ -4220,35 +4220,35 @@ a.tag:hover {
   border-top-left-radius: 0;
 }
 
-.field.has-addons .control .button:not([disabled]):hover, .field.has-addons .control .button.is-hovered:not([disabled]),
+.field.has-addons .control .button:not([disabled]):hover, .field.has-addons .control .button:not([disabled]).is-hovered,
 .field.has-addons .control .input:not([disabled]):hover,
-.field.has-addons .control .input.is-hovered:not([disabled]),
+.field.has-addons .control .input:not([disabled]).is-hovered,
 .field.has-addons .control .select select:not([disabled]):hover,
-.field.has-addons .control .select select.is-hovered:not([disabled]) {
+.field.has-addons .control .select select:not([disabled]).is-hovered {
   z-index: 2;
 }
 
-.field.has-addons .control .button:not([disabled]):focus, .field.has-addons .control .button.is-focused:not([disabled]), .field.has-addons .control .button:not([disabled]):active, .field.has-addons .control .button.is-active:not([disabled]),
+.field.has-addons .control .button:not([disabled]):focus, .field.has-addons .control .button:not([disabled]).is-focused, .field.has-addons .control .button:not([disabled]):active, .field.has-addons .control .button:not([disabled]).is-active,
 .field.has-addons .control .input:not([disabled]):focus,
-.field.has-addons .control .input.is-focused:not([disabled]),
+.field.has-addons .control .input:not([disabled]).is-focused,
 .field.has-addons .control .input:not([disabled]):active,
-.field.has-addons .control .input.is-active:not([disabled]),
+.field.has-addons .control .input:not([disabled]).is-active,
 .field.has-addons .control .select select:not([disabled]):focus,
-.field.has-addons .control .select select.is-focused:not([disabled]),
+.field.has-addons .control .select select:not([disabled]).is-focused,
 .field.has-addons .control .select select:not([disabled]):active,
-.field.has-addons .control .select select.is-active:not([disabled]) {
+.field.has-addons .control .select select:not([disabled]).is-active {
   z-index: 3;
 }
 
-.field.has-addons .control .button:not([disabled]):focus:hover, .field.has-addons .control .button.is-focused:not([disabled]):hover, .field.has-addons .control .button:not([disabled]):active:hover, .field.has-addons .control .button.is-active:not([disabled]):hover,
+.field.has-addons .control .button:not([disabled]):focus:hover, .field.has-addons .control .button:not([disabled]).is-focused:hover, .field.has-addons .control .button:not([disabled]):active:hover, .field.has-addons .control .button:not([disabled]).is-active:hover,
 .field.has-addons .control .input:not([disabled]):focus:hover,
-.field.has-addons .control .input.is-focused:not([disabled]):hover,
+.field.has-addons .control .input:not([disabled]).is-focused:hover,
 .field.has-addons .control .input:not([disabled]):active:hover,
-.field.has-addons .control .input.is-active:not([disabled]):hover,
+.field.has-addons .control .input:not([disabled]).is-active:hover,
 .field.has-addons .control .select select:not([disabled]):focus:hover,
-.field.has-addons .control .select select.is-focused:not([disabled]):hover,
+.field.has-addons .control .select select:not([disabled]).is-focused:hover,
 .field.has-addons .control .select select:not([disabled]):active:hover,
-.field.has-addons .control .select select.is-active:not([disabled]):hover {
+.field.has-addons .control .select select:not([disabled]).is-active:hover {
   z-index: 4;
 }
 
@@ -11618,12 +11618,18 @@ footer {
   background-image: none;
 }
 
+.navbar .navbar-brand {
+  font-family: "League Spartan Variable", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-weight: bold;
+}
+
 .input {
   border: 1px solid #dbdbdb;
 }
 
-.title {
-  font-family: Eczar, BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+.title,
+h1, h2, h3, h4, h5 {
+  font-family: "League Spartan Variable", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 .clicky {
