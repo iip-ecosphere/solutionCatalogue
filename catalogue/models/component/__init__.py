@@ -56,14 +56,6 @@ class Use(models.Model):
 
 
 class Source(models.Model):
-<<<<<<< HEAD
-    manufacturer = models.CharField(
-        "Hersteller",
-        help_text="Entwickler und/oder Hersteller der Lösung",
-        max_length=1000,
-    )
-=======
->>>>>>> added country field
     contact = models.TextField(
         "Kontakt",
         help_text="Möglichkeit zum Hersteller Kontakt aufzunehmen",
@@ -140,7 +132,7 @@ class Contact(models.Model):
     # Contact Information
     contact_manufacturer = models.CharField(
         "Hersteller",
-        help_text="Entwickler und/oder Hersteller der Komponente",
+        help_text="Entwickler und/oder Hersteller der Lösung",
         max_length=1000,
     )
     contact_person_name = models.CharField(
@@ -180,7 +172,7 @@ class Contact(models.Model):
     )
     phone_regex = RegexValidator(
         regex=r"^\+?1?\d{9,15}$",
-        message="Die Telefonnummer muss folgendes Format aufweisen: '+999999999'.",
+        message="Die Telefonnummer muss folgendes Format ausweisen: '+999999999'.",
     )
     contact_phone = models.CharField(
         "Telefonnummer",

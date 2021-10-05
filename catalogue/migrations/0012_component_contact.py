@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalogue', '0010_component_is_deleted'),
+        ('catalogue', '0011_auto_20211005_1359'),
     ]
 
     operations = [
@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='component',
             name='contact_manufacturer',
-            field=models.CharField(default='ACME', help_text='Entwickler und/oder Hersteller der Komponente', max_length=1000, verbose_name='Hersteller'),
+            field=models.CharField(default='ACME', help_text='Entwickler und/oder Hersteller der Lösung', max_length=1000, verbose_name='Hersteller'),
             preserve_default=False,
         ),
         migrations.AddField(
