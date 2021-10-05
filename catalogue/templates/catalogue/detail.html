@@ -84,9 +84,9 @@
           <h3 class="title is-3 has-text-white">
             Lösungsanbieter:
           </h3>
-          <h4 class="subtitle is-5 has-text-white">{{ component.manufacturer }}</h4>
+          {% get_field component "contact_manufacturer" as manufacturer %}
+          <h4 class="subtitle is-5 has-text-white">{{ manufacturer }}</h4>
           <p class="has-text-white">{{ component.get_contact.0 }}:</p>
-          {% list_fields component component.get_contact.1 as fields %}
           {% get_field component "contact_person_name" as name %}
           <p class="has-text-white">{{  name }}</p>
           {% get_field component "contact_address_country" as country %}

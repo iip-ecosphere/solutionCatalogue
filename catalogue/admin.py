@@ -255,7 +255,6 @@ class ComponentAdmin(admin.ModelAdmin):
                 Source._meta.verbose_name,
                 {
                     "fields": (
-                        "manufacturer",
                         "contact",
                         "additional_info",
                     )
@@ -266,8 +265,8 @@ class ComponentAdmin(admin.ModelAdmin):
                 Contact._meta.verbose_name,
                 {
                     "fields": (
+                        "contact_manufacturer",
                         "contact_person_name",
-                        "contact_address_country",
                         "contact_address_zip",
                         "contact_address_city",
                         "contact_address_street",
