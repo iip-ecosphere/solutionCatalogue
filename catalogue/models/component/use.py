@@ -24,5 +24,5 @@ class KPI(models.Model):
         verbose_name = "KPI"
         verbose_name_plural = verbose_name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.get_type_display()

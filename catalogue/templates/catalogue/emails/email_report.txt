@@ -1,9 +1,9 @@
 {% block content %}
-Ein Besucher hat die KI Lösung "{{ component.name }}" gemeldet:
-{{ message }}
+Ein Besucher hat die KI Lösung "{{ report.component.name }}" gemeldet:
+{{ report.message }}
 
 
 Absender:
-{{ name }}
-{{ email }}
+{{ report.name }}
+{{ report.email }}
 {% endblock content %}

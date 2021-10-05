@@ -32,9 +32,6 @@ class BaseData(models.Model):
         verbose_name = "Grunddaten"
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return f"{self.name} - TRL {self.trl}"
-
 
 class ApplicationProfile(models.Model):
     product = models.TextField("Produkt", help_text="Hergestelltes Produkt")
@@ -43,9 +40,6 @@ class ApplicationProfile(models.Model):
         abstract = True
         verbose_name = "Anwendungsprofil"
         verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.product
 
 
 class Use(models.Model):
@@ -58,9 +52,6 @@ class Use(models.Model):
         abstract = True
         verbose_name = "Nutzen"
         verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.scenarios
 
 
 class Source(models.Model):
@@ -82,9 +73,6 @@ class Source(models.Model):
         abstract = True
         verbose_name = "Quelle"
         verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return ""
 
 
 class TechnicalSpecification(models.Model):
@@ -108,9 +96,6 @@ class TechnicalSpecification(models.Model):
         abstract = True
         verbose_name = "Technische Spezifikation"
         verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return ""
 
 
 class Requirements(models.Model):
@@ -142,9 +127,6 @@ class Requirements(models.Model):
         abstract = True
         verbose_name = "Vorraussetzungen"
         verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return ""
 
 
 class PublicComponentManager(models.Manager):
@@ -182,7 +164,7 @@ class Component(
         verbose_name_plural = "KI Lösungen"
 
     def __str__(self) -> str:
-        return "{} {} - {}".format(self._meta.verbose_name, self.id, self.name)
+        return f"{self._meta.verbose_name} {self.id} - {self.name}"
 
     def get_basedata(self) -> Tuple[str, List[str]]:
         return (

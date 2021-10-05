@@ -14,17 +14,17 @@ class Profile(models.Model):
         return self.user.username
 
     @property
-    def component_count(self):
+    def component_count(self) -> int:
         return Component.objects.filter(created_by=self.user).count()
 
 
 @receiver(post_save, sender=User)
-def create_or_update_user_profile(sender, instance, created, **kwargs):
+def create_or_update_user_profile(sender, instance, created, **kwargs) -> None:
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
 
 
 @receiver(pre_save, sender=User)
-def add_to_staff(sender, instance, **kwargs):
+def add_to_staff(sender, instance, **kwargs) -> None:
     instance.is_staff = True

@@ -447,7 +447,7 @@ class CustomUserAdmin(UserAdmin):
         r = sorted([str(g) for g in obj.groups.all()])
         if obj.user_permissions.count():
             r += ["+"]
-        return mark_safe("<nobr>{}</nobr>".format(", ".join(r)))
+        return mark_safe(f"<nobr>{', '.join(r)}</nobr>")
 
     @admin.display(
         description=Profile._meta.get_field("company").verbose_name,

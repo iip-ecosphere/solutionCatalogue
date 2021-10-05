@@ -49,13 +49,12 @@ class SearchFeedbackView(generic.edit.FormView):
         return render(self.request, self.success_template, self.get_context_data())
 
     def send_mail_feedback(self, feedback: Feedback):
-        context = {
-            "name": feedback.name,
-            "message": feedback.message,
-            "email": feedback.mail,
-            "sentiment": feedback.sentiment,
-        }
-        content = render_to_string("catalogue/emails/email_feedback.txt", context)
+        content = render_to_string(
+            "catalogue/emails/email_feedback.txt",
+            {
+                "feedback": feedback,
+            },
+        )
         send_mail(
             subject="KI-Lösungskatalog: Feedback",
             message=content,
@@ -102,13 +101,12 @@ class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
         return render(self.request, self.template_name)
 
     def send_mail_customer(self, inquiry: Inquiry):
-        context = {
-            "name": inquiry.name,
-            "message": inquiry.message,
-            "email": inquiry.mail,
-            "comp": inquiry.component,
-        }
-        content = render_to_string("catalogue/emails/email_message.txt", context)
+        content = render_to_string(
+            "catalogue/emails/email_message.txt",
+            {
+                "inquiry": inquiry,
+            },
+        )
         send_mail(
             subject="KI-Lösungskatalog: Anfrage",
             message=content,
@@ -186,13 +184,12 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
         return render(self.request, self.success_template, self.get_context_data())
 
     def send_mail_report(self, report: Report):
-        context = {
-            "name": report.name,
-            "message": report.message,
-            "email": report.mail,
-            "component": report.component,
-        }
-        content = render_to_string("catalogue/emails/email_report.txt", context)
+        content = render_to_string(
+            "catalogue/emails/email_report.txt",
+            {
+                "report": report,
+            },
+        )
         send_mail(
             subject="KI-Lösungskatalog: Report",
             message=content,

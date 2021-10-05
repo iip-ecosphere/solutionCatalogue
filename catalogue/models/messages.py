@@ -31,7 +31,7 @@ class Inquiry(SenderInfo):
         verbose_name = "Anfrage"
         verbose_name_plural = "Anfragen"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self._meta.verbose_name} {self.id}"
 
 
@@ -50,7 +50,7 @@ class Feedback(SenderInfo):
         verbose_name = "Such-Feedback"
         verbose_name_plural = "Such-Feedback"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self._meta.verbose_name} {self.id}"
 
 
@@ -71,5 +71,5 @@ class Report(SenderInfo):
         verbose_name = "Meldung"
         verbose_name_plural = "Meldungen"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self._meta.verbose_name} {self.id}"

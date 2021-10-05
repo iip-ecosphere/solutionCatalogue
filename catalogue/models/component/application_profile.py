@@ -23,7 +23,7 @@ class CorporateDivision(models.Model):
         verbose_name = "Unternehmensbereich"
         verbose_name_plural = verbose_name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.get_name_display()
 
 
@@ -40,7 +40,7 @@ class HierarchyLevel(models.Model):
         verbose_name = "Hierarchie-Ebene"
         verbose_name_plural = verbose_name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.get_name_display()
 
 
@@ -57,7 +57,7 @@ class Process(models.Model):
         verbose_name = "Prozess"
         verbose_name_plural = verbose_name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.get_name_display()
 
 
@@ -74,7 +74,7 @@ class BranchProven(models.Model):
         verbose_name = "Branche (erprobt)"
         verbose_name_plural = verbose_name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.get_name_display()
 
 
@@ -91,5 +91,5 @@ class BranchApplicable(models.Model):
         verbose_name = "Branche (anwendbar)"
         verbose_name_plural = verbose_name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.get_name_display()

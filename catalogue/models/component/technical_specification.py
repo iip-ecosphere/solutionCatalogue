@@ -16,7 +16,7 @@ class AIMethod(models.Model):
         verbose_name = "KI-Methode"
         verbose_name_plural = verbose_name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
@@ -35,7 +35,7 @@ class DataAnalysisProcess(models.Model):
         verbose_name = "Datenanalyse-Prozess"
         verbose_name_plural = verbose_name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.get_name_display()
 
 
@@ -58,7 +58,7 @@ class Licenses(models.Model):
         verbose_name = "Lizenz"
         verbose_name_plural = "Lizenzen"
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.name:
             return f"{self.get_type_display()} - {self.name}"
         else:

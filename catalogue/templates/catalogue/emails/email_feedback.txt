@@ -1,11 +1,11 @@
 {% extends "catalogue/emails/email_base.txt" %}
 
 {% block content %}
-Sie haben neues Feedback zur Suche von {{ name }} erhalten:
-{{ message }}
+Sie haben neues Feedback zur Suche von {{ feedback.name }} erhalten:
+{{ feedback.message }}
 
-Der Nutzer hat die Suche folgendermaßen eingestuft: {{ sentiment }}
-Die Email dieses Nutzers lautet: {{ email }}
+Der Nutzer hat die Sucherfahrung folgendermaßen eingestuft: {{ feedback.sentiment }}
+Die Email dieses Nutzers lautet: {{ feedback.email }}
 {% endblock content %}
 
 
