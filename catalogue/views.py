@@ -57,7 +57,7 @@ class SearchFeedbackView(generic.edit.FormView):
         }
         content = render_to_string("catalogue/emails/email_feedback.txt", context)
         send_mail(
-            subject="IIP Ecosphere Lösungskatalog: Feedback",
+            subject="KI-Lösungskatalog: Feedback",
             message=content,
             from_email=settings.SENDER_EMAIL_FEEDBACK,
             recipient_list=get_admin_emails(),
@@ -110,7 +110,7 @@ class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
         }
         content = render_to_string("catalogue/emails/email_message.txt", context)
         send_mail(
-            subject="IIP Ecosphere Lösungskatalog: Anfrage",
+            subject="KI-Lösungskatalog: Anfrage",
             message=content,
             from_email=settings.SENDER_EMAIL_MESSAGE,
             recipient_list=[inquiry.recipient.email],
@@ -194,7 +194,7 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
         }
         content = render_to_string("catalogue/emails/email_report.txt", context)
         send_mail(
-            subject="IIP Ecosphere Lösungskatalog: Report",
+            subject="KI-Lösungskatalog: Report",
             message=content,
             from_email=settings.SENDER_EMAIL_FEEDBACK,
             recipient_list=get_mod_emails(),

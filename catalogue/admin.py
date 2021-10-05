@@ -302,7 +302,7 @@ class ComponentAdmin(admin.ModelAdmin):
         context = {"comp": instance, "link": request.build_absolute_uri()}
         content = render_to_string("catalogue/emails/email_approve_admin.txt", context)
         send_mail(
-            subject="IIP Ecosphere Lösungskatalog: Komponente muss moderiert werden",
+            subject="KI-Lösungskatalog: Lösung muss moderiert werden",
             message=content,
             from_email=settings.SENDER_EMAIL_APPROVE,
             recipient_list=get_mod_emails(),
@@ -313,7 +313,7 @@ class ComponentAdmin(admin.ModelAdmin):
         context = {"comp": instance, "link": request.build_absolute_uri()}
         content = render_to_string("catalogue/emails/email_approve_user.txt", context)
         send_mail(
-            subject="IIP Ecosphere Lösungskatalog: Komponente wurde freigegeben",
+            subject="KI-Lösungskatalog: Lösung wurde freigegeben",
             message=content,
             from_email=settings.SENDER_EMAIL_APPROVE,
             recipient_list=[instance.created_by.email],

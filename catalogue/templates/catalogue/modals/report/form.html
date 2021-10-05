@@ -1,10 +1,11 @@
 {% load bulma_tags %}
+{% load verbose_name %}
 <div class="modal is-active">
   <div class="modal-background" onclick="closeReportModal()"></div>
   <div class="modal-content">
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Komponente '{{ component.name }}' melden</p>
+        <p class="modal-card-title">{% verbose_name component %} '{{ component.name }}' melden</p>
         <button class="delete" aria-label="close" onclick="closeReportModal()"></button>
       </header>
       <form hx-post="{% url 'catalogue:report_component' component.id %}" hx-swap="outerHTML">

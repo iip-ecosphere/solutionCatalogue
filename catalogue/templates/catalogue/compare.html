@@ -2,7 +2,7 @@
 {% load bulma_tags %}
 {% load list_fields %}
 {% load verbose_name %}
-{% block title %}Vergleich{% endblock %}
+{% block title %}Vergleich - {{ block.super }}{% endblock %}
 {% block body %}
   <section class="section has-background-primary has-text-white">
     <div class="container is-max-widescreen">
@@ -84,7 +84,7 @@
         </div>
       {% else %}
         <div class="column has-text-centered">
-          <p class="mt-6">Keine Komponenten zum Vergleich ausgewählt.</p>
+          <p class="mt-6">Keine Lösungen zum Vergleich ausgewählt.</p>
         </div>
       {% endif %}
     </div>

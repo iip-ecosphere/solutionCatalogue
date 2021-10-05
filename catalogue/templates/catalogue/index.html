@@ -1,8 +1,6 @@
 {% extends "catalogue/base.html" %}
 {% load static %}
-{% load verbose_name %}
 {% load bulma_tags %}
-{% block title %}Catalogue Index{% endblock %}
 {% block body %}
   <section class="section is-medium bg-bubble pull-nav">
     <div class="container is-max-widescreen">
@@ -61,7 +59,7 @@
   <section class="section bg-gradient-blue-red pt-0">
     <div class="container is-max-widescreen">
       <h2 class="title is-3 has-text-white has-text-centered">
-        Ausgewählte Lösungen
+        Ausgewählte KI Lösungen
       </h2>
       <div class="columns is-flex-wrap-wrap">
         {% for c in components %}

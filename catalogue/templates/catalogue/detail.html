@@ -1,8 +1,7 @@
 {% extends "catalogue/base.html" %}
-{% load verbose_name %}
 {% load list_fields %}
 {% load bulma_tags %}
-{% block title %}Komponente - {{ component.name }}{% endblock %}
+{% block title %}{{ component.name }}  - {{ block.super }}{% endblock %}
 {% block body %}
   <section class="section has-background-primary has-text-white">
     <div class="container is-max-widescreen">

@@ -49,7 +49,7 @@
     </div>
   {% endif %}
   {% if not in_cart %}
-    <button id="addButton" class="button is-success" title="Füge Komponente in den Warenkorb hinzu"
+    <button id="addButton" class="button is-success" title="Lösung zum Vergleich hinzufügen"
             style="margin-left: -5px; border-left: 2px solid white; border-radius: 0;"
             hx-post="{% url 'catalogue:edit_cart' current_id %}?c={{ current_id }}"
             hx-target="#shopping_card"

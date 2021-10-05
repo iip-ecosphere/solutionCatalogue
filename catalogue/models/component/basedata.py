@@ -10,7 +10,7 @@ class Task(models.Model):
         choices=TaskChoices.choices,
         max_length=5,
         help_text=(
-            "Art der Aufgabe, der die beschriebene KI-Komponente zugeordnet werden kann"
+            "Art der Aufgabe, der die beschriebene KI-Lösung zugeordnet werden kann"
             " (z.B. Predictive Maintenance, Qualitätsprüfung))"
         ),
         blank=True,

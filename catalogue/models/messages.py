@@ -32,7 +32,7 @@ class Inquiry(SenderInfo):
         verbose_name_plural = "Anfragen"
 
     def __str__(self):
-        return "{} {}".format(self._meta.verbose_name, self.id)
+        return f"{self._meta.verbose_name} {self.id}"
 
 
 class Feedback(SenderInfo):
@@ -51,7 +51,7 @@ class Feedback(SenderInfo):
         verbose_name_plural = "Such-Feedback"
 
     def __str__(self):
-        return "{} {}".format(self._meta.verbose_name, self.id)
+        return f"{self._meta.verbose_name} {self.id}"
 
 
 class Report(SenderInfo):
@@ -62,7 +62,7 @@ class Report(SenderInfo):
         verbose_name=Component._meta.verbose_name,
     )
     message = models.TextField(
-        "Warum möchten Sie diese Komponente melden?",
+        "Warum möchten Sie diese Lösung melden?",
         help_text="Ihre Nachricht",
         max_length=2000,
     )
@@ -72,4 +72,4 @@ class Report(SenderInfo):
         verbose_name_plural = "Meldungen"
 
     def __str__(self):
-        return "{} {}".format(self._meta.verbose_name, self.id)
+        return f"{self._meta.verbose_name} {self.id}"

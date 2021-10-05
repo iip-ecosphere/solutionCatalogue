@@ -11,20 +11,20 @@ class BaseData(models.Model):
     name = models.CharField(
         "Name",
         max_length=200,
-        help_text="Bezeichnung der Komponente",
+        help_text="Bezeichnung der Lösung",
         blank=False,
         unique=True,
     )
     trl = models.IntegerField(
         "TRL",
         help_text=(
-            "Status der Komponente in Bezug auf Ihre Einsetzbarkeit durch die Angabe"
+            "Status der Lösung in Bezug auf Ihre Einsetzbarkeit durch die Angabe"
             " eines Technischen Reifegrades (Technology Readiness Level)."
         ),
         choices=TRLChoices.choices,
     )
     description = models.TextField(
-        "Kurzbeschreibung", help_text="Kurze Beschreibung der Komponente"
+        "Kurzbeschreibung", help_text="Kurze Beschreibung der Lösung"
     )
 
     class Meta:
@@ -51,7 +51,7 @@ class ApplicationProfile(models.Model):
 class Use(models.Model):
     scenarios = models.TextField(
         "Szenarien / Use cases",
-        help_text="Beschreibung von Szenarien, in denen die Komponente bereits erfolgreich eingesetzt wurde",
+        help_text="Beschreibung von Szenarien, in denen die Lösung bereits erfolgreich eingesetzt wurde",
     )
 
     class Meta:
@@ -66,7 +66,7 @@ class Use(models.Model):
 class Source(models.Model):
     manufacturer = models.CharField(
         "Hersteller",
-        help_text="Entwickler und/oder Hersteller der Komponente",
+        help_text="Entwickler und/oder Hersteller der Lösung",
         max_length=1000,
     )
     contact = models.TextField(
@@ -75,7 +75,7 @@ class Source(models.Model):
         blank=True,
     )
     additional_info = models.TextField(
-        "Zusatzinformationen", help_text="Zusatzinformation zur Komponente", blank=True
+        "Zusatzinformationen", help_text="Zusatzinformation zur Lösung", blank=True
     )
 
     class Meta:
@@ -90,12 +90,12 @@ class Source(models.Model):
 class TechnicalSpecification(models.Model):
     realtime_processing = models.IntegerField(
         "Echtzeitverarbeitung",
-        help_text="Klassifizierung der Komponente in Bezug auf ihre Echtzeitfähigkeit",
+        help_text="Klassifizierung der Lösung in Bezug auf ihre Echtzeitfähigkeit",
         choices=RealtimeChoices.choices,
     )
     data_formats = models.CharField(
         "Datenformate",
-        help_text="Datenformate, die von der KI-Komponente verarbeitet werden können und Datenformat der Ergebnisse",
+        help_text="Datenformate, die von der KI-Lösung verarbeitet werden können und Datenformat der Ergebnisse",
         max_length=1000,
         blank=True,
     )
@@ -123,18 +123,18 @@ class Requirements(models.Model):
         "IT Umgebung/Software",
         help_text=(
             "Anforderungen an die IT-Umgebung (inkl. IT Hardware) und an weitere Software/Bibliotheken"
-            ", die für den Betrieb der Komponente notwendig sind"
+            ", die für den Betrieb der Lösung notwendig sind"
         ),
         max_length=1000,
     )
     hardware_requirements = models.CharField(
         "Spezielle Hardware",
-        help_text="Spezielle Hardware, welche für den Betrieb der Komponente notwendig ist (z.B. Kamera, Roboter)",
+        help_text="Spezielle Hardware, welche für den Betrieb der Lösung notwendig ist (z.B. Kamera, Roboter)",
         max_length=1000,
     )
     devices = models.CharField(
         "Maschinen/Steuerungen",
-        help_text="Maschinen und IoT Devices, mit denen die Komponente kompatibel ist",
+        help_text="Maschinen und IoT Devices, mit denen die Lösung kompatibel ist",
         max_length=1000,
     )
 

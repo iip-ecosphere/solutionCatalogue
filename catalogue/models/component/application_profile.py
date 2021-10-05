@@ -13,7 +13,7 @@ from . import Component
 class CorporateDivision(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
-        help_text="Bereich des produzierenden Unternehmens, für den die Komponenten entwickelt wurde",
+        help_text="Bereich des produzierenden Unternehmens, für den die Lösungen entwickelt wurde",
         choices=CorporateDivisionChoices.choices,
         max_length=2,
         blank=True,
@@ -31,7 +31,7 @@ class HierarchyLevel(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         choices=HierarchyLevelChoices.choices,
-        help_text="Automatisierebene, für die die KI-Komponente gedacht ist",
+        help_text="Automatisierebene, für die die KI-Lösung gedacht ist",
         max_length=2,
         blank=True,
     )
@@ -48,7 +48,7 @@ class Process(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
         choices=ProcessChoices.choices,
-        help_text="Prozess der durch die KI-Komponente unterstützt wird",
+        help_text="Prozess der durch die KI-Lösung unterstützt wird",
         max_length=5,
         blank=True,
     )
@@ -64,7 +64,7 @@ class Process(models.Model):
 class BranchProven(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
-        help_text="Branche(n) für die die Komponente bereits erfolgreich erprobt wurde; belegte Anwendung",
+        help_text="Branche(n) für die die Lösung bereits erfolgreich erprobt wurde; belegte Anwendung",
         choices=BranchChoices.choices,
         max_length=3,
         blank=True,
@@ -81,7 +81,7 @@ class BranchProven(models.Model):
 class BranchApplicable(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
-        help_text="Branche, in denen die Komponenten anwendbar ist",
+        help_text="Branche, in denen die Lösungen anwendbar ist",
         choices=BranchChoices.choices,
         max_length=3,
         blank=True,

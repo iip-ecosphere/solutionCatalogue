@@ -45,7 +45,7 @@ class Licenses(models.Model):
         "Typ",
         choices=LicenseChoices.choices,
         max_length=4,
-        help_text="Welche Lizenzen bringt die Komponente mit, insbesondere Open Source Lizenzen",
+        help_text="Welche Lizenzen bringt die Lösung mit, insbesondere Open Source Lizenzen",
         blank=True,
     )
     name = models.CharField(

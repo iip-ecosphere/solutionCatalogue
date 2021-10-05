@@ -148,7 +148,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
-GRAPPELLI_ADMIN_TITLE = "AI Solutions Catalogue"
+GRAPPELLI_ADMIN_TITLE = "Admin - KI-Lösungskatalog - IIP-Ecosphere"
 GRAPPELLI_SWITCH_USER = True
 
 INTERNAL_IPS = [
