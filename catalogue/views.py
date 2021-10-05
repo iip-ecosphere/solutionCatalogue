@@ -15,7 +15,7 @@ from .filters import (
 )
 from .models import Component
 from .models.messages import Inquiry, Feedback, Report
-from .models.logging import SearchLog
+from .models.logging import SearchLog, ComponentLog
 from .utils import is_admin_or_mod, get_admin_emails, get_mod_emails
 
 
@@ -36,9 +36,11 @@ class SearchView(FilterView):
         # check if user has session and save query
         if not request.session or not request.session.session_key:
             request.session.save()
-        SearchLog(
+        log = SearchLog.objects.create(
             query=request.get_full_path(), identifier=request.session.session_key
-        ).save()
+        )
+        # Save SearchLog in session for component relation
+        request.session["current_query"] = log.id
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -80,6 +82,11 @@ class DetailView(generic.DetailView):
 
     def get(self, request, *args, **kwargs):
         self.pk = self.kwargs.get(self.pk_url_kwarg)
+        if "current_query" in request.session:
+            ComponentLog(
+                query=SearchLog.objects.get(pk=request.session["current_query"]),
+                component=Component.objects.get(pk=self.pk),
+            ).save()
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
