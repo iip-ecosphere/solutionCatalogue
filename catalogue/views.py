@@ -24,6 +24,10 @@ class IndexView(FilterView):
     filterset_class = ComponentFilterFrontPage
 
 
+class ImprintView(generic.TemplateView):
+    template_name = "catalogue/imprint.html"
+
+
 class SearchView(FilterView):
     template_name = "catalogue/search.html"
     context_object_name = "components"
