@@ -89,6 +89,7 @@
           {% list_fields component component.get_contact.1 as fields %}
           {% get_field component "contact_person_name" as name %}
           <p class="has-text-white">{{  name }}</p>
+          {% get_field component "contact_address_country" as country %}
           {% get_field component "contact_address_zip" as zip %}
           {% get_field component "contact_address_city" as city %}
           {% get_field component "contact_address_street" as street %}
@@ -99,7 +100,8 @@
             {% if zip or city %}
               {{  zip }} {{ city }},
             {% endif %}
-            Deutschland</p>
+            {{ country }}
+          </p>
           {% get_field component "contact_email" as email %}
           {% get_field component "contact_phone" as phone %}
           {% if email %}

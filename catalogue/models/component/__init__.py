@@ -56,11 +56,14 @@ class Use(models.Model):
 
 
 class Source(models.Model):
+<<<<<<< HEAD
     manufacturer = models.CharField(
         "Hersteller",
         help_text="Entwickler und/oder Hersteller der Lösung",
         max_length=1000,
     )
+=======
+>>>>>>> added country field
     contact = models.TextField(
         "Kontakt",
         help_text="Möglichkeit zum Hersteller Kontakt aufzunehmen",
@@ -135,6 +138,11 @@ class Requirements(models.Model):
 
 class Contact(models.Model):
     # Contact Information
+    manufacturer = models.CharField(
+        "Hersteller",
+        help_text="Entwickler und/oder Hersteller der Komponente",
+        max_length=1000,
+    )
     contact_person_name = models.CharField(
         "Name",
         help_text="Name des zuständigen Mitarbeiters",
@@ -143,8 +151,14 @@ class Contact(models.Model):
     contact_address_zip = models.CharField(
         "PLZ",
         help_text="PLZ in der sich der Anbieter befindet",
-        max_length=100,
+        max_length=10,
         blank=True,
+    )
+    contact_address_country =  models.CharField(
+        "Land",
+        help_text="Land in dem sich der Anbieter befindet",
+        max_length=100,
+        default="Deutschland"
     )
     contact_address_city = models.CharField(
         "Stadt",

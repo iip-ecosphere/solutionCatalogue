@@ -267,6 +267,7 @@ class ComponentAdmin(admin.ModelAdmin):
                 {
                     "fields": (
                         "contact_person_name",
+                        "contact_address_country",
                         "contact_address_zip",
                         "contact_address_city",
                         "contact_address_street",
