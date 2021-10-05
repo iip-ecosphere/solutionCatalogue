@@ -5,5 +5,5 @@ Ein Besucher hat die KI Lösung "{{ report.component.name }}" gemeldet:
 
 Absender:
 {{ report.name }}
-{{ report.email }}
+{{ report.mail }}
 {% endblock content %}

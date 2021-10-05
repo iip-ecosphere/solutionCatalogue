@@ -7,5 +7,5 @@ Sie haben eine Nachricht bezüglich Ihrer KI Lösung "{{ inquiry.comp }}" erhalt
 
 Absender:
 {{ inquiry.name }}
-{{ inquiry.email }}
+{{ inquiry.mail }}
 {% endblock content %}

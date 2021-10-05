@@ -5,7 +5,7 @@ Sie haben neues Feedback zur Suche von {{ feedback.name }} erhalten:
 {{ feedback.message }}
 
 Der Nutzer hat die Sucherfahrung folgendermaßen eingestuft: {{ feedback.sentiment }}
-Die Email dieses Nutzers lautet: {{ feedback.email }}
+Die Email dieses Nutzers lautet: {{ feedback.mail }}
 {% endblock content %}
 
 
