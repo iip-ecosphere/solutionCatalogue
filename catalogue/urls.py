@@ -18,4 +18,5 @@ urlpatterns = [
     path("cart/<int:pk>", views.CartView.as_view(), name="edit_cart"),
     path("cart", views.CartView.as_view(), name="get_cart"),
     path("impressum", views.ImprintView.as_view(), name="imprint"),
+    path("datenschutz", views.DataprotectionView.as_view(), name="dataprotection"),
 ]

@@ -28,6 +28,10 @@ class ImprintView(generic.TemplateView):
     template_name = "catalogue/imprint.html"
 
 
+class DataprotectionView(generic.TemplateView):
+    template_name = "catalogue/dataprotection.html"
+
+
 class SearchView(FilterView):
     template_name = "catalogue/search.html"
     context_object_name = "components"
