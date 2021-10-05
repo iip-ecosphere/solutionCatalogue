@@ -38,7 +38,7 @@ class Inquiry(SenderInfo):
 class Feedback(SenderInfo):
     CHOICES = [("positive", "Positiv"), ("neutral", "Neutral"), ("negativ", "Negativ")]
     sentiment = models.CharField(
-        "Wie zufieden sind Sie mit der Suche?",
+        "Wie zufrieden sind Sie mit der Suche?",
         max_length=8,
         choices=CHOICES,
         default=CHOICES[0][0],
