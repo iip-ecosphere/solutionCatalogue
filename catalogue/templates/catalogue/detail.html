@@ -86,9 +86,17 @@
           </h3>
           {% get_field component "contact_manufacturer" as manufacturer %}
           <h4 class="subtitle is-5 has-text-white">{{ manufacturer }}</h4>
-          <p class="has-text-white">{{ component.get_contact.0 }}:</p>
+          <p class="has-text-white">Ansprechpartner:</p>
           {% get_field component "contact_person_name" as name %}
           <p class="has-text-white">{{  name }}</p>
+          {% get_field component "contact_phone" as phone %}
+          {% get_field component "contact_email" as email %}
+          {% if phone %}
+            <p><a class="has-text-white" href="tel:{{ phone }}">{{  phone }}</a></p>
+          {% endif %}
+          {% if email %}
+            <p><a class="has-text-white" href="mailto:{{ email }}">{{  email }}</a></p>
+          {% endif %}
           {% get_field component "contact_address_country" as country %}
           {% get_field component "contact_address_zip" as zip %}
           {% get_field component "contact_address_city" as city %}
@@ -102,14 +110,6 @@
             {% endif %}
             {{ country }}
           </p>
-          {% get_field component "contact_email" as email %}
-          {% get_field component "contact_phone" as phone %}
-          {% if email %}
-            <a class="has-text-white" href="mailto:{{ email }}">{{  email }}</p>
-          {% endif %}
-          {% if phone %}
-            <a class="has-text-white" href="tel:{{ phone }}">{{  phone }}</a>
-          {% endif %}
         </div>
         {% if component.allow_email %}
           <div class="column is-half">

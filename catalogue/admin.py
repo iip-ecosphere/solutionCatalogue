@@ -13,7 +13,6 @@ from .models import (
     BaseData,
     ApplicationProfile,
     Use,
-    Source,
     Contact,
     Requirements,
     Task,
@@ -250,16 +249,6 @@ class ComponentAdmin(admin.ModelAdmin):
                     )
                 },
             ),
-            # Source
-            (
-                Source._meta.verbose_name,
-                {
-                    "fields": (
-                        "contact",
-                        "additional_info",
-                    )
-                },
-            ),
             # Contact
             (
                 Contact._meta.verbose_name,
@@ -267,11 +256,11 @@ class ComponentAdmin(admin.ModelAdmin):
                     "fields": (
                         "contact_manufacturer",
                         "contact_person_name",
-                        "contact_address_zip",
-                        "contact_address_city",
-                        "contact_address_street",
                         "contact_email",
                         "contact_phone",
+                        "contact_address_street",
+                        "contact_address_city",
+                        "contact_address_zip",
                     )
                 },
             ),

@@ -55,22 +55,6 @@ class Use(models.Model):
         verbose_name_plural = verbose_name
 
 
-class Source(models.Model):
-    contact = models.TextField(
-        "Kontakt",
-        help_text="Möglichkeit zum Hersteller Kontakt aufzunehmen",
-        blank=True,
-    )
-    additional_info = models.TextField(
-        "Zusatzinformationen", help_text="Zusatzinformation zur Lösung", blank=True
-    )
-
-    class Meta:
-        abstract = True
-        verbose_name = "Quelle"
-        verbose_name_plural = verbose_name
-
-
 class TechnicalSpecification(models.Model):
     realtime_processing = models.IntegerField(
         "Echtzeitverarbeitung",
@@ -124,9 +108,6 @@ class Requirements(models.Model):
         verbose_name = "Vorraussetzungen"
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return ""
-
 
 class Contact(models.Model):
     # Contact Information
@@ -139,30 +120,6 @@ class Contact(models.Model):
         "Name",
         help_text="Name des zuständigen Mitarbeiters",
         max_length=100,
-    )
-    contact_address_zip = models.CharField(
-        "PLZ",
-        help_text="PLZ in der sich der Anbieter befindet",
-        max_length=10,
-        blank=True,
-    )
-    contact_address_country = models.CharField(
-        "Land",
-        help_text="Land in dem sich der Anbieter befindet",
-        max_length=100,
-        default="Deutschland",
-    )
-    contact_address_city = models.CharField(
-        "Stadt",
-        help_text="Stadt in der sich der Anbieter befindet",
-        max_length=100,
-        blank=True,
-    )
-    contact_address_street = models.CharField(
-        "Straße",
-        help_text="Straße des Anbieters",
-        max_length=100,
-        blank=True,
     )
     contact_email = models.EmailField(
         "Email",
@@ -180,6 +137,30 @@ class Contact(models.Model):
         max_length=17,
         validators=[phone_regex],
         blank=True,
+    )
+    contact_address_street = models.CharField(
+        "Straße",
+        help_text="Straße des Anbieters",
+        max_length=100,
+        blank=True,
+    )
+    contact_address_city = models.CharField(
+        "Stadt",
+        help_text="Stadt in der sich der Anbieter befindet",
+        max_length=100,
+        blank=True,
+    )
+    contact_address_zip = models.CharField(
+        "PLZ",
+        help_text="PLZ in der sich der Anbieter befindet",
+        max_length=10,
+        blank=True,
+    )
+    contact_address_country = models.CharField(
+        "Land",
+        help_text="Land in dem sich der Anbieter befindet",
+        max_length=100,
+        default="Deutschland",
     )
 
     class Meta:
@@ -203,7 +184,6 @@ class Component(
     ApplicationProfile,
     BaseData,
     Requirements,
-    Source,
     Use,
     TechnicalSpecification,
     Contact,
@@ -264,9 +244,6 @@ class Component(
             [x.name for x in TechnicalSpecification._meta.get_fields()]
             + ["aimethod", "dataanalysisprocess", "licenses"],
         )
-
-    def get_source(self) -> Tuple[str, List[str]]:
-        return Source._meta.verbose_name, [x.name for x in Source._meta.get_fields()]
 
     def get_contact(self) -> Tuple[str, List[str]]:
         return Contact._meta.verbose_name, [x.name for x in Contact._meta.get_fields()]

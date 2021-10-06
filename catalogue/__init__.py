@@ -2,7 +2,7 @@ COMPONENT_RELATED_FIELDS = (
     "basedata",
     "applicationprofile",
     "requirements",
-    "source",
+    "contact",
     "technicalspecification",
     "use",
 )
