@@ -127,15 +127,16 @@ class Contact(models.Model):
         max_length=100,
         blank=True,
     )
-    phone_regex = RegexValidator(
-        regex=r"^\+?1?\d{9,15}$",
-        message="Die Telefonnummer muss folgendes Format ausweisen: '+999999999'.",
-    )
     contact_phone = models.CharField(
         "Telefonnummer",
         help_text="Telefonnummer des zuständigen Mitarbeiters",
         max_length=17,
-        validators=[phone_regex],
+        validators=[
+            RegexValidator(
+                regex=r"^\+?1?\d{9,15}$",
+                message="Die Telefonnummer muss folgendes Format ausweisen: '+999999999'.",
+            )
+        ],
         blank=True,
     )
     contact_address_street = models.CharField(
