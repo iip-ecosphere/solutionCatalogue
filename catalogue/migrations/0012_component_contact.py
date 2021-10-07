@@ -11,10 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='component',
-            name='manufacturer',
-        ),
         migrations.AddField(
             model_name='component',
             name='contact_address_city',
@@ -42,12 +38,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='component',
-            name='contact_manufacturer',
-            field=models.CharField(default='ACME', help_text='Entwickler und/oder Hersteller der Lösung', max_length=1000, verbose_name='Hersteller'),
-            preserve_default=False,
-        ),
-        migrations.AddField(
-            model_name='component',
             name='contact_person_name',
             field=models.CharField(default='Max Mustermann', help_text='Name des zuständigen Mitarbeiters', max_length=100, verbose_name='Name'),
             preserve_default=False,
@@ -56,5 +46,19 @@ class Migration(migrations.Migration):
             model_name='component',
             name='contact_phone',
             field=models.CharField(blank=True, help_text='Telefonnummer des zuständigen Mitarbeiters', max_length=17, validators=[django.core.validators.RegexValidator(message="Die Telefonnummer muss folgendes Format ausweisen: '+999999999'.", regex='^\\+?1?\\d{9,15}$')], verbose_name='Telefonnummer'),
+        ),
+        migrations.RenameField(
+            model_name='component',
+            old_name='manufacturer',
+            new_name='contact_manufacturer'
+        ),
+        migrations.RenameField(
+            model_name='component',
+            old_name='additional_info',
+            new_name='contact_additional_info'
+        ),
+        migrations.RemoveField(
+            model_name='component',
+            name='contact',
         ),
     ]

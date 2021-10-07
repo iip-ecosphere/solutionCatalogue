@@ -163,6 +163,9 @@ class Contact(models.Model):
         max_length=100,
         default="Deutschland",
     )
+    contact_additional_info = models.TextField(
+        "Zusatzinformationen", help_text="Zusatzinformation zur Lösung", blank=True
+    )
 
     class Meta:
         abstract = True

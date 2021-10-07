@@ -52,6 +52,11 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='component',
+            name='manufacturer',
+            field=models.CharField(help_text='Entwickler und/oder Hersteller der Lösung', max_length=1000, verbose_name='Hersteller'),
+        ),
+        migrations.AlterField(
+            model_name='component',
             name='name',
             field=models.CharField(help_text='Bezeichnung der Lösung', max_length=200, unique=True, verbose_name='Name'),
         ),

@@ -110,6 +110,8 @@
             {% endif %}
             {{ country }}
           </p>
+          {% get_field component "contact_additional_info" as info %}
+          <p class="has-text-white">{{  info }}</p>
         </div>
         {% if component.allow_email %}
           <div class="column is-half">
