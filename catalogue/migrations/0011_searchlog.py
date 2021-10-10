@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('identifier', models.CharField(max_length=1000, verbose_name='Identifier')),
                 ('query', models.CharField(blank=True, max_length=100, verbose_name='Anfrage')),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='Erstellt')),
+                ('created', models.DateTimeField(auto_now_add=True, verbose_name='Erstellt'))
             ],
             options={
                 'verbose_name': 'Suchverlauf',

@@ -420,50 +420,44 @@ class ReportAdmin(admin.ModelAdmin):
         )
 
 
+class ComponentLogInline(admin.TabularInline):
+    model = ComponentLog
+    ordering = ("-created",)
+    can_delete = False
+    fields = (
+        "created",
+        "component",
+    )
+    readonly_fields = ("component", "created")
+    extra = 0
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+
 @admin.register(SearchLog)
 class SearchLogAdmin(admin.ModelAdmin):
     list_display = (
+        "identifier",
+        "created",
+        "get_query",
+        "get_comp_count",
+    )
+    search_fields = (
+        "query",
         "created",
         "identifier",
-        "get_query",
     )
-    search_fields = ("query", "created", "identifier")
-    list_display_links = None
+    readonly_fields = ("query", "created", "identifier")
+    inlines = [ComponentLogInline]
 
     @admin.display(description=SearchLog._meta.get_field("query").verbose_name)
     def get_query(self, obj):
         return mark_safe(f"<a href='{obj.query}'>{obj.query}</a>")
 
-
-@admin.register(ComponentLog)
-class ComponentLogAdmin(admin.ModelAdmin):
-    list_display = (
-        "created",
-        "component_link",
-        "query_link",
-    )
-    search_fields = ("query", "created", "component")
-    list_display_links = None
-
-    @admin.display(description=Component._meta.verbose_name, ordering="component__name")
-    def component_link(self, obj):
-        return mark_safe(
-            f"""
-            <a href='{reverse('admin:catalogue_component_change', args=(obj.component.id,))}'>
-            {obj.component.name}
-            </a>
-        """
-        )
-
-    @admin.display(description=SearchLog._meta.verbose_name)
-    def query_link(self, obj):
-        return mark_safe(
-            f"""
-            <a href='{reverse('admin:catalogue_searchlog_change', args=(obj.query.id,))}'>
-            {obj.query.query}
-            </a>
-        """
-        )
+    @admin.display(description="Anzahl angeklickter Lösungen")
+    def get_comp_count(self, obj):
+        return ComponentLog.objects.filter(query=obj.id).count()
 
 
 class ProfileInline(admin.StackedInline):
