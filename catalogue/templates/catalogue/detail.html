@@ -84,34 +84,25 @@
           <h3 class="title is-3 has-text-white">
             Lösungsanbieter:
           </h3>
-          {% get_field component "contact_manufacturer" as manufacturer %}
-          <h4 class="subtitle is-5 has-text-white">{{ manufacturer }}</h4>
+          <h4 class="subtitle is-5 has-text-white">{{ component.contact_manufacturer }}</h4>
           <p class="has-text-white">Ansprechpartner:</p>
-          {% get_field component "contact_person_name" as name %}
-          <p class="has-text-white">{{  name }}</p>
-          {% get_field component "contact_phone" as phone %}
-          {% get_field component "contact_email" as email %}
-          {% if phone %}
-            <p><a class="has-text-white" href="tel:{{ phone }}">{{  phone }}</a></p>
+          <p class="has-text-white">{{  component.contact_person_name }}</p>
+          {% if component.contact_phone %}
+            <p><a class="has-text-white" href="tel:{{ phone }}">{{  component.contact_phone }}</a></p>
           {% endif %}
-          {% if email %}
-            <p><a class="has-text-white" href="mailto:{{ email }}">{{  email }}</a></p>
+          {% if component.contact_email %}
+            <p><a class="has-text-white" href="mailto:{{ email }}">{{  component.contact_email }}</a></p>
           {% endif %}
-          {% get_field component "contact_address_country" as country %}
-          {% get_field component "contact_address_zip" as zip %}
-          {% get_field component "contact_address_city" as city %}
-          {% get_field component "contact_address_street" as street %}
           <p class="has-text-white">
-            {% if street %}
-              {{  street }},
+            {% if component.contact_address_street %}
+              {{  component.contact_address_street }},
             {% endif %}
-            {% if zip or city %}
-              {{  zip }} {{ city }},
+            {% if component.contact_address_zip or component.contact_address_city %}
+              {{  component.contact_address_zip }} {{ component.contact_address_city }},
             {% endif %}
-            {{ country }}
+            {{ component.contact_address_country}}
           </p>
-          {% get_field component "contact_additional_info" as info %}
-          <p class="has-text-white">{{  info }}</p>
+          <p class="has-text-white">{{  component.contact_additional_info }}</p>
         </div>
         {% if component.allow_email %}
           <div class="column is-half">
