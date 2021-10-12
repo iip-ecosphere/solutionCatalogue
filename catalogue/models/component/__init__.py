@@ -3,6 +3,7 @@ from typing import List, Tuple
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.validators import RegexValidator
 
 from ..choices import TRLChoices, RealtimeChoices
 
@@ -51,27 +52,6 @@ class Use(models.Model):
     class Meta:
         abstract = True
         verbose_name = "Nutzen"
-        verbose_name_plural = verbose_name
-
-
-class Source(models.Model):
-    manufacturer = models.CharField(
-        "Hersteller",
-        help_text="Entwickler und/oder Hersteller der Lösung",
-        max_length=1000,
-    )
-    contact = models.TextField(
-        "Kontakt",
-        help_text="Möglichkeit zum Hersteller Kontakt aufzunehmen",
-        blank=True,
-    )
-    additional_info = models.TextField(
-        "Zusatzinformationen", help_text="Zusatzinformation zur Lösung", blank=True
-    )
-
-    class Meta:
-        abstract = True
-        verbose_name = "Quelle"
         verbose_name_plural = verbose_name
 
 
@@ -129,6 +109,70 @@ class Requirements(models.Model):
         verbose_name_plural = verbose_name
 
 
+class Contact(models.Model):
+    # Contact Information
+    contact_manufacturer = models.CharField(
+        "Hersteller",
+        help_text="Entwickler und/oder Hersteller der Lösung",
+        max_length=1000,
+    )
+    contact_person_name = models.CharField(
+        "Name",
+        help_text="Name des zuständigen Mitarbeiters",
+        max_length=100,
+    )
+    contact_email = models.EmailField(
+        "Email",
+        help_text="Email Adresse des zuständigen Mitarbeiters",
+        max_length=100,
+        blank=True,
+    )
+    contact_phone = models.CharField(
+        "Telefonnummer",
+        help_text="Telefonnummer des zuständigen Mitarbeiters",
+        max_length=17,
+        validators=[
+            RegexValidator(
+                regex=r"^\+?1?\d{9,15}$",
+                message="Die Telefonnummer muss folgendes Format ausweisen: '+999999999'.",
+            )
+        ],
+        blank=True,
+    )
+    contact_address_street = models.CharField(
+        "Straße",
+        help_text="Straße des Anbieters",
+        max_length=100,
+        blank=True,
+    )
+    contact_address_city = models.CharField(
+        "Stadt",
+        help_text="Stadt in der sich der Anbieter befindet",
+        max_length=100,
+        blank=True,
+    )
+    contact_address_zip = models.CharField(
+        "PLZ",
+        help_text="PLZ in der sich der Anbieter befindet",
+        max_length=10,
+        blank=True,
+    )
+    contact_address_country = models.CharField(
+        "Land",
+        help_text="Land in dem sich der Anbieter befindet",
+        max_length=100,
+        default="Deutschland",
+    )
+    contact_additional_info = models.TextField(
+        "Zusatzinformationen", help_text="Zusatzinformation zur Lösung", blank=True
+    )
+
+    class Meta:
+        abstract = True
+        verbose_name = "Kontakt Informationen"
+        verbose_name_plural = verbose_name
+
+
 class PublicComponentManager(models.Manager):
     def get_queryset(self):
         return (
@@ -141,7 +185,12 @@ class PublicComponentManager(models.Manager):
 
 
 class Component(
-    ApplicationProfile, BaseData, Requirements, Source, Use, TechnicalSpecification
+    ApplicationProfile,
+    BaseData,
+    Requirements,
+    Use,
+    TechnicalSpecification,
+    Contact,
 ):
     objects = models.Manager()
     public_objects = PublicComponentManager()
@@ -200,8 +249,8 @@ class Component(
             + ["aimethod", "dataanalysisprocess", "licenses"],
         )
 
-    def get_source(self) -> Tuple[str, List[str]]:
-        return Source._meta.verbose_name, [x.name for x in Source._meta.get_fields()]
+    def get_contact(self) -> Tuple[str, List[str]]:
+        return Contact._meta.verbose_name, [x.name for x in Contact._meta.get_fields()]
 
     def get_absolute_url(self):
         return reverse("catalogue:detail", kwargs={"pk": self.pk})

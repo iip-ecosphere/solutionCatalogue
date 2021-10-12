@@ -84,9 +84,25 @@
           <h3 class="title is-3 has-text-white">
             Lösungsanbieter:
           </h3>
-          <h4 class="subtitle is-5 has-text-white">{{ component.manufacturer }}</h4>
-          <p class="has-text-white">Kontakt: {{ component.contact }}</p>
-          <p class="has-text-white">{{ component.additional_info }}</p>
+          <h4 class="subtitle is-5 has-text-white">{{ component.contact_manufacturer }}</h4>
+          <p class="has-text-white">Ansprechpartner:</p>
+          <p class="has-text-white">{{  component.contact_person_name }}</p>
+          {% if component.contact_phone %}
+            <p><a class="has-text-white" href="tel:{{ phone }}">{{  component.contact_phone }}</a></p>
+          {% endif %}
+          {% if component.contact_email %}
+            <p><a class="has-text-white" href="mailto:{{ email }}">{{  component.contact_email }}</a></p>
+          {% endif %}
+          <p class="has-text-white">
+            {% if component.contact_address_street %}
+              {{  component.contact_address_street }},
+            {% endif %}
+            {% if component.contact_address_zip or component.contact_address_city %}
+              {{  component.contact_address_zip }} {{ component.contact_address_city }},
+            {% endif %}
+            {{ component.contact_address_country}}
+          </p>
+          <p class="has-text-white">{{  component.contact_additional_info }}</p>
         </div>
         {% if component.allow_email %}
           <div class="column is-half">

@@ -14,7 +14,7 @@ from .models import (
     BaseData,
     ApplicationProfile,
     Use,
-    Source,
+    Contact,
     Requirements,
     Task,
     BranchProven,
@@ -251,14 +251,19 @@ class ComponentAdmin(admin.ModelAdmin):
                     )
                 },
             ),
-            # Source
+            # Contact
             (
-                Source._meta.verbose_name,
+                Contact._meta.verbose_name,
                 {
                     "fields": (
-                        "manufacturer",
-                        "contact",
-                        "additional_info",
+                        "contact_manufacturer",
+                        "contact_person_name",
+                        "contact_email",
+                        "contact_phone",
+                        "contact_address_street",
+                        "contact_address_city",
+                        "contact_address_zip",
+                        "contact_additional_info",
                     )
                 },
             ),
