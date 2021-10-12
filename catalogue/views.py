@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from .forms import InquiryForm, FeedbackForm, ReportForm
 from .filters import (
@@ -14,6 +15,7 @@ from .filters import (
 )
 from .models import Component
 from .models.messages import Inquiry, Feedback, Report
+from .models.logging import SearchLog, ComponentLog
 from .utils import is_admin_or_mod, get_admin_emails, get_mod_emails
 
 
@@ -37,6 +39,19 @@ class SearchView(FilterView):
     context_object_name = "components"
     queryset = Component.public_objects.all()
     filterset_class = ComponentFilter
+
+    def get(self, request, *args, **kwargs):
+        # check if user has session and save query
+        if not request.session or not request.session.session_key:
+            request.session.save()
+        log = SearchLog.objects.create(
+            query=request.get_full_path(),
+            identifier=request.session.session_key,
+            query_result_count=self.queryset.count(),
+        )
+        # Save SearchLog in session for component relation
+        request.session["current_query"] = log.id
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -76,6 +91,11 @@ class DetailView(generic.DetailView):
 
     def get(self, request, *args, **kwargs):
         self.pk = self.kwargs.get(self.pk_url_kwarg)
+        if "current_query" in request.session:
+            ComponentLog(
+                query=SearchLog.objects.get(pk=request.session["current_query"]),
+                component=Component.objects.get(pk=self.pk),
+            ).save()
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):

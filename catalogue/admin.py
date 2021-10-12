@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.db.models import Count
 
 from .models import (
     Component,
@@ -29,6 +30,7 @@ from .models import (
 )
 from .models.users import Profile
 from .models.messages import Inquiry, Feedback, Report
+from .models.logging import SearchLog, ComponentLog
 from .utils import is_admin, is_admin_or_mod, get_mod_emails
 
 
@@ -417,6 +419,60 @@ class ReportAdmin(admin.ModelAdmin):
             </a>
         """
         )
+
+
+class ComponentLogInline(admin.TabularInline):
+    model = ComponentLog
+    ordering = ("-accessed",)
+    can_delete = False
+    fields = (
+        "accessed",
+        "component",
+    )
+    readonly_fields = fields
+    extra = 0
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(SearchLog)
+class SearchLogAdmin(admin.ModelAdmin):
+    list_display = (
+        "identifier",
+        "created",
+        "get_query",
+        "query_result_count",
+        "get_comp_count",
+    )
+    search_fields = (
+        "query",
+        "created",
+        "identifier",
+    )
+    readonly_fields = (
+        "query",
+        "created",
+        "identifier",
+        "query_result_count",
+    )
+    list_filter = [
+        "created",
+        "query_result_count",
+    ]
+    inlines = [ComponentLogInline]
+
+    @admin.display(description=SearchLog._meta.get_field("query").verbose_name)
+    def get_query(self, obj):
+        return mark_safe(f"<a href='{obj.query}'>{obj.query}</a>")
+
+    def get_queryset(self, request):
+        qs = super(SearchLogAdmin, self).get_queryset(request)
+        return qs.annotate(comp_count=Count("componentlog"))
+
+    @admin.display(description=ComponentLog._meta.verbose_name, ordering="comp_count")
+    def get_comp_count(self, obj):
+        return obj.comp_count
 
 
 class ProfileInline(admin.StackedInline):
