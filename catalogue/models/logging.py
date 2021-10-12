@@ -20,7 +20,7 @@ class SearchLog(models.Model):
 
 
 class ComponentLog(models.Model):
-    created = models.DateTimeField("Erstellt", auto_now_add=True)
+    accessed = models.DateTimeField("Besucht", auto_now_add=True)
     query = models.ForeignKey(
         SearchLog, on_delete=models.CASCADE, verbose_name="Suchanfrage"
     )
