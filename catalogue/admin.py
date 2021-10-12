@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.db.models import Count
 
 from .models import (
     Component,
@@ -449,16 +450,27 @@ class SearchLogAdmin(admin.ModelAdmin):
         "created",
         "identifier",
     )
-    readonly_fields = ("query", "created", "identifier", "query_result_count",)
+    readonly_fields = (
+        "query",
+        "created",
+        "identifier",
+        "query_result_count",
+    )
     inlines = [ComponentLogInline]
 
     @admin.display(description=SearchLog._meta.get_field("query").verbose_name)
     def get_query(self, obj):
         return mark_safe(f"<a href='{obj.query}'>{obj.query}</a>")
 
+    def get_queryset(self, request):
+        qs = super(SearchLogAdmin, self).get_queryset(request)
+        return qs.annotate(comp_count=Count("componentlog"))
+
     @admin.display(description="Anzahl angeklickter Lösungen")
     def get_comp_count(self, obj):
-        return ComponentLog.objects.filter(query=obj.id).count()
+        return obj.comp_count
+
+    get_comp_count.admin_order_field = "comp_count"
 
 
 class ProfileInline(admin.StackedInline):
