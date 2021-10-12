@@ -37,7 +37,9 @@ class SearchView(FilterView):
         if not request.session or not request.session.session_key:
             request.session.save()
         log = SearchLog.objects.create(
-            query=request.get_full_path(), identifier=request.session.session_key
+            query=request.get_full_path(),
+            identifier=request.session.session_key,
+            query_result_count=self.queryset.count()
         )
         # Save SearchLog in session for component relation
         request.session["current_query"] = log.id

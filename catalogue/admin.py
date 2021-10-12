@@ -441,6 +441,7 @@ class SearchLogAdmin(admin.ModelAdmin):
         "identifier",
         "created",
         "get_query",
+        "query_result_count",
         "get_comp_count",
     )
     search_fields = (
@@ -448,7 +449,7 @@ class SearchLogAdmin(admin.ModelAdmin):
         "created",
         "identifier",
     )
-    readonly_fields = ("query", "created", "identifier")
+    readonly_fields = ("query", "created", "identifier", "query_result_count",)
     inlines = [ComponentLogInline]
 
     @admin.display(description=SearchLog._meta.get_field("query").verbose_name)
