@@ -332,7 +332,6 @@ class InquiryAdmin(admin.ModelAdmin):
     list_display = (
         "created",
         "component_link",
-        "recipient",
         "name",
         "mail",
         "message_short",
@@ -340,7 +339,6 @@ class InquiryAdmin(admin.ModelAdmin):
     readonly_fields = (
         "created",
         "component",
-        "recipient",
         "name",
         "mail",
         "message",
@@ -349,7 +347,7 @@ class InquiryAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         if is_admin_or_mod(request):
             return Inquiry.objects.all()
-        return Inquiry.objects.filter(recipient=request.user)
+        return Inquiry.objects.filter(component__created_by=request.user)
 
     @admin.display(description=Inquiry._meta.get_field("message").verbose_name)
     def message_short(self, obj):
