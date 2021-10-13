@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='component',
             name='contact_email',
-            field=models.EmailField(blank=True, help_text='Email Adresse des zuständigen Mitarbeiters', max_length=100, verbose_name='Email'),
+            field=models.EmailField(help_text='Email Adresse des zuständigen Mitarbeiters', max_length=100, verbose_name='Email'),
         ),
         migrations.AddField(
             model_name='component',

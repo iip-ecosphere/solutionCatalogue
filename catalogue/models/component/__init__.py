@@ -125,7 +125,6 @@ class Contact(models.Model):
         "Email",
         help_text="Email Adresse des zuständigen Mitarbeiters",
         max_length=100,
-        blank=True,
     )
     contact_phone = models.CharField(
         "Telefonnummer",

@@ -123,7 +123,6 @@ class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
     def form_valid(self, form: InquiryForm):
         inquiry = form.save(commit=False)
         inquiry.component = self.get_object()
-        inquiry.recipient = inquiry.component.created_by
         inquiry.save()
         self.send_mail_customer(inquiry)
         return render(self.request, self.template_name)
@@ -139,7 +138,7 @@ class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
             subject="KI-Lösungskatalog: Anfrage",
             message=content,
             from_email=settings.SENDER_EMAIL_MESSAGE,
-            recipient_list=[inquiry.recipient.email],
+            recipient_list=[inquiry.component.contact_email],
         )
 
 

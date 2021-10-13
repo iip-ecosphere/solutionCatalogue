@@ -14,9 +14,6 @@ class SenderInfo(models.Model):
 
 
 class Inquiry(SenderInfo):
-    recipient = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Adressat"
-    )
     component = models.ForeignKey(
         Component,
         on_delete=models.SET_NULL,
