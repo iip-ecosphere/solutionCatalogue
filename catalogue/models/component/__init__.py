@@ -81,7 +81,7 @@ class TechnicalSpecification(models.Model):
 class Requirements(models.Model):
     protocols = models.CharField(
         "Protokolle/Schnittstellen",
-        help_text="Schnittstellen und/oder Protokolle, die von der Kompomente unterstützt werden",
+        help_text="Schnittstellen und/oder Protokolle, die von der Lösung unterstützt werden",
         max_length=1000,
     )
     it_environment = models.CharField(
