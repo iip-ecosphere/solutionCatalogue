@@ -11,14 +11,14 @@ class Task(models.Model):
         max_length=5,
         help_text=(
             "Art der Aufgabe, der die beschriebene KI-Lösung zugeordnet werden kann"
-            " (z.B. Predictive Maintenance, Qualitätsprüfung))"
+            " (z.B. Predictive Maintenance, Qualitätsprüfung)"
         ),
         blank=True,
     )
 
     class Meta:
-        verbose_name = "Task"
-        verbose_name_plural = "Tasks"
+        verbose_name = "Aufgabe"
+        verbose_name_plural = "Aufgaben"
 
     def __str__(self) -> str:
         return self.get_name_display()
