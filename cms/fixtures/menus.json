@@ -1,0 +1,16 @@
+[
+    {
+        "model": "cms.menu",
+        "pk": 1,
+        "fields": {
+            "name": "bottom"
+        }
+    },
+    {
+        "model": "cms.menu",
+        "pk": 2,
+        "fields": {
+            "name": "top"
+        }
+    }
+]
