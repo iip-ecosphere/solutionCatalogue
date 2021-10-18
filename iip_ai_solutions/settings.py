@@ -36,6 +36,7 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 INSTALLED_APPS = [
     "catalogue.apps.CatalogueConfig",
+    "cms.apps.CmsConfig",
     "grappelli",
     "nested_admin",
     "django.contrib.admin",
@@ -223,3 +224,4 @@ CKEDITOR_CONFIGS = {
     },
     "default": {},
 }
+CMS_TEMPLATE_DIR = BASE_DIR / "cms/templates/cms/cms_templates/"
