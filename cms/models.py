@@ -3,14 +3,11 @@ from django.conf import settings
 from os import listdir
 from os.path import isfile, join
 from ckeditor.fields import RichTextField
-from django.utils.functional import lazy
 
 
 def load_template_choices():
     return [
-        (f, f)
-        for f in listdir(settings.CMS_TEMPLATE_DIR)
-        if isfile(join(settings.CMS_TEMPLATE_DIR, f))
+        (f.name, f.name) for f in settings.CMS_TEMPLATE_DIR.iterdir() if f.is_file()
     ]
 
 
@@ -39,7 +36,7 @@ class Menu(models.Model):
         verbose_name_plural = "Menüs"
 
     def __str__(self):
-        return "{0}".format(self.name)
+        return self.name
 
 
 class StaticMenuPage(BasePage):
@@ -64,4 +61,4 @@ class StaticMenuPage(BasePage):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return "{0}".format(self.title)
+        return self.title
