@@ -11,12 +11,10 @@ register = template.Library()
 
 
 @register.simple_tag
-def get_top_menu_items(name: str) -> [StaticMenuPage]:
-    items = StaticMenuPage.objects.filter(menu__name=name).filter(parent=None)
-    for item in items:
-        yield item
+def get_top_menu_items(name: str) -> List[StaticMenuPage]:
+    return StaticMenuPage.objects.filter(menu__name=name).filter(parent=None)
 
 
 @register.simple_tag
-def get_child_items(parent: StaticMenuPage) -> [StaticMenuPage]:
+def get_child_items(parent: StaticMenuPage) -> List[StaticMenuPage]:
     return StaticMenuPage.objects.filter(parent=parent)
