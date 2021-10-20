@@ -29,7 +29,6 @@ def create_or_update_user_profile(sender, instance, created, **kwargs) -> None:
     instance.profile.save()
 
 
-
 @receiver(pre_save, sender=User)
 def add_to_staff(sender, instance, **kwargs) -> None:
     instance.is_staff = True
