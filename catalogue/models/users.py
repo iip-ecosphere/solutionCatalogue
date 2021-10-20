@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
@@ -23,6 +23,13 @@ def create_or_update_user_profile(sender, instance, created, **kwargs) -> None:
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
+
+
+@receiver(pre_save, sender=User)
+def add_to_default_group(sender, instance, **kwargs) -> None:
+    if instance.pk is None:  # user is created
+        group = Group.objects.get(name="Autoren")
+        instance.groups.add(group)
 
 
 @receiver(pre_save, sender=User)
