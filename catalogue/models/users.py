@@ -21,15 +21,13 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs) -> None:
     if created:
+        # add user profile
         Profile.objects.create(user=instance)
-    instance.profile.save()
-
-
-@receiver(pre_save, sender=User)
-def add_to_default_group(sender, instance, **kwargs) -> None:
-    if instance.pk is None:  # user is created
+        # add user to default group
         group = Group.objects.get(name="Autoren")
         instance.groups.add(group)
+    instance.profile.save()
+
 
 
 @receiver(pre_save, sender=User)
