@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.validators import RegexValidator
+from ckeditor.fields import RichTextField
 
 from ..choices import TRLChoices, RealtimeChoices
 
@@ -36,7 +37,9 @@ class BaseData(models.Model):
 
 
 class ApplicationProfile(models.Model):
-    long_description = models.TextField("Beschreibung", help_text="Ausführliche Beschreibung der Lösung")
+    long_description = RichTextField(
+        "Beschreibung", help_text="Ausführliche Beschreibung der Lösung"
+    )
 
     class Meta:
         abstract = True
@@ -45,7 +48,7 @@ class ApplicationProfile(models.Model):
 
 
 class Use(models.Model):
-    scenarios = models.TextField(
+    scenarios = RichTextField(
         "Szenarien / Use cases",
         help_text="Beschreibung von Szenarien, in denen die Lösung bereits erfolgreich eingesetzt wurde",
     )

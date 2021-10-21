@@ -20,6 +20,7 @@ gunicorn = "*"
 django-sass = "*"
 django-bulma = "*"
 django-allauth = "*"
+django-ckeditor = "*"
 
 [requires]
 python_version = "3"

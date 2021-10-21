@@ -2,6 +2,7 @@
 {% load field_helpers %}
 {% field_verbose_name component field as title %}
 {% field_value component field as value %}
+{% field_is_html component field as html %}
 {% if value %}
   <div class="columns">
     <div class="column is-one-third">
@@ -16,7 +17,11 @@
         </ul>
       {% else %}
         <div class="content">
-          {{ value|linebreaks }}
+          {% if html %}
+            {{ value|safe }}
+          {% else %}
+            {{ value|linebreaks }}
+          {% endif %}
         </div>
       {% endif %}
     </div>
