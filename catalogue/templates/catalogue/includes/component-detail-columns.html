@@ -11,7 +11,9 @@
         {% endfor %}
       </ul>
     {% else %}
-      <p>{{ value }}</p>
+      <div class="content">
+        {{ value|linebreaks }}
+      </div>
     {% endif %}
   </div>
 </div>

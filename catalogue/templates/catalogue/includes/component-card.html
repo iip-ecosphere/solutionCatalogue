@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="content">
-      <p>{{ c.description }}</p>
+      {{ c.description|linebreaks }}
       {% if c.task_set %}
         <p class="title is-5">{{ c.task_set | verbose_name_plural }}</p>
         <ul>

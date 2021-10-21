@@ -7,10 +7,10 @@
     <div class="container is-max-widescreen">
       <div class="media">
         <div class="media-content">
-          <h1 class="title is-3 has-text-white">
+          <h1 class="title is-2 has-text-white">
             {{ component.name }}
           </h1>
-          <h2 class="subtitle is-5 has-text-white">
+          <h2 class="subtitle is-4 has-text-white">
             {{ component.contact_manufacturer }}
           </h2>
         </div>
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="content mt-4">
-        <p>{{ component.description }}</p>
+        {{ component.description|linebreaks }}
       </div>
       <a class="button is-rounded is-small is-pulled-right is-primary-light has-text-primary has-text-weight-bold"
          href="#contact">
@@ -80,29 +80,31 @@
   <section id="contact" class="section bg-bubble-gradient">
     <div class="container is-max-widescreen">
       <div class="columns">
-        <div class="column is-half">
-          <h3 class="title is-3 has-text-white">
+        <div class="column is-half has-text-white">
+          <h2 class="title is-3 has-text-white">
             Lösungsanbieter:
-          </h3>
-          <h4 class="subtitle is-5 has-text-white">{{ component.contact_manufacturer }}</h4>
-          <p class="has-text-white">Ansprechpartner:</p>
-          <p class="has-text-white">{{  component.contact_person_name }}</p>
-          {% if component.contact_phone %}
-            <p><a class="has-text-white" href="tel:{{ phone }}">{{  component.contact_phone }}</a></p>
-          {% endif %}
-          {% if component.contact_email %}
-            <p><a class="has-text-white" href="mailto:{{ email }}">{{  component.contact_email }}</a></p>
-          {% endif %}
-          <p class="has-text-white">
+          </h2>
+          <h3 class="subtitle is-5 has-text-white">{{ component.contact_manufacturer }}</h3>
+          <h4 class="title is-5 mt-2 mb-1 has-text-white">Ansprechpartner:</h4>
+          <ul>
+            <li>{{ component.contact_person_name }}</li>
+            {% if component.contact_phone %}
+              <li><a class="has-text-white" href="tel:{{ phone }}">{{ component.contact_phone }}</a></li>
+            {% endif %}
+            {% if component.contact_email %}
+              <li><a class="has-text-white" href="mailto:{{ email }}">{{ component.contact_email }}</a></li>
+            {% endif %}
             {% if component.contact_address_street %}
-              {{  component.contact_address_street }},
+              <li>{{ component.contact_address_street }}</li>
             {% endif %}
             {% if component.contact_address_zip or component.contact_address_city %}
-              {{  component.contact_address_zip }} {{ component.contact_address_city }},
+              <li>{{ component.contact_address_zip }} {{ component.contact_address_city }}</li>
             {% endif %}
-            {{ component.contact_address_country}}
-          </p>
-          <p class="has-text-white">{{  component.contact_additional_info }}</p>
+            <li>{{ component.contact_address_country }}</li>
+          </ul>
+          <div class="content mt-2">
+            {{ component.contact_additional_info|linebreaks }}
+          </div>
         </div>
         {% if component.allow_email %}
           <div class="column is-half">
