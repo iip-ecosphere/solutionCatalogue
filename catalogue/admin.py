@@ -263,6 +263,7 @@ class ComponentAdmin(admin.ModelAdmin):
                         "contact_address_street",
                         "contact_address_city",
                         "contact_address_zip",
+                        "contact_address_country",
                         "contact_additional_info",
                     )
                 },
