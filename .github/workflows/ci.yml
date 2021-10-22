@@ -21,8 +21,9 @@ jobs:
       run: |
         pipenv install --dev
     - name: black
-      run: |
-        pipenv run black . --check --exclude "/migrations/.*\.py$"
+      run: pipenv run black . --check --exclude "/migrations/.*\.py$"
     - name: flake8
-      run: |
-        pipenv run flake8
+      run: pipenv run flake8
+    - name: migrations
+      run: pipenv run ./manage.py migrate
+
