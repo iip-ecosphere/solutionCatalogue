@@ -20,13 +20,14 @@ class BaseData(models.Model):
         "TRL",
         help_text=(
             "Status der Lösung in Bezug auf Ihre Einsetzbarkeit durch die Angabe"
-            " eines Technischen Reifegrades (Technology Readiness Level)."
+            " eines technischen Reifegrades (Technology Readiness Level)."
         ),
         choices=TRLChoices.choices,
     )
     description = models.TextField(
         "Kurzbeschreibung", help_text="Kurze Beschreibung der Lösung"
     )
+    url = models.URLField("URL", help_text="Öffentlicher Link zur Lösung", blank=True)
 
     class Meta:
         abstract = True

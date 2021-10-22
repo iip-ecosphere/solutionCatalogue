@@ -188,6 +188,7 @@ class ComponentAdmin(admin.ModelAdmin):
                         "name",
                         "trl",
                         "description",
+                        "url",
                     )
                 },
             ),
