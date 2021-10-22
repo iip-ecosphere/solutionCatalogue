@@ -18,12 +18,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade pipenv wheel
     - name: Install dependencies
-      run: |
-        pipenv install --dev
+      run: pipenv install --dev
     - name: black
       run: pipenv run black . --check --exclude "/migrations/.*\.py$"
     - name: flake8
       run: pipenv run flake8
-    - name: migrations
+    - name: missing migrations
+      run: pipenv run ./manage.py makemigrations --check --dry-run
+    - name: run migrations
       run: pipenv run ./manage.py migrate
-
