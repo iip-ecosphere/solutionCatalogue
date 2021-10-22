@@ -1,5 +1,5 @@
 --
-KI-Lösungskatalog
+{{ request.site.name }}
 
 Forschungszentrum L3S
 Leibniz Universität Hannover

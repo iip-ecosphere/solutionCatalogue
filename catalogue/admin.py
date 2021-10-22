@@ -311,10 +311,12 @@ class ComponentAdmin(admin.ModelAdmin):
 
     def send_approve_notification_mods(self, instance, request):
         """Send email notification to mods for component requiring approval."""
-        context = {"comp": instance, "request": request}
-        content = render_to_string("catalogue/emails/email_approve_admin.txt", context)
+        context = {"comp": instance}
+        content = render_to_string(
+            "catalogue/emails/email_approve_admin.txt", context, request=request
+        )
         send_mail(
-            subject="KI-Lösungskatalog: Lösung muss moderiert werden",
+            subject=f"{request.site.name}: Lösung muss moderiert werden",
             message=content,
             from_email=settings.SENDER_EMAIL_APPROVE,
             recipient_list=get_mod_emails(),
@@ -327,7 +329,7 @@ class ComponentAdmin(admin.ModelAdmin):
             "catalogue/emails/email_approve_user.txt", context, request=request
         )
         send_mail(
-            subject="KI-Lösungskatalog: Lösung wurde freigegeben",
+            subject=f"{request.site.name}: Lösung wurde freigegeben",
             message=content,
             from_email=settings.SENDER_EMAIL_APPROVE,
             recipient_list=[instance.created_by.email],

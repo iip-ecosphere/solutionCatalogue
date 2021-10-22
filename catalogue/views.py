@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.contrib.sites.models import Site
 
 from .forms import InquiryForm, FeedbackForm, ReportForm
 from .filters import (
@@ -76,9 +77,10 @@ class SearchFeedbackView(generic.edit.FormView):
             {
                 "feedback": feedback,
             },
+            request=self.request,
         )
         send_mail(
-            subject="KI-Lösungskatalog: Feedback",
+            subject=f"{Site.objects.get_current().name}: Feedback",
             message=content,
             from_email=settings.SENDER_EMAIL_FEEDBACK,
             recipient_list=get_admin_emails(),
@@ -132,9 +134,10 @@ class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
             {
                 "inquiry": inquiry,
             },
+            request=self.request,
         )
         send_mail(
-            subject="KI-Lösungskatalog: Anfrage",
+            subject=f"{Site.objects.get_current().name}: Anfrage",
             message=content,
             from_email=settings.SENDER_EMAIL_MESSAGE,
             recipient_list=[inquiry.component.contact_email],
@@ -215,9 +218,10 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             {
                 "report": report,
             },
+            request=self.request,
         )
         send_mail(
-            subject="KI-Lösungskatalog: Report",
+            subject=f"{Site.objects.get_current().name}: Report",
             message=content,
             from_email=settings.SENDER_EMAIL_FEEDBACK,
             recipient_list=get_mod_emails(),
