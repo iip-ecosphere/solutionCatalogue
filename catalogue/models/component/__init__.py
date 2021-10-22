@@ -215,7 +215,11 @@ class Component(
         help_text="Erlaubt die Einblendung eines Kontaktformulares.",
         default=True,
     )
-    approved = models.BooleanField("Freigegeben", default=False)
+    approved = models.BooleanField(
+        "Freigegeben",
+        help_text="Lösung wird nach Moderation freigegeben",
+        default=False,
+    )
     frontpage = models.BooleanField("Auf der Startseite anzeigen?", default=False)
     is_deleted = models.BooleanField("Gelöscht", default=False)
 
