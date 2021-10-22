@@ -1,7 +1,7 @@
 {% extends "catalogue/emails/email_base.txt" %}
 
 {% block content %}
-Sie haben eine Nachricht bezüglich Ihrer KI Lösung "{{ inquiry.comp }}" erhalten:
+Sie haben eine Nachricht bezüglich Ihrer KI-Lösung "{{ inquiry.comp.name }}" erhalten:
 {{ inquiry.message }}
 
 

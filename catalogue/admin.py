@@ -146,6 +146,9 @@ class ComponentAdmin(admin.ModelAdmin):
         if not is_admin_or_mod(request):
             if not change or obj.approved:
                 # send notification on new or previously approved components
+                super().save_model(
+                    request, obj, form, change
+                )  # save (new) obj to get a pk
                 self.send_approve_notification_mods(obj, request)
             # reset approval on change by user
             obj.approved = False
@@ -308,7 +311,7 @@ class ComponentAdmin(admin.ModelAdmin):
 
     def send_approve_notification_mods(self, instance, request):
         """Send email notification to mods for component requiring approval."""
-        context = {"comp": instance, "link": request.build_absolute_uri()}
+        context = {"comp": instance, "request": request}
         content = render_to_string("catalogue/emails/email_approve_admin.txt", context)
         send_mail(
             subject="KI-Lösungskatalog: Lösung muss moderiert werden",
@@ -319,8 +322,10 @@ class ComponentAdmin(admin.ModelAdmin):
 
     def send_approve_notification_user(self, instance, request):
         """Send email notification to user that a component was approved."""
-        context = {"comp": instance, "link": request.build_absolute_uri()}
-        content = render_to_string("catalogue/emails/email_approve_user.txt", context)
+        context = {"comp": instance}
+        content = render_to_string(
+            "catalogue/emails/email_approve_user.txt", context, request=request
+        )
         send_mail(
             subject="KI-Lösungskatalog: Lösung wurde freigegeben",
             message=content,

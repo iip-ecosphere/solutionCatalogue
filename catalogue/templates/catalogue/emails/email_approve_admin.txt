@@ -1,5 +1,6 @@
 {% block content %}
-Eine Lösung wurde neu erstellt oder verändert und muss moderiert werden.
-Name der Lösung: {{ comp }}
-Link zur Lösung: {{ link }}
+Eine KI-Lösung wurde neu erstellt oder verändert und muss moderiert werden.
+
+{{ comp }}
+{{ BASE_URL }}{% url 'admin:catalogue_component_change' comp.id %}
 {% endblock content %}

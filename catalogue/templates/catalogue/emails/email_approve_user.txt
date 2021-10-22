@@ -1,5 +1,6 @@
 {% block content %}
-Ihre Lösung wurde freigegeben!
-Name der Lösung: {{ comp }}
-Link zur Lösung: {{ link }}
+Ihre KI-Lösung wurde freigegeben!
+
+{{ comp.name }}
+{{ BASE_URL }}{{ comp.get_absolute_url }}
 {% endblock content %}
