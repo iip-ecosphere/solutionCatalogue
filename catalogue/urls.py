@@ -1,7 +1,12 @@
 from django.urls import path
 from django.views.generic import RedirectView
+from django.conf import settings
 
 from . import views
+
+favicon_view = RedirectView.as_view(
+    url=settings.STATIC_URL + "catalogue/favicon/favicon.ico", permanent=True
+)
 
 app_name = "catalogue"
 urlpatterns = [
@@ -19,4 +24,5 @@ urlpatterns = [
     path("cart", views.CartView.as_view(), name="get_cart"),
     path("impressum", views.ImprintView.as_view(), name="imprint"),
     path("datenschutz", views.DataprotectionView.as_view(), name="dataprotection"),
+    path("favicon.ico", favicon_view),
 ]
