@@ -13,7 +13,7 @@ from . import Component
 class CorporateDivision(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
-        help_text="Bereich des produzierenden Unternehmens, für den die Lösungen entwickelt wurde",
+        help_text="Bereich des produzierenden Unternehmens, für den die Lösung entwickelt wurde",
         choices=CorporateDivisionChoices.choices,
         max_length=2,
         blank=True,
@@ -64,7 +64,7 @@ class Process(models.Model):
 class BranchProven(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
-        help_text="Branche(n) für die die Lösung bereits erfolgreich erprobt wurde; belegte Anwendung",
+        help_text="Branche, in der die Lösung bereits erfolgreich erprobt wurde; belegte Anwendung",
         choices=BranchChoices.choices,
         max_length=3,
         blank=True,
@@ -81,7 +81,7 @@ class BranchProven(models.Model):
 class BranchApplicable(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     name = models.CharField(
-        help_text="Branche, in denen die Lösungen anwendbar ist",
+        help_text="Branche, in der die Lösung anwendbar ist",
         choices=BranchChoices.choices,
         max_length=3,
         blank=True,

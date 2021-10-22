@@ -201,8 +201,19 @@ class Component(
         verbose_name="Erstellt von",
     )
     lastmodified_at = models.DateTimeField("Zuletzt bearbeitet", auto_now=True)
-    published = models.BooleanField("Veröffentlicht", default=False)
-    allow_email = models.BooleanField("Erlaube Kontaktaufnahme per Mail", default=True)
+    published = models.BooleanField(
+        "Veröffentlicht",
+        help_text=(
+            "Lösung bereit zur Veröffentlichung. "
+            "Nach anschließender Moderation wird Ihre Lösung öffentlich zugänglich."
+        ),
+        default=False,
+    )
+    allow_email = models.BooleanField(
+        "Erlaube Kontaktaufnahme per Mail",
+        help_text="Erlaubt die Einblendung eines Kontaktformulares.",
+        default=True,
+    )
     approved = models.BooleanField("Freigegeben", default=False)
     frontpage = models.BooleanField("Auf der Startseite anzeigen?", default=False)
     is_deleted = models.BooleanField("Gelöscht", default=False)
