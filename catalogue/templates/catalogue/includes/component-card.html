@@ -3,9 +3,9 @@
   <div class="card-content">
     <div class="media">
       <div class="media-content">
-        <p class="title is-4">
+        <h3 class="title is-4">
           <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-        </p>
+        </h3>
         <p class="subtitle is-6">
           {{ c.contact_manufacturer }}
         </p>
@@ -17,16 +17,16 @@
     <div class="content">
       {{ c.description|linebreaks }}
       {% if c.task_set.all %}
-        <p class="title is-5">{{ c.task_set | verbose_name_plural }}</p>
-        <ul>
+        <h5 class="title is-5 mb-2">{{ c.task_set | verbose_name_plural }}</h5>
+        <ul class="mt-2">
           {% for t in c.task_set.all %}
             <li>{{ t.get_name_display }}</li>
           {% endfor %}
         </ul>
       {% endif %}
       {% if c.process_set.all %}
-        <p class="title is-5">{{ c.process_set | verbose_name_plural }}</p>
-        <ul>
+        <h5 class="title is-5 mb-2">{{ c.process_set | verbose_name_plural }}</h5>
+        <ul class="mt-2">
           {% for t in c.process_set.all %}
             <li>{{ t.get_name_display }}</li>
           {% endfor %}
