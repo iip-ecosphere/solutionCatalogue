@@ -16,7 +16,7 @@
     </div>
     <div class="content">
       {{ c.description|linebreaks }}
-      {% if c.task_set %}
+      {% if c.task_set.all %}
         <p class="title is-5">{{ c.task_set | verbose_name_plural }}</p>
         <ul>
           {% for t in c.task_set.all %}
@@ -24,7 +24,7 @@
           {% endfor %}
         </ul>
       {% endif %}
-      {% if c.process_set %}
+      {% if c.process_set.all %}
         <p class="title is-5">{{ c.process_set | verbose_name_plural }}</p>
         <ul>
           {% for t in c.process_set.all %}

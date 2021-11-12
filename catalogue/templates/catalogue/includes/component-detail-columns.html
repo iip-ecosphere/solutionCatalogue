@@ -1,19 +1,21 @@
 {% load filters %}
-<div class="columns">
-  <div class="column is-one-third">
-    <h4 class="subtitle is-5 has-text-weight-bold">{{ title }}</h4>
+{% if value %}
+  <div class="columns">
+    <div class="column is-one-third">
+      <h4 class="subtitle is-5 has-text-weight-bold">{{ title }}</h4>
+    </div>
+    <div class="column">
+      {% if value|is_list %}
+        <ul>
+          {% for x in value %}
+            <li>{{ x }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="content">
+          {{ value|linebreaks }}
+        </div>
+      {% endif %}
+    </div>
   </div>
-  <div class="column">
-    {% if value|is_list %}
-      <ul>
-        {% for x in value %}
-          <li>{{ x }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <div class="content">
-        {{ value|linebreaks }}
-      </div>
-    {% endif %}
-  </div>
-</div>
+{% endif %}
