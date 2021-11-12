@@ -8,12 +8,6 @@
           {{ message }}
         </div>
       {% endfor %}
-      {% if form.non_field_errors %}
-        <div class="notification is-danger">
-          <button class="delete"></button>
-          {{ form.non_field_errors }}
-        </div>
-      {% endif %}
       <div class="columns">
         <div class="column is-half is-offset-one-quarter">
           <div class="card">
