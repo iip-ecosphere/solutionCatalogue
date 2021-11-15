@@ -12,27 +12,23 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+from .env import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Load .env
-dotenv_file = BASE_DIR / ".env"
-load_dotenv(dotenv_path=dotenv_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "insecurekey")
+SECRET_KEY = ENV_STR("SECRET_KEY", "insecurekey")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("SECRET_KEY") is None
+DEBUG = ENV_STR("SECRET_KEY") is None
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = ENV_LIST("ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
 
-SECURE_SSL_REDIRECT = bool(os.getenv("SECURE_SSL_REDIRECT", False))
+SECURE_SSL_REDIRECT = ENV_BOOL("SECURE_SSL_REDIRECT", False)
 SESSION_COOKIE_SECURE = DEBUG
 SESSION_SAVE_EVERY_REQUEST = True
 
@@ -166,7 +162,7 @@ LOGIN_URL = "/accounts/login/"
 
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_REQUIRED = not DEBUG
-ACCOUNT_EMAIL_VERIFICATION = os.getenv(
+ACCOUNT_EMAIL_VERIFICATION = ENV_STR(
     "ACCOUNT_EMAIL_VERIFICATION", "optional" if DEBUG else "mandatory"
 )
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
@@ -175,31 +171,31 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http" if DEBUG else "https"
 SOCIALACCOUNT_PROVIDERS = {
     "github": {
         "APP": {
-            "client_id": os.getenv("SOCIAL_GITHUB_CLIENT_ID", ""),
-            "secret": os.getenv("SOCIAL_GITHUB_SECRET", ""),
+            "client_id": ENV_STR("SOCIAL_GITHUB_CLIENT_ID", ""),
+            "secret": ENV_STR("SOCIAL_GITHUB_SECRET", ""),
             "key": "",
         }
     },
     "gitlab": {
         "APP": {
-            "client_id": os.getenv("SOCIAL_GITLAB_CLIENT_ID", ""),
-            "secret": os.getenv("SOCIAL_GITLAB_SECRET", ""),
+            "client_id": ENV_STR("SOCIAL_GITLAB_CLIENT_ID", ""),
+            "secret": ENV_STR("SOCIAL_GITLAB_SECRET", ""),
             "key": "",
         }
     },
     "twitter": {
         "APP": {
-            "client_id": os.getenv("SOCIAL_TWITTER_CLIENT_ID", ""),
-            "secret": os.getenv("SOCIAL_TWITTER_SECRET", ""),
+            "client_id": ENV_STR("SOCIAL_TWITTER_CLIENT_ID", ""),
+            "secret": ENV_STR("SOCIAL_TWITTER_SECRET", ""),
             "key": "",
         }
     },
 }
 
-SENDER_EMAIL_MESSAGE = os.getenv("SENDER_EMAIL_MESSAGE", "noreply@example.com")
-SENDER_EMAIL_FEEDBACK = os.getenv("SENDER_EMAIL_FEEDBACK", "noreply@example.com")
-SENDER_EMAIL_APPROVE = os.getenv("SENDER_EMAIL_APPROVE", "noreply@example.com")
-EMAIL_HOST = os.getenv("EMAIL_HOST", "localhost")
-EMAIL_PORT = os.getenv("EMAIL_PORT", "1025")
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+SENDER_EMAIL_MESSAGE = ENV_STR("SENDER_EMAIL_MESSAGE", "noreply@example.com")
+SENDER_EMAIL_FEEDBACK = ENV_STR("SENDER_EMAIL_FEEDBACK", "noreply@example.com")
+SENDER_EMAIL_APPROVE = ENV_STR("SENDER_EMAIL_APPROVE", "noreply@example.com")
+EMAIL_HOST = ENV_STR("EMAIL_HOST", "localhost")
+EMAIL_PORT = ENV_INT("EMAIL_PORT", 1025)
+EMAIL_HOST_USER = ENV_STR("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = ENV_STR("EMAIL_HOST_PASSWORD", "")
