@@ -8,13 +8,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(dotenv_path=BASE_DIR / ".env")
 
-__all__ = [
-    "ENV_BOOL",
-    "ENV_STR",
-    "ENV_INT",
-    "ENV_LIST",
-]
-
 
 def ENV_BOOL(name: str, default: bool = False) -> bool:
     val = os.getenv(name, str(default)).lower()
