@@ -25,7 +25,7 @@ class BaseData(models.Model):
         choices=TRLChoices.choices,
     )
     description = models.TextField(
-        "Kurzbeschreibung", help_text="Kurze Beschreibung der Lösung"
+        "Kurzbeschreibung", help_text="Kurze Beschreibung der Lösung", max_length=1000
     )
     url = models.URLField("URL", help_text="Öffentlicher Link zur Lösung", blank=True)
 
