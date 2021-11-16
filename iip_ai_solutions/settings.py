@@ -207,8 +207,6 @@ CKEDITOR_CONFIGS = {
         "toolbar_Basic": [["Source", "-", "Bold", "Italic"]],
         "toolbar_Full": [
             [
-                "Styles",
-                "Format",
                 "Bold",
                 "Italic",
                 "SpellChecker",

@@ -38,7 +38,9 @@ class BaseData(models.Model):
 
 class ApplicationProfile(models.Model):
     long_description = RichTextField(
-        "Beschreibung", help_text="Ausführliche Beschreibung der Lösung"
+        "Beschreibung",
+        help_text="Ausführliche Beschreibung der Lösung",
+        config_name="component",
     )
 
     class Meta:
@@ -51,6 +53,7 @@ class Use(models.Model):
     scenarios = RichTextField(
         "Szenarien / Use cases",
         help_text="Beschreibung von Szenarien, in denen die Lösung bereits erfolgreich eingesetzt wurde",
+        config_name="component",
     )
 
     class Meta:
