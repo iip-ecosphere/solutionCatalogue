@@ -197,7 +197,7 @@ class ComponentAdmin(admin.ModelAdmin):
             ),
             (None, {"classes": ("placeholder", "task_set-group"), "fields": ()}),
             # Application Profile
-            (ApplicationProfile._meta.verbose_name, {"fields": ("product",)}),
+            (ApplicationProfile._meta.verbose_name, {"fields": ("long_description",)}),
             (
                 None,
                 {"classes": ("placeholder", "branchproven_set-group"), "fields": ()},
