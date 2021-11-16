@@ -3,7 +3,6 @@ from django.db.models import Q, Count
 
 import django_filters
 
-from . import COMPONENT_RELATED_FIELDS
 from .models import (
     Component,
     TRLChoices,
@@ -146,19 +145,15 @@ class ComponentComparisonFilter(django_filters.FilterSet):
 
     @property
     def qs(self):
-        return (
-            super().qs.filter(published=True)
-            # .select_related(*COMPONENT_RELATED_FIELDS)
-            # .prefetch_related(
-            #     "basedata__task_set",
-            #     "applicationprofile__corporatedivision_set",
-            #     "applicationprofile__hierarchylevel_set",
-            #     "applicationprofile__process_set",
-            #     "applicationprofile__branchproven_set",
-            #     "applicationprofile__branchapplicable_set",
-            #     "use__kpi_set",
-            #     "technicalspecification__aimethod_set",
-            #     "technicalspecification__dataanalysisprocess_set",
-            #     "technicalspecification__licenses_set",
-            # )
+        return super().qs.prefetch_related(
+            "task_set",
+            "corporatedivision_set",
+            "hierarchylevel_set",
+            "process_set",
+            "branchproven_set",
+            "branchapplicable_set",
+            "kpi_set",
+            "aimethod_set",
+            "dataanalysisprocess_set",
+            "licenses_set",
         )

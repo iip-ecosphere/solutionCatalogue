@@ -89,23 +89,26 @@ class SearchFeedbackView(generic.edit.FormView):
 
 class DetailView(generic.DetailView):
     template_name = "catalogue/detail.html"
+    model = Component
 
     def get(self, request, *args, **kwargs):
-        self.pk = self.kwargs.get(self.pk_url_kwarg)
+        ret = super().get(request, *args, **kwargs)
         if "current_query" in request.session:
+            # log user access on component after search
             ComponentLog(
                 query=SearchLog.objects.get(pk=request.session["current_query"]),
-                component=Component.objects.get(pk=self.pk),
+                component=self.object,
             ).save()
-        return super().get(request, *args, **kwargs)
+        return ret
 
     def get_queryset(self):
-        comp = Component.objects.get(id=self.pk)
+        qs = super().get_queryset()
+        comp = qs.get(id=self.kwargs.get(self.pk_url_kwarg))
         if self.request.GET.get("preview", None) and (
             comp.created_by == self.request.user or is_admin_or_mod(self.request)
         ):
             # allow preview of components for owners or mods
-            return Component.objects.all()
+            return qs
 
         return Component.public_objects.all()
 
@@ -147,6 +150,7 @@ class SendInquiry(generic.detail.SingleObjectMixin, generic.edit.FormView):
 class ComparisonView(FilterView):
     template_name = "catalogue/compare.html"
     context_object_name = "components"
+    queryset = Component.public_objects.all()
     filterset_class = ComponentComparisonFilter
 
     def get_context_data(self, **kwargs):
