@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.gitlab",
     "allauth.socialaccount.providers.twitter",
+    "ckeditor",
 ]
 
 MIDDLEWARE = [
@@ -199,3 +200,26 @@ EMAIL_HOST = ENV_STR("EMAIL_HOST", "localhost")
 EMAIL_PORT = ENV_INT("EMAIL_PORT", 1025)
 EMAIL_HOST_USER = ENV_STR("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = ENV_STR("EMAIL_HOST_PASSWORD", "")
+
+CKEDITOR_CONFIGS = {
+    "component": {
+        "skin": "moono-lisa",
+        "toolbar_Basic": [["Source", "-", "Bold", "Italic"]],
+        "toolbar_Full": [
+            [
+                "Bold",
+                "Italic",
+                "SpellChecker",
+                "Undo",
+                "Redo",
+            ],
+            ["Link", "Unlink"],
+            ["NumberedList", "BulletedList", "Table"],
+            ["Source"],
+        ],
+        "toolbar": "Full",
+        "removePlugins": "stylesheetparser",
+        "allowedContent": "p h b ul ol li i dl em table tr th td a[*]{*}(*)",
+    },
+    "default": {},
+}

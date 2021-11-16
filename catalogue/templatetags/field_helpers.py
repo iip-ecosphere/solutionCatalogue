@@ -3,6 +3,7 @@ from typing import Union, List
 from django import template
 from django.db import models
 from django.db.models import QuerySet
+from ckeditor.fields import RichTextField
 
 register = template.Library()
 
@@ -36,3 +37,8 @@ def field_verbose_name(m: models.Model, field_name: str) -> str:
     if hasattr(m, "model"):
         m = m.model
     return m._meta.get_field(field_name).verbose_name
+
+
+@register.simple_tag
+def field_is_html(m: models.Model, field_name: str) -> bool:
+    return m._meta.get_field(field_name).__class__ is RichTextField
