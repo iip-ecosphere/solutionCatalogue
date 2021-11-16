@@ -36,7 +36,7 @@ class BaseData(models.Model):
 
 
 class ApplicationProfile(models.Model):
-    product = models.TextField("Produkt", help_text="Hergestelltes Produkt")
+    long_description = models.TextField("Beschreibung", help_text="Ausführliche Beschreibung der Lösung")
 
     class Meta:
         abstract = True
@@ -81,12 +81,12 @@ class TechnicalSpecification(models.Model):
 
 class Requirements(models.Model):
     protocols = models.CharField(
-        "Protokolle/Schnittstellen",
+        "Protokolle / Schnittstellen",
         help_text="Schnittstellen und/oder Protokolle, die von der Lösung unterstützt werden",
         max_length=1000,
     )
     it_environment = models.CharField(
-        "IT Umgebung/Software",
+        "IT Umgebung / Software",
         help_text=(
             "Anforderungen an die IT-Umgebung (inkl. IT Hardware) und an weitere Software/Bibliotheken"
             ", die für den Betrieb der Lösung notwendig sind"
@@ -99,7 +99,7 @@ class Requirements(models.Model):
         max_length=1000,
     )
     devices = models.CharField(
-        "Maschinen/Steuerungen",
+        "Maschinen / Steuerungen",
         help_text="Maschinen und IoT Devices, mit denen die Lösung kompatibel ist",
         max_length=1000,
     )
