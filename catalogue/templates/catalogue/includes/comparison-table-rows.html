@@ -1,0 +1,22 @@
+{% load filters %}
+{% load field_helpers %}
+{% for field in fields %}
+  {% field_verbose_name components.0 field as name %}
+  <tr>
+    <th>{{ name }}</th>
+    {% for c in components %}
+      {% field_value c field as value %}
+      {% if value|is_list %}
+        <td>
+          <ul>
+            {% for x in value %}
+              <li>{{ x }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      {% else %}
+        <td>{{ value }}</td>
+      {% endif %}
+    {% endfor %}
+  </tr>
+{% endfor %}

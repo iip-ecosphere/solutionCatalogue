@@ -1,4 +1,7 @@
 {% load filters %}
+{% load field_helpers %}
+{% field_verbose_name component field as title %}
+{% field_value component field as value %}
 {% if value %}
   <div class="columns">
     <div class="column is-one-third">

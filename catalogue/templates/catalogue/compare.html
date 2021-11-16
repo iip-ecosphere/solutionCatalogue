@@ -1,7 +1,4 @@
 {% extends "catalogue/base.html" %}
-{% load bulma_tags %}
-{% load list_fields %}
-{% load verbose_name %}
 {% block title %}Vergleich - {{ block.super }}{% endblock %}
 {% block body %}
   <section class="section has-background-primary has-text-white">
@@ -33,51 +30,11 @@
               </tr>
               </thead>
               <tbody>
-              {% for field in components.0.get_basedata.1 %}
-                {% get_verbose_field_name components.0 field as name %}
-                <tr>
-                  <th>{{ name }}</th>
-                  {% for c in components %}
-                    <td>{% get_field c field %}</td>
-                  {% endfor %}
-                </tr>
-              {% endfor %}
-              {% for field in components.0.get_application_profile.1 %}
-                {% get_verbose_field_name components.0 field as name %}
-                <tr>
-                  <th>{{ name }}</th>
-                  {% for c in components %}
-                    <td>{% get_field c field %}</td>
-                  {% endfor %}
-                </tr>
-              {% endfor %}
-              {% for field in components.0.get_use.1 %}
-                {% get_verbose_field_name components.0 field as name %}
-                <tr>
-                  <th>{{ name }}</th>
-                  {% for c in components %}
-                    <td>{% get_field c field %}</td>
-                  {% endfor %}
-                </tr>
-              {% endfor %}
-              {% for field in components.0.get_requirements.1 %}
-                {% get_verbose_field_name components.0 field as name %}
-                <tr>
-                  <th>{{ name }}</th>
-                  {% for c in components %}
-                    <td>{% get_field c field %}</td>
-                  {% endfor %}
-                </tr>
-              {% endfor %}
-              {% for field in components.0.get_technical_specification.1 %}
-                {% get_verbose_field_name components.0 field as name %}
-                <tr>
-                  <th>{{ name }}</th>
-                  {% for c in components %}
-                    <td>{% get_field c field %}</td>
-                  {% endfor %}
-                </tr>
-              {% endfor %}
+                {% include "catalogue/includes/comparison-table-rows.html" with components=components fields=components.0.get_basedata.1 only %}
+                {% include "catalogue/includes/comparison-table-rows.html" with components=components fields=components.0.get_application_profile.1 only %}
+                {% include "catalogue/includes/comparison-table-rows.html" with components=components fields=components.0.get_use.1 only %}
+                {% include "catalogue/includes/comparison-table-rows.html" with components=components fields=components.0.get_requirements.1 only %}
+                {% include "catalogue/includes/comparison-table-rows.html" with components=components fields=components.0.get_technical_specification.1 only %}
               </tbody>
             </table>
           </div>
