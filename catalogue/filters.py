@@ -46,13 +46,15 @@ class ComponentFilterBase(django_filters.FilterSet):
     )
     branchproven__name = django_filters.MultipleChoiceFilter(
         label=BranchProven._meta.verbose_name,
-        choices=BranchChoices.choices[1:],
+        choices=BranchChoices.choices[1:-1],
         widget=forms.CheckboxSelectMultiple,
+        method="branch_filter",
     )
     branchapplicable__name = django_filters.MultipleChoiceFilter(
         label=BranchApplicable._meta.verbose_name,
-        choices=BranchChoices.choices[1:],
+        choices=BranchChoices.choices[1:-1],
         widget=forms.CheckboxSelectMultiple,
+        method="branch_filter",
     )
 
     def __init__(self, *args, **kwargs):
@@ -76,6 +78,10 @@ class ComponentFilterBase(django_filters.FilterSet):
             "task_set",
             "process_set",
         )
+
+    @staticmethod
+    def branch_filter(qs, name, value):
+        return qs.filter(**{name + "__in": value}) | qs.filter(**{name: "ALL"})
 
     @staticmethod
     def combined_filter(queryset, name, value):
