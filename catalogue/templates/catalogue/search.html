@@ -40,8 +40,8 @@
                 <div class="tags mb-1">
                   {% for id, name in field.field.choices %}
                     {% if id|stringformat:"s" in field.value %}
-                      <span class="tag has-background-info is-rounded">
-                        {{ name }}
+                      <span class="tag has-background-info is-rounded" title="{{ name }}">
+                        {{ name|truncatechars:35 }}
                         <button type="button" value="id_{{ field.name }}_{{ forloop.counter0 }}"
                                 class="delete is-small"></button>
                       </span>
