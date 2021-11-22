@@ -1,5 +1,7 @@
+from typing import Dict
+
 from django import forms
-from django.db.models import Q, Count
+from django.db.models import Q, Count, QuerySet
 
 import django_filters
 
@@ -37,8 +39,6 @@ class ComponentFilterBase(django_filters.FilterSet):
         label="Name / Beschreibung",
         method="combined_filter",
     )
-    # basedata__name = django_filters.CharFilter(lookup_expr="icontains", label="Name")
-    # basedata__description = django_filters.CharFilter(lookup_expr="icontains", label="Beschreibung")
     task__name = django_filters.MultipleChoiceFilter(
         label=Task._meta.verbose_name,
         choices=TaskChoices.choices[1:],
@@ -57,45 +57,39 @@ class ComponentFilterBase(django_filters.FilterSet):
         method="branch_filter",
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         # self.add_count_to_facet("basedata__trl")
 
-    def get_facet_counts(self, field):
+    def get_facet_counts(self, field: str) -> Dict[str, int]:
         qs = self.filter_queryset(self.queryset) if self.is_valid() else self.queryset
         facet_counts = qs.values(field).annotate(count=Count(field))
         return {x[field]: x["count"] for x in facet_counts}
 
-    def add_count_to_facet(self, field):
+    def add_count_to_facet(self, field: str) -> None:
         counts = self.get_facet_counts(field)
         self.form.fields[field].choices = [
             (x, f"{y} ({counts.get(x, 0)})") for x, y in self.form.fields[field].choices
         ]
 
     @property
-    def qs(self):
+    def qs(self) -> QuerySet:
         return super().qs.prefetch_related(
             "task_set",
             "process_set",
         )
 
     @staticmethod
-    def branch_filter(qs, name, value):
+    def branch_filter(qs: QuerySet, name: str, value: str) -> QuerySet:
         return qs.filter(**{name + "__in": value}) | qs.filter(**{name: "ALL"})
 
     @staticmethod
-    def combined_filter(queryset, name, value):
+    def combined_filter(queryset: QuerySet, name: str, value: str) -> QuerySet:
         # TODO: use postgres full text search
         q = Q()
         for n in name:
             q |= Q(**{f"{n}__icontains": value})
         return queryset.filter(q)
-
-
-class ComponentFilterFrontPage(ComponentFilterBase):
-    @property
-    def qs(self):
-        return super().qs.filter(frontpage=True)
 
 
 class ComponentFilter(ComponentFilterBase):
@@ -150,7 +144,7 @@ class ComponentComparisonFilter(django_filters.FilterSet):
     )
 
     @property
-    def qs(self):
+    def qs(self) -> QuerySet:
         return super().qs.prefetch_related(
             "task_set",
             "corporatedivision_set",

@@ -10,7 +10,7 @@ from django.contrib.sites.models import Site
 from .forms import InquiryForm, FeedbackForm, ReportForm
 from .filters import (
     ComponentFilter,
-    ComponentFilterFrontPage,
+    ComponentFilterBase,
     ComponentComparisonFilter,
 )
 from .models import Component
@@ -22,8 +22,8 @@ from .utils import is_admin_or_mod, get_admin_emails, get_mod_emails
 class IndexView(FilterView):
     template_name = "catalogue/index.html"
     context_object_name = "components"
-    queryset = Component.public_objects.all()
-    filterset_class = ComponentFilterFrontPage
+    queryset = Component.public_objects.filter(frontpage=True)
+    filterset_class = ComponentFilterBase
 
 
 class ImprintView(generic.TemplateView):
