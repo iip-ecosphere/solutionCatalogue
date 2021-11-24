@@ -1,6 +1,5 @@
 from django.db import models
 
-from .users import User
 from .component import Component
 
 

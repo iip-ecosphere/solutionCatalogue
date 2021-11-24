@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -32,6 +34,10 @@ from .models.users import Profile
 from .models.messages import Inquiry, Feedback, Report
 from .models.logging import SearchLog, ComponentLog
 from .utils import is_admin, is_admin_or_mod, get_mod_emails
+
+
+if TYPE_CHECKING:
+    from django.http import request
 
 
 class TopNestedBase:
@@ -157,14 +163,14 @@ class ComponentAdmin(admin.ModelAdmin):
             self.send_approve_notification_user(obj, request)
         super().save_model(request, obj, form, change)
 
-    def delete_model(self, request, obj):
+    def delete_model(self, request: "request", obj):
         if is_admin_or_mod(request):
             super().delete_model(request, obj)
             return
         obj.is_deleted = True
         super().save_model(request, obj, None, True)
 
-    def delete_queryset(self, request, queryset):
+    def delete_queryset(self, request: "request", queryset):
         for obj in queryset:
             self.delete_model(request, obj)
 
@@ -309,7 +315,9 @@ class ComponentAdmin(admin.ModelAdmin):
 
         return super().changelist_view(request, extra_context)
 
-    def send_approve_notification_mods(self, instance, request):
+    def send_approve_notification_mods(
+        self, instance: Component, request: "request"
+    ) -> None:
         """Send email notification to mods for component requiring approval."""
         context = {"comp": instance}
         content = render_to_string(
@@ -322,7 +330,7 @@ class ComponentAdmin(admin.ModelAdmin):
             recipient_list=get_mod_emails(),
         )
 
-    def send_approve_notification_user(self, instance, request):
+    def send_approve_notification_user(self, instance: Component, request: "request"):
         """Send email notification to user that a component was approved."""
         context = {"comp": instance}
         content = render_to_string(

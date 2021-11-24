@@ -1,10 +1,9 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from django.contrib.auth import get_user_model
 
 if TYPE_CHECKING:
     from django.http import request
-    from django.db.models import QuerySet
 
 
 def is_admin(r: "request") -> bool:
@@ -22,18 +21,18 @@ def is_admin_or_mod(r: "request") -> bool:
     return is_admin(r) or is_mod(r)
 
 
-def get_admin_emails() -> "QuerySet":
+def get_admin_emails() -> List[str]:
     """Get all eMail addresses of admins"""
-    return (
+    return list(
         get_user_model()
         .objects.filter(is_superuser=True)
         .values_list("email", flat=True)
     )
 
 
-def get_mod_emails() -> "QuerySet":
+def get_mod_emails() -> List[str]:
     """Get all eMail addresses of moderators"""
-    return (
+    return list(
         get_user_model()
         .objects.filter(groups__name__in=["Moderatoren"])
         .values_list("email", flat=True)

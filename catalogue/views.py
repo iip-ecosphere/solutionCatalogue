@@ -1,21 +1,20 @@
-from django.views import generic
-
-from django_filters.views import FilterView
-from django.shortcuts import render
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.core.mail import send_mail
+from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.views import generic
+from django_filters.views import FilterView
 
-from .forms import InquiryForm, FeedbackForm, ReportForm
 from .filters import (
     ComponentFilter,
     ComponentFilterBase,
     ComponentComparisonFilter,
 )
+from .forms import InquiryForm, FeedbackForm, ReportForm
 from .models import Component
-from .models.messages import Inquiry, Feedback, Report
 from .models.logging import SearchLog, ComponentLog
+from .models.messages import Inquiry, Feedback, Report
 from .utils import is_admin_or_mod, get_admin_emails, get_mod_emails
 
 
