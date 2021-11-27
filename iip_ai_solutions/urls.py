@@ -16,13 +16,19 @@ Including another URLconf
 import debug_toolbar
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("", include("catalogue.urls")),
     path("cms/", include("cms.urls")),
+    path("ckeditor/", include("ckeditor_uploader.urls")),
     path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),
     path("_nested_admin/", include("nested_admin.urls")),
     path("grappelli/", include("grappelli.urls")),
     path("__debug__/", include(debug_toolbar.urls)),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

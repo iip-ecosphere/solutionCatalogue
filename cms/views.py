@@ -14,5 +14,3 @@ class PageView(generic.DetailView):
 
     def get_template_names(self):
         return [pathlib.Path(__file__).parent / f"templates/{self.object.template}"]
-
-

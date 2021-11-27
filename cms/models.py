@@ -1,12 +1,14 @@
 from django.db import models
 from django.conf import settings
-from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 import pathlib
 
 
 def load_template_choices():
     return [
-        (f.name, f.name) for f in (pathlib.Path(__file__).parent / "templates/").iterdir() if f.is_file()
+        (f.name, f.name)
+        for f in (pathlib.Path(__file__).parent / "templates/").iterdir()
+        if f.is_file()
     ]
 
 
@@ -15,7 +17,7 @@ class BasePage(models.Model):
     template = models.CharField(
         "Template", max_length=100, choices=[("", "")], blank=False, default=None
     )
-    content = RichTextField(blank=True)
+    content = RichTextUploadingField(blank=True)
 
     class Meta:
         abstract = True
