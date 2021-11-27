@@ -1,13 +1,12 @@
 from django.db import models
 from django.conf import settings
-from os import listdir
-from os.path import isfile, join
 from ckeditor.fields import RichTextField
+import pathlib
 
 
 def load_template_choices():
     return [
-        (f.name, f.name) for f in settings.CMS_TEMPLATE_DIR.iterdir() if f.is_file()
+        (f.name, f.name) for f in (pathlib.Path(__file__).parent / "templates/").iterdir() if f.is_file()
     ]
 
 
