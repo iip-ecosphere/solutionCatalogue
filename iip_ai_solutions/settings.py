@@ -224,4 +224,3 @@ CKEDITOR_CONFIGS = {
     },
     "default": {},
 }
-CMS_TEMPLATE_DIR = BASE_DIR / "cms/templates/cms/cms_templates/"

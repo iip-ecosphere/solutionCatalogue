@@ -3,22 +3,16 @@ from django.shortcuts import render
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from .models import StaticMenuPage
+import pathlib
 
 
-class PageView(generic.TemplateView):
-    def get(self, request, page_url: str):
-        self.page = get_object_or_404(StaticMenuPage, url=page_url)
-        return render(
-            request,
-            settings.CMS_TEMPLATE_DIR / self.page.template,
-            self.get_context_data(),
-        )
+class PageView(generic.DetailView):
+    model = StaticMenuPage
+    context_object_name = "page"
+    slug_url_kwarg = "page_url"
+    slug_field = "url"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data()
-        context["page"] = self.page
-        return context
+    def get_template_names(self):
+        return [pathlib.Path(__file__).parent / f"templates/{self.object.template}"]
 
 
-class MenuView(generic.DetailView):
-    pass
