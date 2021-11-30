@@ -4,12 +4,13 @@ from .models import StaticMenuPage, Menu
 
 @admin.register(StaticMenuPage)
 class CMSAdmin(admin.ModelAdmin):
-    list_display = ("title", "url", "menu", "parent", "root")
+    list_display = ("published", "title", "slug", "menu", "parent", "root")
     fields = (
         "title",
         "menu",
+        "published",
         "root",
-        "url",
+        "slug",
         "template",
         "parent",
         "content",

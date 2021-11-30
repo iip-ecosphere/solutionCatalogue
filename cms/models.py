@@ -18,6 +18,7 @@ class BasePage(models.Model):
         "Template", max_length=100, choices=[("", "")], blank=False, default=None
     )
     content = RichTextUploadingField(blank=True)
+    published = models.BooleanField(default=False, verbose_name="Veröffentlicht")
 
     class Meta:
         abstract = True
@@ -43,16 +44,18 @@ class Menu(models.Model):
 class StaticMenuPage(BasePage):
     menu = models.ForeignKey(
         Menu,
-        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
         verbose_name="Menü",
     )
     root = models.BooleanField("Oberste Ebene", default=False)
-    url = models.CharField(blank=True, max_length=200)
+    slug = models.SlugField(default="", max_length=200, verbose_name="Url")
     parent = models.ForeignKey(
         "self",
         blank=True,
         limit_choices_to={"root": True},
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
         verbose_name="Oberpunkt",
         null=True,
     )
