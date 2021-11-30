@@ -45,12 +45,12 @@
             </a>
             <div class="navbar-dropdown">
               {% for child in childs %}
-                <a class="navbar-item" href="{% url 'cms:page' child.slug  %}">{{ child.title }}</a>
+                <a class="navbar-item" href="{{ child.get_absolute_url }}">{{ child.title }}</a>
               {% endfor %}
             </div>
           </div>
           {% else %}
-            <a class="navbar-item" href="{% url 'cms:page' item.slug  %}">{{ item.title }}</a>
+            <a class="navbar-item" href="{{ item.get_absolute_url }}">{{ item.title }}</a>
           {% endif %}
         {% endfor %}
         {% if user.is_authenticated %}
@@ -105,7 +105,7 @@
           <p>
             {% get_top_menu_items "bottom" as menu %}
             {% for item in menu %}
-              <a class="has-text-white" href="{% url 'cms:page' item.slug  %}">{{ item.title }}</a><br>
+              <a class="has-text-white" href="{{ item.get_absolute_url }}">{{ item.title }}</a><br>
             {% endfor %}
           </p>
         </div>

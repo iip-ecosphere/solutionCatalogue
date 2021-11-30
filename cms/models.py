@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 import pathlib
 
@@ -50,7 +51,7 @@ class StaticMenuPage(BasePage):
         verbose_name="Menü",
     )
     root = models.BooleanField("Oberste Ebene", default=False)
-    slug = models.SlugField(default="", max_length=200, verbose_name="Url")
+    slug = models.SlugField(default="", unique=True, max_length=200, verbose_name="Url")
     parent = models.ForeignKey(
         "self",
         blank=True,
@@ -63,6 +64,9 @@ class StaticMenuPage(BasePage):
     class Meta:
         verbose_name = "Menü Seiten"
         verbose_name_plural = verbose_name
+
+    def get_absolute_url(self):
+        return reverse("cms:page", kwargs={"slug": self.slug})
 
     def __str__(self):
         return self.title

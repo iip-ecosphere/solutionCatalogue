@@ -15,6 +15,7 @@ class CMSAdmin(admin.ModelAdmin):
         "parent",
         "content",
     )
+    prepopulated_fields = {"slug": ("title",)}
 
     class Media:
         js = ("/static/admin/js/cms_admin.js",)
