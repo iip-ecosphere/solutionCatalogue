@@ -62,8 +62,8 @@ class StaticMenuPage(BasePage):
     )
 
     class Meta:
-        verbose_name = "Menü Seiten"
-        verbose_name_plural = verbose_name
+        verbose_name = "Seite"
+        verbose_name_plural = "Seiten"
 
     def get_absolute_url(self):
         return reverse("cms:page", kwargs={"slug": self.slug})

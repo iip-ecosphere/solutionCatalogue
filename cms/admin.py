@@ -5,6 +5,8 @@ from .models import StaticMenuPage, Menu
 @admin.register(StaticMenuPage)
 class CMSAdmin(admin.ModelAdmin):
     list_display = ("published", "title", "slug", "menu", "parent", "root")
+    list_display_links = ("title", )
+    list_editable = ("published",)
     fields = (
         "title",
         "menu",
