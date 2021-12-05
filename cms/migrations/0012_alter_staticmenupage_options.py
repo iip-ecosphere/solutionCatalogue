@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0011_alter_staticmenupage_slug'),
+        ("cms", "0011_alter_staticmenupage_slug"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='staticmenupage',
-            options={'verbose_name': 'Seite', 'verbose_name_plural': 'Seiten'},
+            name="staticmenupage",
+            options={"verbose_name": "Seite", "verbose_name_plural": "Seiten"},
         ),
     ]

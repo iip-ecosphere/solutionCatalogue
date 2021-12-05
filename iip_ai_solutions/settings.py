@@ -223,6 +223,7 @@ CKEDITOR_CONFIGS = {
         "removePlugins": "stylesheetparser",
         "allowedContent": "p h b ul ol li i dl em table tr th td a[*]{*}(*)",
     },
+    "cms": {"extraAllowedContent": "div(*)"},
     "default": {},
 }
 

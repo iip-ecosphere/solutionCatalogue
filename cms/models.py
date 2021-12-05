@@ -18,7 +18,7 @@ class BasePage(models.Model):
     template = models.CharField(
         "Template", max_length=100, choices=[("", "")], blank=False, default=None
     )
-    content = RichTextUploadingField(blank=True)
+    content = RichTextUploadingField(blank=True, config_name="cms")
     published = models.BooleanField(default=False, verbose_name="Veröffentlicht")
 
     class Meta:

@@ -8,11 +8,15 @@ register = template.Library()
 
 @register.simple_tag
 def get_top_menu_items(name: str) -> QuerySet:
-    return (
+    qs = (
         StaticMenuPage.objects.filter(menu__name=name)
         .filter(parent=None)
         .filter(published=True)
     )
+    # remove sites that are root points but have no children sites
+    for item in qs:
+        if not item.root or len(get_child_items(item)) > 0:
+            yield item
 
 
 @register.simple_tag
