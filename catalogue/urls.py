@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import RedirectView
 from django.conf import settings
 
@@ -22,7 +22,5 @@ urlpatterns = [
     path("compare", views.ComparisonView.as_view(), name="compare"),
     path("cart/<int:pk>", views.CartView.as_view(), name="edit_cart"),
     path("cart", views.CartView.as_view(), name="get_cart"),
-    path("impressum", views.ImprintView.as_view(), name="imprint"),
-    path("datenschutz", views.DataprotectionView.as_view(), name="dataprotection"),
     path("favicon.ico", favicon_view),
 ]

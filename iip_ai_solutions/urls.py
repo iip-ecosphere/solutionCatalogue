@@ -19,6 +19,8 @@ from django.urls import include, path
 
 urlpatterns = [
     path("", include("catalogue.urls")),
+    path("cms/", include("cms.urls")),
+    path("ckeditor/", include("ckeditor_uploader.urls")),
     path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),
     path("_nested_admin/", include("nested_admin.urls")),

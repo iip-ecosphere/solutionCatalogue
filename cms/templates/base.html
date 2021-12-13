@@ -1,0 +1,18 @@
+{% extends "catalogue/base.html" %}
+{% block title %} {{ page.title }} - {{ block.super }}{% endblock %}
+{% block body %}
+  <section class="section has-background-primary">
+    <div class="container is-max-widescreen">
+      <h1 class="title has-text-white has-text-centered">
+        {{ page.title }}
+      </h1>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container is-max-widescreen">
+      {% block content %}
+        {{ page.content|safe }}
+      {% endblock %}
+    </div>
+  </section>
+{% endblock %}

@@ -1,4 +1,5 @@
 {% load static %}
+{% load menu_tags %}
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -34,6 +35,24 @@
       <div class="navbar-end">
         <a class="navbar-item" href="{% url 'catalogue:index' %}">Start</a>
         <a class="navbar-item" href="{% url 'catalogue:search' %}">Suche</a>
+        {% get_top_menu_items "top" as menu %}
+        {% for item in menu %}
+          {% get_child_items item as childs %}
+          {% if childs %}
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              {{ item.title }}
+            </a>
+            <div class="navbar-dropdown">
+              {% for child in childs %}
+                <a class="navbar-item" href="{{ child.get_absolute_url }}">{{ child.title }}</a>
+              {% endfor %}
+            </div>
+          </div>
+          {% else %}
+            <a class="navbar-item" href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+          {% endif %}
+        {% endfor %}
         {% if user.is_authenticated %}
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
@@ -84,8 +103,10 @@
         <div class="content">
           <h5 class="has-text-white">Menü</h5>
           <p>
-            <a class="has-text-white" href="{% url 'catalogue:dataprotection' %}">Datenschutz</a><br>
-            <a class="has-text-white" href="{% url 'catalogue:imprint' %}">Impressum</a>
+            {% get_top_menu_items "bottom" as menu %}
+            {% for item in menu %}
+              <a class="has-text-white" href="{{ item.get_absolute_url }}">{{ item.title }}</a><br>
+            {% endfor %}
           </p>
         </div>
       </div>

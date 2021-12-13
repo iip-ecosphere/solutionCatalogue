@@ -36,6 +36,7 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 INSTALLED_APPS = [
     "catalogue.apps.CatalogueConfig",
+    "cms.apps.CmsConfig",
     "grappelli",
     "nested_admin",
     "django.contrib.admin",
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.gitlab",
     "allauth.socialaccount.providers.twitter",
     "ckeditor",
+    "ckeditor_uploader",
 ]
 
 MIDDLEWARE = [
@@ -221,5 +223,14 @@ CKEDITOR_CONFIGS = {
         "removePlugins": "stylesheetparser",
         "allowedContent": "p h b ul ol li i dl em table tr th td a[*]{*}(*)",
     },
+    "cms": {"extraAllowedContent": "div(*)"},
     "default": {},
 }
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_RESTRICT_BY_USER = True
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_RESTRICT_BY_DATE = True
