@@ -1,3 +1,5 @@
+from typing import Iterable
+
 from django import template
 from django.db.models import QuerySet
 
@@ -7,7 +9,7 @@ register = template.Library()
 
 
 @register.simple_tag
-def get_top_menu_items(name: str) -> QuerySet:
+def get_top_menu_items(name: str) -> Iterable[StaticMenuPage]:
     qs = (
         StaticMenuPage.objects.filter(menu__name=name)
         .filter(parent=None)
