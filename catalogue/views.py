@@ -1,3 +1,4 @@
+import os
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
@@ -5,6 +6,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views import generic
 from django_filters.views import FilterView
+from django.http import HttpResponse, Http404
 
 from .filters import (
     ComponentFilter,
@@ -221,3 +223,11 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             from_email=settings.SENDER_EMAIL_FEEDBACK,
             recipient_list=get_mod_emails(),
         )
+
+def downloadMedia(request, path):
+    if os.path.exists(path):
+        with open(path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+            response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(path)
+            return response
+    raise Http404("Datei nicht gefunden")

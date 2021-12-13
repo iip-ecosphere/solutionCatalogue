@@ -1,4 +1,5 @@
 from typing import List, Tuple
+import os
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -7,6 +8,7 @@ from django.core.validators import RegexValidator
 from ckeditor.fields import RichTextField
 
 from ..choices import TRLChoices, RealtimeChoices
+from django import forms
 
 
 class BaseData(models.Model):
@@ -178,7 +180,6 @@ class Contact(models.Model):
         verbose_name = "Kontakt Informationen"
         verbose_name_plural = verbose_name
 
-
 class PublicComponentManager(models.Manager):
     def get_queryset(self):
         return (
@@ -275,3 +276,15 @@ class Component(
 
     def get_absolute_url(self):
         return reverse("catalogue:detail", kwargs={"pk": self.pk})
+
+
+class ComponentFile(models.Model):
+    component = models.ForeignKey(Component, on_delete=models.CASCADE) # When a Case is deleted, upload models are also deleted
+    file = models.FileField(upload_to="comp_files", null=True, blank=True)
+    class Meta:
+        verbose_name = "Anhang"
+        verbose_name_plural = verbose_name
+
+    @property
+    def filename(self):
+        return os.path.basename(self.file.name)

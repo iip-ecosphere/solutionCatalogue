@@ -48,6 +48,12 @@
               onclick="openTab(event, 'tab2')">
             <a>Voraussetzungen</a>
           </li>
+          {% if component.componentfile_set.all %}
+            <li class="tabLink has-background-grey-light has-text-weight-bold is-uppercase"
+                onclick="openTab(event, 'tab3')">
+              <a>Anhang</a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </div>
@@ -76,6 +82,33 @@
       {% for field in component.get_technical_specification.1 %}
         {% include "catalogue/includes/component-detail-columns.html" with component=component field=field only %}
       {% endfor %}
+    </div>
+  </section>
+  <section id="tab3" class="section tab" style="display: none">
+    <div class="container is-max-widescreen">
+      <div class="columns">
+        {% for file in component.componentfile_set.all %}
+          <div class="column is-one-third">
+            <div class="file is-success has-name is-boxed">
+              <a href="{% url 'catalogue:download' file.file.path %}">
+                <label class="file-label">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span class="file-label">
+                      Herunterladen
+                    </span>
+                  </span>
+                  <span class="file-name">
+                    {{  file.filename }}
+                  </span>
+                </label>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </section>
   <section id="contact" class="section bg-bubble-gradient">

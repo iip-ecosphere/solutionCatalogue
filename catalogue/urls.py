@@ -1,6 +1,7 @@
 from django.urls import path, include
 from django.views.generic import RedirectView
 from django.conf import settings
+from django.conf.urls.static import static
 
 from . import views
 
@@ -15,6 +16,7 @@ urlpatterns = [
     path("search", views.SearchView.as_view(), name="search"),
     path("search/feedback", views.SearchFeedbackView.as_view(), name="search_feedback"),
     path("solution/<int:pk>", views.DetailView.as_view(), name="detail"),
+    path("download/<path:path>", views.downloadMedia, name="download"),
     path("solution/<int:pk>/contact", views.SendInquiry.as_view(), name="send_inquiry"),
     path(
         "solution/<int:pk>/report", views.ReportView.as_view(), name="report_component"
@@ -24,3 +26,6 @@ urlpatterns = [
     path("cart", views.CartView.as_view(), name="get_cart"),
     path("favicon.ico", favicon_view),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
