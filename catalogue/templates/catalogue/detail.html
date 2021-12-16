@@ -90,7 +90,7 @@
         {% for file in component.componentfile_set.all %}
           <div class="column is-one-third">
             <div class="file is-success has-name is-boxed">
-              <a href="{% url 'catalogue:download' file.file.path %}">
+              <a href="{% url 'catalogue:download' file.id %}">
                 <label class="file-label">
                   <span class="file-cta">
                     <span class="file-icon">

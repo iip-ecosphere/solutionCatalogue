@@ -2,6 +2,7 @@ import os
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
+from django.http.response import FileResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views import generic
@@ -14,7 +15,7 @@ from .filters import (
     ComponentComparisonFilter,
 )
 from .forms import InquiryForm, FeedbackForm, ReportForm
-from .models import Component
+from .models import Component, ComponentFile
 from .models.logging import SearchLog, ComponentLog
 from .models.messages import Inquiry, Feedback, Report
 from .utils import is_admin_or_mod, get_admin_emails, get_mod_emails
@@ -224,10 +225,9 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             recipient_list=get_mod_emails(),
         )
 
-def downloadMedia(request, path):
+def downloadMedia(request, id):
+    path = ComponentFile.objects.get(id=id).file.path
     if os.path.exists(path):
-        with open(path, 'rb') as fh:
-            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
-            response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(path)
-            return response
+        response = FileResponse(open(path, 'rb'), as_attachment=True)
+        return response
     raise Http404("Datei nicht gefunden")

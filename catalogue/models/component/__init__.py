@@ -3,12 +3,14 @@ import os
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.fields import UUIDField
 from django.urls import reverse
 from django.core.validators import RegexValidator
 from ckeditor.fields import RichTextField
 
 from ..choices import TRLChoices, RealtimeChoices
 from django import forms
+import uuid
 
 
 class BaseData(models.Model):
@@ -279,6 +281,7 @@ class Component(
 
 
 class ComponentFile(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     component = models.ForeignKey(Component, on_delete=models.CASCADE) # When a Case is deleted, upload models are also deleted
     file = models.FileField(upload_to="comp_files", null=True, blank=True)
     class Meta:
