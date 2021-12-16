@@ -35,6 +35,7 @@ class BaseData(models.Model):
         "Kurzbeschreibung", help_text="Kurze Beschreibung der Lösung", max_length=1000
     )
     url = models.URLField("URL", help_text="Öffentlicher Link zur Lösung", blank=True)
+    image = models.ImageField("Titelbild", upload_to='componentImages', help_text="Titelbild der Lösung", blank=True)
 
     class Meta:
         abstract = True
