@@ -1,3 +1,5 @@
+import os
+import uuid
 from typing import List, Tuple
 from pathlib import Path
 
@@ -6,13 +8,29 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.validators import RegexValidator
 from ckeditor.fields import RichTextField
+from django.core.exceptions import ValidationError
+from PIL import Image
 
 from ..choices import TRLChoices, RealtimeChoices
-import uuid
 
 
 def get_file_path(instance, filename: str) -> Path:
     return Path("component_uploads") / str(instance.id) / filename
+
+
+def get_image_path(instance, filename):
+    ext = filename.split(".")[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+    return os.path.join("component_uploads/", filename)
+
+
+def validate_image_size(image):
+    MIN_WIDTH = 1153
+    MIN_HEIGHT = 0
+    img = Image.open(image)
+    fw, fh = img.size
+    if fw < MIN_WIDTH or fh < MIN_HEIGHT:
+        raise ValidationError("Das Bild muss mindestens 1153px breit sein!")
 
 
 class BaseData(models.Model):
@@ -35,7 +53,13 @@ class BaseData(models.Model):
         "Kurzbeschreibung", help_text="Kurze Beschreibung der Lösung", max_length=1000
     )
     url = models.URLField("URL", help_text="Öffentlicher Link zur Lösung", blank=True)
-    image = models.ImageField("Titelbild", upload_to='componentImages', help_text="Titelbild der Lösung", blank=True)
+    image = models.ImageField(
+        "Titelbild",
+        upload_to=get_image_path,
+        help_text="Titelbild der Lösung",
+        blank=True,
+        validators=[validate_image_size],
+    )
 
     class Meta:
         abstract = True
