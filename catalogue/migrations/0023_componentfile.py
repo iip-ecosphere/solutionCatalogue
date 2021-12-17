@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name='ComponentFile',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('file', models.FileField(blank=True, null=True, upload_to='comp_files')),
+                ('file', models.FileField(blank=True, upload_to='comp_files')),
                 ('component', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='catalogue.component')),
             ],
             options={

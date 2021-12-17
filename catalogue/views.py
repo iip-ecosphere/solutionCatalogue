@@ -225,9 +225,10 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             recipient_list=get_mod_emails(),
         )
 
+
 def downloadMedia(request, id):
     path = ComponentFile.objects.get(id=id).file.path
     if os.path.exists(path):
-        response = FileResponse(open(path, 'rb'), as_attachment=True)
+        response = FileResponse(open(path, "rb"), as_attachment=True)
         return response
     raise Http404("Datei nicht gefunden")

@@ -182,6 +182,7 @@ class Contact(models.Model):
         verbose_name = "Kontakt Informationen"
         verbose_name_plural = verbose_name
 
+
 class PublicComponentManager(models.Manager):
     def get_queryset(self):
         return (
@@ -191,6 +192,12 @@ class PublicComponentManager(models.Manager):
             .filter(published=True)
             .filter(is_deleted=False)
         )
+
+
+def get_file_path(instance, filename):
+    ext = filename.split(".")[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+    return os.path.join("component_uploads/", filename)
 
 
 class Component(
@@ -282,11 +289,15 @@ class Component(
 
 class ComponentFile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    component = models.ForeignKey(Component, on_delete=models.CASCADE) # When a Case is deleted, upload models are also deleted
-    file = models.FileField(upload_to="comp_files", null=True, blank=True)
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
+    file = models.FileField(upload_to=get_file_path, blank=True)
+
     class Meta:
         verbose_name = "Anhang"
         verbose_name_plural = verbose_name
+
+    def __str__(self) -> str:
+        return f"{self._meta.verbose_name} {self.id} - {self.filename}"
 
     @property
     def filename(self):

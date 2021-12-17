@@ -98,8 +98,10 @@ class DAProcessInline(SubNestedBase, admin.StackedInline):
 class LicensesInline(SubNestedBase, admin.StackedInline):
     model = Licenses
 
+
 class FileInline(SubNestedBase, admin.StackedInline):
     model = ComponentFile
+
 
 @admin.register(Component)
 class ComponentAdmin(admin.ModelAdmin):
