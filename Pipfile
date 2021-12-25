@@ -23,6 +23,7 @@ django-sass = "*"
 django-bulma = "*"
 django-allauth = "*"
 django-ckeditor = "*"
+Pillow = "*"
 
 [requires]
 python_version = "3"

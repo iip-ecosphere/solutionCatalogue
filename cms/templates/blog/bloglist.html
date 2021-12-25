@@ -1,0 +1,53 @@
+{% extends "catalogue/base.html" %}
+{% load bulma_tags %}
+{% load field_helpers %}
+{% block title %}{{ component.name }}  - {{ block.super }}{% endblock %}
+{% block body %}
+<section class="section has-background-primary has-text-white">
+    <div class="container is-max-widescreen">
+        <div class="media">
+            <div class="media-content">
+              <h1 class="title is-2 has-text-white">
+                IIP-Ecosphere Erfolgsgeschichten
+              </h1>
+            </div>
+        </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container is-max-widescreen">
+        {% if blog_posts|length == 0 %}
+            <p>Noch keine Einträge vorhanden :(</p>
+        {% endif %}
+        <div class="row">
+            {% for post in blog_posts %}
+                <div class="card mb-4">
+                    <div class="card-content">
+                        <p class="title">{{ post.title }}</p>
+                        <p class="subtitle">{{ post.author }} | {{ post.created}} </p>
+                        <div class="content">{{ post.content|safe|slice:":600" }}</div>
+                    </div>
+                    <footer class="card-footer">
+                        <p class="card-footer-item">
+                          <span>
+                            <a href="{% url 'cms:blog_page' post.slug %}">Weiterlesen</a>
+                          </span>
+                        </p>
+                    </footer>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        {% if page_obj.has_previous %}
+            <a class="pagination-previous" href="?page={{ page_obj.previous_page_number }}">Zurück</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="pagination-next" href="?page={{ page_obj.next_page_number }}">Nächste Seite</a>
+        {% endif %}
+        <ul class="pagination-list">
+          <li><a class="pagination-link is-current">{{ page_obj.number }}</a></li>
+        </ul>
+      </nav>
+  </section>
+{% endblock %}
