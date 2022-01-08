@@ -1,27 +1,26 @@
-import os
 import uuid
-from typing import List, Tuple
 from pathlib import Path
+from typing import List, Tuple
 
-from django.db import models
-from django.contrib.auth.models import User
-from django.urls import reverse
-from django.core.validators import RegexValidator
-from ckeditor.fields import RichTextField
-from django.core.exceptions import ValidationError
 from PIL import Image
+from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
+from django.db import models
+from django.urls import reverse
 
-from ..choices import TRLChoices, RealtimeChoices
+from ..choices import RealtimeChoices, TRLChoices
 
 
 def get_file_path(instance, filename: str) -> Path:
-    return Path("component_uploads") / str(instance.id) / filename
+    return Path("component_uploads") / "docs" / str(instance.id) / filename
 
 
 def get_image_path(instance, filename):
-    ext = filename.split(".")[-1]
-    filename = "%s.%s" % (uuid.uuid4(), ext)
-    return os.path.join("component_uploads/", filename)
+    ext = Path(filename).suffix
+    file = Path(str(uuid.uuid4())).with_suffix(ext)
+    return Path("component_uploads") / "images" / file
 
 
 def validate_image_size(image):
