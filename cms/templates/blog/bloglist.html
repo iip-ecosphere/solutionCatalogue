@@ -30,7 +30,7 @@
                     <footer class="card-footer">
                         <p class="card-footer-item">
                           <span>
-                            <a href="{% url 'cms:blog_page' post.slug %}">Weiterlesen</a>
+                            <a href="{{ post.get_absolute_url }}">Weiterlesen</a>
                           </span>
                         </p>
                     </footer>

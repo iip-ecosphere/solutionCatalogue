@@ -28,16 +28,18 @@
             </div>
         </div>
     </section>
-    <section class="section">
-        <div class="container is-max-widescreen">
-            <div class="columns is-flex-wrap-wrap">
-                {% for c in post.components.all %}
-                <div class="column is-one-third">
-                    {% include "catalogue/includes/component-card.html" with c=c only %}
+    {% if post.components.all|length > 0 %}
+        <section class="section">
+            <div class="container is-max-widescreen">
+                <div class="columns is-flex-wrap-wrap">
+                    {% for c in post.components.all %}
+                    <div class="column is-one-third">
+                        {% include "catalogue/includes/component-card.html" with c=c only %}
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 
 {% endblock %}

@@ -1,11 +1,11 @@
-from django.db import models
-from django.conf import settings
-from django.urls import reverse
-from ckeditor_uploader.fields import RichTextUploadingField
 import pathlib
 
-from django.contrib.auth.models import User
 from catalogue.models import Component
+from ckeditor_uploader.fields import RichTextUploadingField
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.db import models
+from django.urls import reverse
 
 
 def load_template_choices():
@@ -18,9 +18,6 @@ def load_template_choices():
 
 class BasePage(models.Model):
     title = models.CharField("Titel", max_length=100)
-    template = models.CharField(
-        "Template", max_length=100, choices=[("", "")], blank=False, default=None
-    )
     content = RichTextUploadingField(blank=True, config_name="cms")
     published = models.BooleanField(default=False, verbose_name="Veröffentlicht")
 
@@ -28,10 +25,6 @@ class BasePage(models.Model):
         abstract = True
         verbose_name = "Basis Seite"
         verbose_name_plural = verbose_name
-
-    def __init__(self, *args, **kwargs):
-        self._meta.get_field("template").choices = load_template_choices()
-        super(BasePage, self).__init__(*args, **kwargs)
 
 
 class Menu(models.Model):
@@ -53,6 +46,9 @@ class StaticMenuPage(BasePage):
         on_delete=models.SET_NULL,
         verbose_name="Menü",
     )
+    template = models.CharField(
+        "Template", max_length=100, choices=[("", "")], blank=False, default=None
+    )
     root = models.BooleanField("Oberste Ebene", default=False)
     slug = models.SlugField(default="", unique=True, max_length=200, verbose_name="Url")
     parent = models.ForeignKey(
@@ -70,6 +66,10 @@ class StaticMenuPage(BasePage):
 
     def get_absolute_url(self):
         return reverse("cms:page", kwargs={"slug": self.slug})
+
+    def __init__(self, *args, **kwargs):
+        self._meta.get_field("template").choices = load_template_choices()
+        super(StaticMenuPage, self).__init__(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -93,7 +93,7 @@ class BlogPage(BasePage):
         ordering = ["-created"]
 
     def get_absolute_url(self):
-        return reverse("cms:block_page", kwargs={"slug": self.slug})
+        return reverse("cms:blog_page", kwargs={"slug": self.slug})
 
     def __str__(self):
         return self.title

@@ -1,6 +1,7 @@
-from django.contrib import admin
-from .models import StaticMenuPage, Menu, BlogPage
 from catalogue.models import Component
+from django.contrib import admin
+
+from .models import BlogPage, Menu, StaticMenuPage
 
 
 @admin.register(StaticMenuPage)
@@ -44,14 +45,12 @@ class BlogPageAdmin(admin.ModelAdmin):
         "title",
         "title_image",
         "slug",
-        "template",
         "content",
         "components",
     )
     prepopulated_fields = {"slug": ("title",)}
 
     def save_model(self, request, obj, form, change):
-        # add component owner on creation
         obj.author = request.user
         super().save_model(request, obj, form, change)
 
