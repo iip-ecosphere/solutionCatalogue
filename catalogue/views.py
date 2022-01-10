@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from django.http.response import FileResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.views import generic
 from django_filters.views import FilterView
@@ -226,9 +226,12 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
         )
 
 
-def downloadMedia(request, id):
-    path = ComponentFile.objects.get(id=id).file.path
+def download_document(request, id: str):
+    cf = get_object_or_404(ComponentFile, id=id)
+    path = cf.file.path
     if os.path.exists(path):
-        response = FileResponse(open(path, "rb"), as_attachment=True)
+        response = FileResponse(
+            open(path, "rb"), filename=cf.filename, as_attachment=True
+        )
         return response
     raise Http404("Datei nicht gefunden")

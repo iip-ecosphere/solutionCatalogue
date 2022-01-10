@@ -16,7 +16,7 @@ urlpatterns = [
     path("search", views.SearchView.as_view(), name="search"),
     path("search/feedback", views.SearchFeedbackView.as_view(), name="search_feedback"),
     path("solution/<int:pk>", views.DetailView.as_view(), name="detail"),
-    path("download/<str:id>", views.downloadMedia, name="download"),
+    path("solution/document/<str:id>", views.download_document, name="component_document_download"),
     path("solution/<int:pk>/contact", views.SendInquiry.as_view(), name="send_inquiry"),
     path(
         "solution/<int:pk>/report", views.ReportView.as_view(), name="report_component"

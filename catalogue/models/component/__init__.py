@@ -1,16 +1,18 @@
 from typing import List, Tuple
-import os
+from pathlib import Path
 
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.fields import UUIDField
 from django.urls import reverse
 from django.core.validators import RegexValidator
 from ckeditor.fields import RichTextField
 
 from ..choices import TRLChoices, RealtimeChoices
-from django import forms
 import uuid
+
+
+def get_file_path(instance, filename: str) -> Path:
+    return Path("component_uploads") / str(instance.id) / filename
 
 
 class BaseData(models.Model):
@@ -194,12 +196,6 @@ class PublicComponentManager(models.Manager):
         )
 
 
-def get_file_path(instance, filename):
-    ext = filename.split(".")[-1]
-    filename = "%s.%s" % (uuid.uuid4(), ext)
-    return os.path.join("component_uploads/", filename)
-
-
 class Component(
     ApplicationProfile,
     BaseData,
@@ -290,15 +286,18 @@ class Component(
 class ComponentFile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
-    file = models.FileField(upload_to=get_file_path, blank=True)
+    file = models.FileField("Datei", upload_to=get_file_path, blank=True)
 
     class Meta:
-        verbose_name = "Anhang"
-        verbose_name_plural = verbose_name
+        verbose_name = "Dokument"
+        verbose_name_plural = "Dokumente"
 
     def __str__(self) -> str:
         return f"{self._meta.verbose_name} {self.id} - {self.filename}"
 
     @property
-    def filename(self):
-        return os.path.basename(self.file.name)
+    def filename(self) -> str:
+        return Path(self.file.name).name
+
+    def get_absolute_url(self):
+        return reverse("catalogue:component_document_download", kwargs={"id": self.id})
