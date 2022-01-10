@@ -13,6 +13,7 @@ from django.db.models import Count
 
 from .models import (
     Component,
+    ComponentFile,
     BaseData,
     ApplicationProfile,
     Use,
@@ -98,6 +99,10 @@ class LicensesInline(SubNestedBase, admin.StackedInline):
     model = Licenses
 
 
+class FileInline(SubNestedBase, admin.StackedInline):
+    model = ComponentFile
+
+
 @admin.register(Component)
 class ComponentAdmin(admin.ModelAdmin):
     raw_id_fields = ("created_by",)
@@ -119,6 +124,7 @@ class ComponentAdmin(admin.ModelAdmin):
         AIMethodInline,
         DAProcessInline,
         LicensesInline,
+        FileInline,
     ]
 
     @admin.display(

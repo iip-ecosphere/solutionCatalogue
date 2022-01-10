@@ -48,6 +48,12 @@
               onclick="openTab(event, 'tab2')">
             <a>Voraussetzungen</a>
           </li>
+          {% if component.componentfile_set.all %}
+            <li class="tabLink has-background-grey-light has-text-weight-bold is-uppercase"
+                onclick="openTab(event, 'tab3')">
+              <a>Dokumente</a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </div>
@@ -78,6 +84,35 @@
       {% endfor %}
     </div>
   </section>
+  <section id="tab3" class="section tab" style="display: none">
+    <div class="container is-max-widescreen">
+      <div class="columns">
+        {% for file in component.componentfile_set.all %}
+          {% if file.file %}
+            <div class="column is-one-third">
+              <div class="file is-success has-name is-boxed">
+                <a href="{{ file.get_absolute_url }}">
+                  <label class="file-label">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-2x fa-file-pdf"></i>
+                    </span>
+                    <span class="file-label">
+                      Herunterladen
+                    </span>
+                  </span>
+                    <span class="file-name">
+                    {{ file.filename }}
+                  </span>
+                  </label>
+                </a>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
   <section id="contact" class="section bg-bubble-gradient">
     <div class="container is-max-widescreen">
       <div class="columns">
@@ -90,10 +125,12 @@
           <ul>
             <li>{{ component.contact_person_name }}</li>
             {% if component.contact_phone %}
-              <li><a class="has-text-white" href="tel:{{ component.contact_phone }}">{{ component.contact_phone }}</a></li>
+              <li><a class="has-text-white" href="tel:{{ component.contact_phone }}">{{ component.contact_phone }}</a>
+              </li>
             {% endif %}
             {% if component.contact_email %}
-              <li><a class="has-text-white" href="mailto:{{ component.contact_email }}">{{ component.contact_email }}</a></li>
+              <li><a class="has-text-white"
+                     href="mailto:{{ component.contact_email }}">{{ component.contact_email }}</a></li>
             {% endif %}
             {% if component.contact_address_street %}
               <li>{{ component.contact_address_street }}</li>

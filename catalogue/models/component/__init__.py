@@ -1,4 +1,5 @@
 from typing import List, Tuple
+from pathlib import Path
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -7,6 +8,11 @@ from django.core.validators import RegexValidator
 from ckeditor.fields import RichTextField
 
 from ..choices import TRLChoices, RealtimeChoices
+import uuid
+
+
+def get_file_path(instance, filename: str) -> Path:
+    return Path("component_uploads") / str(instance.id) / filename
 
 
 class BaseData(models.Model):
@@ -275,3 +281,23 @@ class Component(
 
     def get_absolute_url(self):
         return reverse("catalogue:detail", kwargs={"pk": self.pk})
+
+
+class ComponentFile(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
+    file = models.FileField("Datei", upload_to=get_file_path, blank=True)
+
+    class Meta:
+        verbose_name = "Dokument"
+        verbose_name_plural = "Dokumente"
+
+    def __str__(self) -> str:
+        return f"{self._meta.verbose_name} {self.id} - {self.filename}"
+
+    @property
+    def filename(self) -> str:
+        return Path(self.file.name).name
+
+    def get_absolute_url(self):
+        return reverse("catalogue:component_document_download", kwargs={"id": self.id})

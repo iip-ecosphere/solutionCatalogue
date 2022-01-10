@@ -1,10 +1,13 @@
+import os
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
-from django.shortcuts import render
+from django.http.response import FileResponse
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.views import generic
 from django_filters.views import FilterView
+from django.http import HttpResponse, Http404
 
 from .filters import (
     ComponentFilter,
@@ -12,7 +15,7 @@ from .filters import (
     ComponentComparisonFilter,
 )
 from .forms import InquiryForm, FeedbackForm, ReportForm
-from .models import Component
+from .models import Component, ComponentFile
 from .models.logging import SearchLog, ComponentLog
 from .models.messages import Inquiry, Feedback, Report
 from .utils import is_admin_or_mod, get_admin_emails, get_mod_emails
@@ -221,3 +224,14 @@ class ReportView(generic.detail.SingleObjectMixin, generic.edit.FormView):
             from_email=settings.SENDER_EMAIL_FEEDBACK,
             recipient_list=get_mod_emails(),
         )
+
+
+def download_document(request, id: str):
+    cf = get_object_or_404(ComponentFile, id=id)
+    path = cf.file.path
+    if os.path.exists(path):
+        response = FileResponse(
+            open(path, "rb"), filename=cf.filename, as_attachment=True
+        )
+        return response
+    raise Http404("Datei nicht gefunden")
