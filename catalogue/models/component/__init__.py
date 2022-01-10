@@ -2,11 +2,15 @@ import uuid
 from pathlib import Path
 from typing import List, Tuple
 
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
+from django.core.validators import (
+    RegexValidator,
+    validate_image_file_extension,
+    FileExtensionValidator,
+)
 from django.db import models
 from django.urls import reverse
 
@@ -23,10 +27,13 @@ def get_image_path(instance, filename):
     return Path("component_uploads") / "images" / file
 
 
-def validate_image_size(image):
+def validate_image_size(image) -> None:
     MIN_WIDTH = 1153
     MIN_HEIGHT = 0
-    img = Image.open(image)
+    try:
+        img = Image.open(image)
+    except UnidentifiedImageError:
+        raise ValidationError("Bildformat nicht erkannt")
     fw, fh = img.size
     if fw < MIN_WIDTH or fh < MIN_HEIGHT:
         raise ValidationError("Das Bild muss mindestens 1153px breit sein!")
@@ -55,9 +62,12 @@ class BaseData(models.Model):
     image = models.ImageField(
         "Titelbild",
         upload_to=get_image_path,
-        help_text="Titelbild der Lösung",
+        help_text="Mindestbreite 1153px",
         blank=True,
-        validators=[validate_image_size],
+        validators=[
+            validate_image_size,
+            FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"]),
+        ],
     )
 
     class Meta:
@@ -319,9 +329,9 @@ class ComponentFile(models.Model):
     def __str__(self) -> str:
         return f"{self._meta.verbose_name} {self.id} - {self.filename}"
 
+    def get_absolute_url(self):
+        return reverse("catalogue:component_document_download", kwargs={"id": self.id})
+
     @property
     def filename(self) -> str:
         return Path(self.file.name).name
-
-    def get_absolute_url(self):
-        return reverse("catalogue:component_document_download", kwargs={"id": self.id})
