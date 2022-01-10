@@ -34,6 +34,12 @@
         <a class="tag has-background-info is-rounded has-text-primary-dark has-text-weight-bold"
            href="{% url 'catalogue:search' %}?task__name={{ t.name }}">{{ t.get_name_display }}</a>
       {% endfor %}
+      {% if component.image %}
+        <hr>
+        <figure class="image">
+          <img src="{{ component.image.url }}">
+        </figure>
+      {% endif %}
     </div>
   </section>
   <section class="section has-background-primary has-text-white p-0">

@@ -1,18 +1,41 @@
-from typing import List, Tuple
-from pathlib import Path
-
-from django.db import models
-from django.contrib.auth.models import User
-from django.urls import reverse
-from django.core.validators import RegexValidator
-from ckeditor.fields import RichTextField
-
-from ..choices import TRLChoices, RealtimeChoices
 import uuid
+from pathlib import Path
+from typing import List, Tuple
+
+from PIL import Image, UnidentifiedImageError
+from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.validators import (
+    RegexValidator,
+    FileExtensionValidator,
+)
+from django.db import models
+from django.urls import reverse
+
+from ..choices import RealtimeChoices, TRLChoices
 
 
 def get_file_path(instance, filename: str) -> Path:
-    return Path("component_uploads") / str(instance.id) / filename
+    return Path("component_uploads") / "docs" / str(instance.id) / filename
+
+
+def get_image_path(instance, filename):
+    ext = Path(filename).suffix
+    file = Path(str(uuid.uuid4())).with_suffix(ext)
+    return Path("component_uploads") / "images" / file
+
+
+def validate_image_size(image) -> None:
+    MIN_WIDTH = 1153
+    MIN_HEIGHT = 0
+    try:
+        img = Image.open(image)
+    except UnidentifiedImageError:
+        raise ValidationError("Bildformat nicht erkannt")
+    fw, fh = img.size
+    if fw < MIN_WIDTH or fh < MIN_HEIGHT:
+        raise ValidationError("Das Bild muss mindestens 1153px breit sein!")
 
 
 class BaseData(models.Model):
@@ -35,6 +58,16 @@ class BaseData(models.Model):
         "Kurzbeschreibung", help_text="Kurze Beschreibung der Lösung", max_length=1000
     )
     url = models.URLField("URL", help_text="Öffentlicher Link zur Lösung", blank=True)
+    image = models.ImageField(
+        "Titelbild",
+        upload_to=get_image_path,
+        help_text="Mindestbreite 1153px",
+        blank=True,
+        validators=[
+            validate_image_size,
+            FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"]),
+        ],
+    )
 
     class Meta:
         abstract = True
@@ -295,9 +328,9 @@ class ComponentFile(models.Model):
     def __str__(self) -> str:
         return f"{self._meta.verbose_name} {self.id} - {self.filename}"
 
+    def get_absolute_url(self):
+        return reverse("catalogue:component_document_download", kwargs={"id": self.id})
+
     @property
     def filename(self) -> str:
         return Path(self.file.name).name
-
-    def get_absolute_url(self):
-        return reverse("catalogue:component_document_download", kwargs={"id": self.id})

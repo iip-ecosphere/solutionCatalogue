@@ -204,6 +204,7 @@ class ComponentAdmin(admin.ModelAdmin):
                         "trl",
                         "description",
                         "url",
+                        "image",
                     )
                 },
             ),
