@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import (
     RegexValidator,
-    validate_image_file_extension,
     FileExtensionValidator,
 )
 from django.db import models
