@@ -35,7 +35,10 @@
       <div class="navbar-end">
         <a class="navbar-item" href="{% url 'catalogue:index' %}">Start</a>
         <a class="navbar-item" href="{% url 'catalogue:search' %}">Suche</a>
-        <a class="navbar-item" href="{% url 'cms:blog' %}">Blog</a>
+        {% get_blog_post_count as blog_posts %}
+        {% if blog_posts %}
+          <a class="navbar-item" href="{% url 'cms:blog' %}">Blog</a>
+        {% endif %}
         {% get_top_menu_items "top" as menu %}
         {% for item in menu %}
           {% get_child_items item as childs %}
