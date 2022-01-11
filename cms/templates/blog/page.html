@@ -1,0 +1,46 @@
+{% extends "catalogue/base.html" %}
+{% block title %}{{ object.title }} - {{ block.super }}{% endblock %}
+{% block body %}
+  <section class="section has-background-primary">
+    <div class="container is-max-widescreen">
+      <h1 class="title has-text-white has-text-centered">
+        {{ object.title }}
+      </h1>
+    </div>
+  </section>
+  <section class="section bg-gradient-blue-red pt-0">
+    <div class="container is-max-widescreen">
+      <div class="card">
+        {% if object.title_image %}
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{ object.title_image.url }}" alt="title image">
+            </figure>
+          </div>
+        {% endif %}
+        <div class="card-content">
+          <div class="content">
+            <p class="title">{{ object.title }}</p>
+            <p class="subtitle">{{ object.author }} | {{ object.created }} </p>
+            <div class="content">{{ object.content|safe }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% if object.components.all %}
+    <section class="section">
+      <div class="container is-max-widescreen">
+        <div class="columns is-flex-wrap-wrap">
+          {% for c in object.components.all %}
+            {% if c.public %}
+              <div class="column is-one-third">
+                {% include "catalogue/includes/component-card.html" with c=c only %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

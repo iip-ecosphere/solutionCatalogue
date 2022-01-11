@@ -3,7 +3,7 @@ from typing import Iterable
 from django import template
 from django.db.models import QuerySet
 
-from cms.models import StaticMenuPage
+from cms.models import StaticMenuPage, BlogPage
 
 register = template.Library()
 
@@ -24,3 +24,8 @@ def get_top_menu_items(name: str) -> Iterable[StaticMenuPage]:
 @register.simple_tag
 def get_child_items(parent: StaticMenuPage) -> QuerySet:
     return StaticMenuPage.objects.filter(parent=parent).filter(published=True)
+
+
+@register.simple_tag
+def get_blog_post_count() -> int:
+    return BlogPage.objects.filter(published=True).count()

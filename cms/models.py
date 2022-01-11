@@ -1,34 +1,37 @@
-from django.db import models
-from django.conf import settings
-from django.urls import reverse
-from ckeditor_uploader.fields import RichTextUploadingField
 import pathlib
+from typing import List, Tuple
+
+from catalogue.models import Component
+from ckeditor_uploader.fields import RichTextUploadingField
+from django.contrib.auth.models import User
+from django.db import models
+from django.urls import reverse
 
 
-def load_template_choices():
+def load_template_choices() -> List[Tuple[str, str]]:
     return [
         (f.name, f.name)
-        for f in (pathlib.Path(__file__).parent / "templates/").iterdir()
+        for f in (pathlib.Path(__file__).parent / "templates").iterdir()
         if f.is_file()
     ]
 
 
 class BasePage(models.Model):
-    title = models.CharField("Titel", max_length=100)
-    template = models.CharField(
-        "Template", max_length=100, choices=[("", "")], blank=False, default=None
+    author = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name="Erstellt von",
+        default=None,
     )
+    created = models.DateTimeField("Erstellt", auto_now_add=True)
+    title = models.CharField("Titel", max_length=100)
+    slug = models.SlugField(default="", unique=True, max_length=200, verbose_name="Url")
     content = RichTextUploadingField(blank=True, config_name="cms")
     published = models.BooleanField(default=False, verbose_name="Veröffentlicht")
 
     class Meta:
         abstract = True
-        verbose_name = "Basis Seite"
-        verbose_name_plural = verbose_name
-
-    def __init__(self, *args, **kwargs):
-        self._meta.get_field("template").choices = load_template_choices()
-        super(BasePage, self).__init__(*args, **kwargs)
 
 
 class Menu(models.Model):
@@ -38,7 +41,7 @@ class Menu(models.Model):
         verbose_name = "Menü"
         verbose_name_plural = "Menüs"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
@@ -50,8 +53,10 @@ class StaticMenuPage(BasePage):
         on_delete=models.SET_NULL,
         verbose_name="Menü",
     )
+    template = models.CharField(
+        "Template", max_length=100, choices=[("", "")], blank=False, default=None
+    )
     root = models.BooleanField("Oberste Ebene", default=False)
-    slug = models.SlugField(default="", unique=True, max_length=200, verbose_name="Url")
     parent = models.ForeignKey(
         "self",
         blank=True,
@@ -65,8 +70,30 @@ class StaticMenuPage(BasePage):
         verbose_name = "Seite"
         verbose_name_plural = "Seiten"
 
+    def __init__(self, *args, **kwargs) -> None:
+        self._meta.get_field("template").choices = load_template_choices()
+        super(StaticMenuPage, self).__init__(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse("cms:page", kwargs={"slug": self.slug})
 
-    def __str__(self):
+    def __str__(self) -> str:
+        return self.title
+
+
+class BlogPage(BasePage):
+    components = models.ManyToManyField(Component, blank=True, verbose_name="Lösungen")
+    title_image = models.ImageField(
+        upload_to="blog/", blank=True, verbose_name="Titelbild"
+    )
+
+    class Meta:
+        verbose_name = "Blog Eintrag"
+        verbose_name_plural = "Blog Einträge"
+        ordering = ["-created"]
+
+    def get_absolute_url(self):
+        return reverse("cms:blog_page", kwargs={"slug": self.slug})
+
+    def __str__(self) -> str:
         return self.title

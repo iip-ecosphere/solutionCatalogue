@@ -275,6 +275,10 @@ class Component(
     def __str__(self) -> str:
         return f"{self._meta.verbose_name} {self.id} - {self.name}"
 
+    @property
+    def public(self) -> bool:
+        return self.published and self.approved
+
     def get_basedata(self) -> Tuple[str, List[str]]:
         return (
             BaseData._meta.verbose_name,
