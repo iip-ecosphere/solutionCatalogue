@@ -6,10 +6,12 @@ from .models import BlogPage, Menu, StaticMenuPage
 
 @admin.register(StaticMenuPage)
 class CMSAdmin(admin.ModelAdmin):
-    list_display = ("title", "published", "slug", "menu", "parent", "root")
+    list_display = ("title", "author", "published", "slug", "menu", "parent", "root")
     list_display_links = ("title",)
     list_editable = ("published",)
     fields = (
+        "created",
+        "author",
         "title",
         "parent",
         "menu",
@@ -19,7 +21,14 @@ class CMSAdmin(admin.ModelAdmin):
         "template",
         "content",
     )
+    readonly_fields = ("created", "author")
     prepopulated_fields = {"slug": ("title",)}
+
+    def save_model(self, request, obj, form, change):
+        if not obj.author:
+            # save author on newly created objects
+            obj.author = request.user
+            super().save_model(request, obj, form, change)
 
     class Media:
         js = ("/static/admin/js/cms_admin.js",)
@@ -34,8 +43,8 @@ class MenuAdmin(admin.ModelAdmin):
 class BlogPageAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "published",
         "author",
+        "published",
         "slug",
         "created",
     )
@@ -55,8 +64,10 @@ class BlogPageAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
 
     def save_model(self, request, obj, form, change):
-        obj.author = request.user
-        super().save_model(request, obj, form, change)
+        if not obj.author:
+            # save author on newly created objects
+            obj.author = request.user
+            super().save_model(request, obj, form, change)
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "components":
