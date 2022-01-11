@@ -16,17 +16,13 @@ def load_template_choices() -> List[Tuple[str, str]]:
     ]
 
 
-def get_default_author() -> int:
-    return User.objects.all()[0].pk
-
-
 class BasePage(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
         null=True,
         verbose_name="Erstellt von",
-        default=get_default_author,
+        default=None,
     )
     created = models.DateTimeField("Erstellt", auto_now_add=True)
     title = models.CharField("Titel", max_length=100)
