@@ -6,7 +6,7 @@ from .models import BlogPage, Menu, StaticMenuPage
 
 @admin.register(StaticMenuPage)
 class CMSAdmin(admin.ModelAdmin):
-    list_display = ("published", "title", "slug", "menu", "parent", "root")
+    list_display = ("title", "published", "slug", "menu", "parent", "root")
     list_display_links = ("title",)
     list_editable = ("published",)
     fields = (
@@ -35,12 +35,15 @@ class BlogPageAdmin(admin.ModelAdmin):
     list_display = (
         "title",
         "published",
+        "author",
         "slug",
         "created",
     )
     list_display_links = ("title",)
     list_editable = ("published",)
     fields = (
+        "created",
+        "author",
         "published",
         "title",
         "title_image",
@@ -48,6 +51,7 @@ class BlogPageAdmin(admin.ModelAdmin):
         "content",
         "components",
     )
+    readonly_fields = ("created", "author")
     prepopulated_fields = {"slug": ("title",)}
 
     def save_model(self, request, obj, form, change):

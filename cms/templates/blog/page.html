@@ -28,14 +28,16 @@
       </div>
     </div>
   </section>
-  {% if object.components.all|length > 0 %}
+  {% if object.components.all %}
     <section class="section">
       <div class="container is-max-widescreen">
         <div class="columns is-flex-wrap-wrap">
           {% for c in object.components.all %}
-            <div class="column is-one-third">
-              {% include "catalogue/includes/component-card.html" with c=c only %}
-            </div>
+            {% if c.public %}
+              <div class="column is-one-third">
+                {% include "catalogue/includes/component-card.html" with c=c only %}
+              </div>
+            {% endif %}
           {% endfor %}
         </div>
       </div>
