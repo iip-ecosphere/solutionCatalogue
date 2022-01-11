@@ -2,7 +2,6 @@ import pathlib
 
 from catalogue.models import Component
 from ckeditor_uploader.fields import RichTextUploadingField
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -11,7 +10,7 @@ from django.urls import reverse
 def load_template_choices():
     return [
         (f.name, f.name)
-        for f in (pathlib.Path(__file__).parent / "templates/").iterdir()
+        for f in (pathlib.Path(__file__).parent / "templates").iterdir()
         if f.is_file()
     ]
 
