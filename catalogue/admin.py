@@ -193,7 +193,7 @@ class ComponentAdmin(admin.ModelAdmin):
         fieldsets = (
             (
                 "Optionen",
-                {"fields": ("approved", "published", "allow_email")},
+                {"fields": ("approved", "published")},
             ),
             # Base
             (
@@ -276,6 +276,8 @@ class ComponentAdmin(admin.ModelAdmin):
                         "contact_manufacturer",
                         "contact_person_name",
                         "contact_email",
+                        "contact_email_show",
+                        "contact_email_form",
                         "contact_phone",
                         "contact_address_street",
                         "contact_address_city",
@@ -300,7 +302,8 @@ class ComponentAdmin(admin.ModelAdmin):
             "name",
             "approved",
             "published",
-            "allow_email",
+            "contact_email_show",
+            "contact_email_form",
             "trl",
             "description_short",
             "get_created_by",
@@ -310,7 +313,8 @@ class ComponentAdmin(admin.ModelAdmin):
         self.list_display_links = ("name",)
         self.list_editable = (
             "published",
-            "allow_email",
+            "contact_email_show",
+            "contact_email_form",
         )
         self.list_filter = ()
         # moderators can choose components for frontpage

@@ -211,6 +211,16 @@ class Contact(models.Model):
     contact_additional_info = models.TextField(
         "Zusatzinformationen", help_text="Zusatzinformation zur Lösung", blank=True
     )
+    contact_email_form = models.BooleanField(
+        "Kontaktformular",
+        help_text="Erlaubt die Einblendung eines Kontaktformulares. Nachricht wird an die angegebene Email Adresse gesendet.",
+        default=True,
+    )
+    contact_email_show = models.BooleanField(
+        "Email Adresse öffentlich",
+        help_text="Zeigt die Email öffentlich an.",
+        default=True,
+    )
 
     class Meta:
         abstract = True
@@ -254,11 +264,6 @@ class Component(
             "Nach anschließender Moderation wird Ihre Lösung öffentlich zugänglich."
         ),
         default=False,
-    )
-    allow_email = models.BooleanField(
-        "Erlaube Kontaktaufnahme per Mail",
-        help_text="Erlaubt die Einblendung eines Kontaktformulares.",
-        default=True,
     )
     approved = models.BooleanField(
         "Freigegeben",

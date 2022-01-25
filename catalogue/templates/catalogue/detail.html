@@ -134,7 +134,7 @@
               <li><a class="has-text-white" href="tel:{{ component.contact_phone }}">{{ component.contact_phone }}</a>
               </li>
             {% endif %}
-            {% if component.contact_email %}
+            {% if component.contact_email and component.contact_email_show %}
               <li><a class="has-text-white"
                      href="mailto:{{ component.contact_email }}">{{ component.contact_email }}</a></li>
             {% endif %}
@@ -150,7 +150,7 @@
             {{ component.contact_additional_info|linebreaks }}
           </div>
         </div>
-        {% if component.allow_email %}
+        {% if component.contact_email_form %}
           <div class="column is-half">
             <div class="card">
               <div class="card-content">
