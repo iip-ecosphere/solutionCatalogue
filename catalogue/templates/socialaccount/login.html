@@ -1,0 +1,23 @@
+{% extends "account/base_card.html" %}
+{% block title %}
+  {% if process == "connect" %}
+    Verbinde mit {{ provider.name }}
+  {% else %}
+    Einloggen via {{ provider.name }}
+  {% endif %}
+{% endblock %}
+{% block card %}
+  <p class="block">
+    {% if process == "connect" %}
+      Sie sind dabei, ein neues Drittanbieterkonto von {{ provider.name }} zu verbinden.
+    {% else %}
+      Sie sind dabei, sich über ein Drittanbieterkonto von {{ provider.name }} anzumelden.
+    {% endif %}
+  </p>
+  <form method="post">
+    {% csrf_token %}
+    <div class="has-text-centered">
+      <button class="button is-rounded is-link">Weiter</button>
+    </div>
+  </form>
+{% endblock %}
