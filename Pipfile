@@ -14,7 +14,7 @@ django-stubs-ext = "*"
 [packages]
 django = ">=3.2,<3.3"
 django-nested-admin = "*"
-django-grappelli = "*"
+django-grappelli = ">=2.15,<3.0"
 django-debug-toolbar = "*"
 django-filter = "*"
 python-dotenv = "*"
