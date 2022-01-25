@@ -28,7 +28,7 @@ class CMSAdmin(admin.ModelAdmin):
         if not obj.author:
             # save author on newly created objects
             obj.author = request.user
-            super().save_model(request, obj, form, change)
+        super().save_model(request, obj, form, change)
 
     class Media:
         js = ("/static/admin/js/cms_admin.js",)
@@ -67,7 +67,7 @@ class BlogPageAdmin(admin.ModelAdmin):
         if not obj.author:
             # save author on newly created objects
             obj.author = request.user
-            super().save_model(request, obj, form, change)
+        super().save_model(request, obj, form, change)
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "components":

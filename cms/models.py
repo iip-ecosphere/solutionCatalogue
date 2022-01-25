@@ -26,7 +26,7 @@ class BasePage(models.Model):
     )
     created = models.DateTimeField("Erstellt", auto_now_add=True)
     title = models.CharField("Titel", max_length=100)
-    slug = models.SlugField(default="", unique=True, max_length=200, verbose_name="Url")
+    slug = models.SlugField(default="", unique=True, max_length=200, verbose_name="URL")
     content = RichTextUploadingField(blank=True, config_name="cms")
     published = models.BooleanField(default=False, verbose_name="Veröffentlicht")
 
