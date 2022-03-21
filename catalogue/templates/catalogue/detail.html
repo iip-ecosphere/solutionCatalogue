@@ -179,6 +179,12 @@
       <div id="reportModal"></div>
     </div>
   </section>
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Kommentare</h2>
+      <div id="isso-thread"></div>
+    </div>
+  </section>
   <div
       id="shopping_card"
       hx-trigger="load"
@@ -188,6 +194,9 @@
   </div>
 {% endblock %}
 {% block script %}
+  <script data-isso="https://katalog.iip-ecosphere.de/isso"
+          data-isso-default-lang="de"
+          src="https://katalog.iip-ecosphere.de/isso/js/embed.min.js"></script>
   <script>
     function openTab(event, tabName) {
       var i, x;
