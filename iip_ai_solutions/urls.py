@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("", include("catalogue.urls")),
     path("cms/", include("cms.urls")),
+    path("events/", include("events.urls")),
     path("ckeditor/", include("ckeditor_uploader.urls")),
     path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),

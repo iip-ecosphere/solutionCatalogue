@@ -1,0 +1,38 @@
+{% extends "catalogue/base.html" %}
+{% block title %}Events - {{ block.super }}{% endblock %}
+{% block body %}
+  <section class="section has-background-primary">
+    <div class="container is-max-widescreen">
+      <h1 class="title has-text-white has-text-centered">
+        Events
+      </h1>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container is-max-widescreen">
+      {% for e in events %}
+        <div class="card mb-4">
+          <div class="card-content">
+            <p class="title">
+              {{ e.summary }}
+            </p>
+            <p class="subtitle">
+
+              {{ e.start }} - {{ e.end }}
+            </p>
+            <p class="content">{{ e.description | linebreaksbr | urlize}}</p>
+          </div>
+          {% if e.location %}
+            <footer class="card-footer">
+              <p class="card-footer-item">
+              <span>
+                {{ e.location }}
+              </span>
+              </p>
+            </footer>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

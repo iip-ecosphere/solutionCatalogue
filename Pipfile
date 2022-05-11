@@ -24,6 +24,7 @@ django-bulma = "*"
 django-allauth = "*"
 django-ckeditor = "*"
 Pillow = "*"
+icalendar = "*"
 
 [requires]
 python_version = "3"

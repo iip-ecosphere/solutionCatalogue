@@ -37,6 +37,7 @@ SESSION_SAVE_EVERY_REQUEST = True
 INSTALLED_APPS = [
     "catalogue.apps.CatalogueConfig",
     "cms.apps.CmsConfig",
+    "events",
     "grappelli",
     "nested_admin",
     "django.contrib.admin",
