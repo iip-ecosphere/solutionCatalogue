@@ -1,18 +1,21 @@
 {% extends "catalogue/base.html" %}
 {% load bulma_tags %}
-{% block title %}Suche - {{ block.super }}{% endblock %}
+{% block title %}Katalog - {{ block.super }}{% endblock %}
 {% block body %}
-  <section class="section has-background-primary">
+  <section class="section pb-0 bg-bubble2">
     <div class="columns is-flex-wrap-wrap">
       <div class="column is-full">
         <div class="columns">
           <div class="column is-one-third is-offset-one-third mb-6">
+            <h1 class="title is-3 has-text-white has-text-centered">
+              KI Lösungskatalog
+            </h1>
             {% include "catalogue/includes/searchbar.html" %}
           </div>
         </div>
       </div>
 
-      <div class="column is-half-tablet is-one-quarter-desktop is-one-fifth-widescreen has-text-white">
+      <div class="column is-half-tablet is-one-quarter-desktop is-one-fifth-widescreen has-background-primary-light">
         <form method="get" name="searchForm">
           {% with filter.form as form %}
             {% for hidden in form.hidden_fields %}
@@ -22,7 +25,7 @@
               {% if field|is_input %}
                 {{ field.as_hidden }}
               {% else %}
-                <button class="button is-white is-outlined mb-2 is-fullwidth drop-down-button" type="button"
+                <button class="button is-outlined mb-2 is-fullwidth drop-down-button" type="button"
                         aria-label="menu" aria-expanded="false" data-target="{{ field.html_name }}dropdown">
                   <span>{{ field.label }}</span>
                   <span class="icon is-right drop-down-icon">
@@ -32,7 +35,7 @@
                 </button>
                 <div class="drop-down-menu mb-4" id="{{ field.html_name }}dropdown">
                   <div class="field">
-                    <div class="control is-size-7">
+                    <div class="control is-size-7 has-text-primary-dark">
                       {{ field }}
                     </div>
                   </div>
@@ -54,7 +57,7 @@
         </form>
       </div>
 
-      <div class="column has-background-primary-light">
+      <div class="column pb-6 has-background-primary-light">
         <div class="container">
           <div class="columns is-flex-wrap-wrap">
             {% for c in components %}
@@ -75,13 +78,13 @@
             hx-target="#feedbackModal">Feedback
     </button>
     <div
-      id="shopping_card"
-      hx-trigger="load"
-      hx-get="{% url 'catalogue:get_cart' %}"
-      hx-target="#shopping_card"
-      hx-swap="innerHTML"
+        id="shopping_card"
+        hx-trigger="load"
+        hx-get="{% url 'catalogue:get_cart' %}"
+        hx-target="#shopping_card"
+        hx-swap="innerHTML"
     >
-  </div>
+    </div>
   </section>
 {% endblock %}
 {% block script %}

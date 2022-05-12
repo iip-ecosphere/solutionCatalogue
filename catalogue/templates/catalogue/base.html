@@ -34,7 +34,7 @@
     <div id="navMenu" class="navbar-menu">
       <div class="navbar-end">
         <a class="navbar-item" href="{% url 'catalogue:index' %}">Start</a>
-        <a class="navbar-item" href="{% url 'catalogue:search' %}">Suche</a>
+        <a class="navbar-item" href="{% url 'catalogue:search' %}">Katalog</a>
         {% get_blog_post_count as blog_posts %}
         {% if blog_posts %}
           <a class="navbar-item" href="{% url 'cms:blog' %}">Blog</a>

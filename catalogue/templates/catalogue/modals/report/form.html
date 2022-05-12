@@ -10,6 +10,7 @@
       </header>
       <form hx-post="{% url 'catalogue:report_component' component.id %}" hx-swap="outerHTML">
         <section class="modal-card-body">
+          <p>Hier können Sie Lösungen melden, die missbräuchlich angelegt wurden oder veraltet sind.</p>
           {% csrf_token %}
           {{ form|bulma }}
         </section>
