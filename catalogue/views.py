@@ -24,7 +24,7 @@ from .utils import is_admin_or_mod, get_admin_emails, get_mod_emails
 class IndexView(FilterView):
     template_name = "catalogue/index.html"
     context_object_name = "components"
-    queryset = Component.public_objects.filter(frontpage=True)
+    queryset = Component.public_objects.filter(frontpage=True)[:3]
     filterset_class = ComponentFilterBase
 
 
