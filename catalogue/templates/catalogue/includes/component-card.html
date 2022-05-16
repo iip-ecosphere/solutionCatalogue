@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="content">
-      {{ c.description|linebreaks }}
+      {{ c.description|linebreaks|truncatewords:80 }}
       {% if c.task_set.all %}
         <h5 class="title is-5 mb-2">{{ c.task_set | verbose_name_plural }}</h5>
         <ul class="mt-2">
