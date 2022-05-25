@@ -1,5 +1,6 @@
 from catalogue.models import Component
 from django.contrib import admin
+from django.urls import reverse
 
 from .models import BlogPage, Menu, StaticMenuPage
 
@@ -29,6 +30,9 @@ class CMSAdmin(admin.ModelAdmin):
             # save author on newly created objects
             obj.author = request.user
         super().save_model(request, obj, form, change)
+
+    def view_on_site(self, obj):
+        return reverse("cms:page", kwargs={"slug": obj.slug})
 
     class Media:
         js = ("/static/admin/js/cms_admin.js",)
