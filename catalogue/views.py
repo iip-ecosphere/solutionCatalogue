@@ -235,3 +235,7 @@ def download_document(request, id: str):
         )
         return response
     raise Http404("Datei nicht gefunden")
+
+
+class BenefitsView(generic.TemplateView):
+    template_name = "catalogue/content/benefits.html"
