@@ -1,5 +1,4 @@
 {% extends "catalogue/emails/email_base.txt" %}
-
 {% block content %}
 Sie haben neues Feedback zur Suche von {{ feedback.name }} erhalten:
 {{ feedback.message }}

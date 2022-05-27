@@ -1,10 +1,9 @@
 --
 {{ request.site.name }}
 
-Forschungszentrum L3S
+IIP-Ecosphere / Forschungszentrum L3S
 Leibniz Universität Hannover
 Appelstraße 9a
 30167 Hannover
-Dr. Claudia Niederée
-Tel.: +49 511 762 17713
-E-Mail: iip-ecosphere@l3s.de
+E-Mail: info@iip-ecosphere.de
+Mehr unter https://www.iip-ecosphere.de
