@@ -72,19 +72,33 @@
   </section>
 
   <section class="section has-background-white">
-    <nav class="level">
-      <a class="level-item has-text-centered" href="https://www.iip-ecosphere.eu">
-        <img src="{% static 'catalogue/logo/Logo_IIP-Ecosphere.svg' %}" style="height: 150px;" alt="IIP-Ecosphere">
-      </a>
-      <a class="level-item has-text-centered" href="https://l3s.de">
-        <img src="{% static 'catalogue/logo/L3S_Logo.jpg' %}" style="height: 150px;"
-             alt="L3S Research Center">
-      </a>
-      <a class="level-item has-text-centered"
-         href="https://www.bmwi.de/Redaktion/DE/Schlaglichter-der-Wirtschaftspolitik/2021/08/12-was-bieten-industrial-internet-of-things-plattformen.html">
-        <img src="{% static 'catalogue/logo/bmwi.png' %}" style="height: 150px;" alt="BMWi">
-      </a>
-    </nav>
+    <div class="container">
+      <div class="columns is-vcentered">
+        <div class="column is-flex is-justify-content-center">
+          <div class="content has-text-primary">
+            <h5 class="has-text-primary">Kontakt</h5>
+            <p>
+              IIP-Ecosphere / Forschungszentrum L3S<br>
+              Leibniz Universität Hannover<br>
+              Appelstraße 9a<br>
+              30167 Hannover<br>
+              E-Mail: info@iip-ecosphere.de<br>
+              Mehr unter <a href="https://www.iip-ecosphere.de/">www.iip-ecosphere.de</a>
+            </p>
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <a href="https://www.iip-ecosphere.eu">
+            <img src="{% static 'catalogue/logo/Logo_IIP-Ecosphere.svg' %}" style="height: 150px;" alt="IIP-Ecosphere">
+          </a>
+        </div>
+        <div class="column has-text-centered">
+          <a
+              href="https://www.bmwk.de/Redaktion/DE/Schlaglichter-der-Wirtschaftspolitik/2021/08/12-was-bieten-industrial-internet-of-things-plattformen.html">
+            <img src="{% static 'catalogue/logo/bmwi.png' %}" style="height: 150px;" alt="BMWi"></a>
+        </div>
+      </div>
+    </div>
   </section>
 {% endblock %}
 {% block script %}

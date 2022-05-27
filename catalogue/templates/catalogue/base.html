@@ -44,16 +44,16 @@
         {% for item in menu %}
           {% get_child_items item as childs %}
           {% if childs %}
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              {{ item.title }}
-            </a>
-            <div class="navbar-dropdown">
-              {% for child in childs %}
-                <a class="navbar-item" href="{{ child.get_absolute_url }}">{{ child.title }}</a>
-              {% endfor %}
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                {{ item.title }}
+              </a>
+              <div class="navbar-dropdown">
+                {% for child in childs %}
+                  <a class="navbar-item" href="{{ child.get_absolute_url }}">{{ child.title }}</a>
+                {% endfor %}
+              </div>
             </div>
-          </div>
           {% else %}
             <a class="navbar-item" href="{{ item.get_absolute_url }}">{{ item.title }}</a>
           {% endif %}
@@ -88,34 +88,12 @@
 
 <footer class="footer has-text-white">
   <div class="container is-max-widescreen">
-    <div class="columns">
-      <div class="column is-6">
-        <div class="content">
-          <h5 class="has-text-white">Kontakt</h5>
-          <p>
-            Forschungszentrum L3S<br>
-            Leibniz Universität Hannover<br>
-            Appelstraße 9a<br>
-            30167 Hannover<br>
-            Dr. Claudia Niederée<br>
-            Tel.: +49 511 762 17713<br>
-            E-Mail: iip-ecosphere@l3s.de
-          </p>
-        </div>
-      </div>
-
-      <div class="column">
-        <div class="content">
-          <h5 class="has-text-white">Menü</h5>
-          <p>
-            {% get_top_menu_items "bottom" as menu %}
-            {% for item in menu %}
-              <a class="has-text-white" href="{{ item.get_absolute_url }}">{{ item.title }}</a><br>
-            {% endfor %}
-          </p>
-        </div>
-      </div>
-    </div>
+    <nav class="level">
+      {% get_top_menu_items "bottom" as menu %}
+      {% for item in menu %}
+        <a class="level-item has-text-white" href="{{ item.get_absolute_url }}">{{ item.title }}</a><br>
+      {% endfor %}
+    </nav>
   </div>
 </footer>
 </body>
