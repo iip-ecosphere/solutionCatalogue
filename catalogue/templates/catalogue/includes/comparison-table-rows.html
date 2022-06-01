@@ -15,7 +15,14 @@
           </ul>
         </td>
       {% else %}
-        <td>{{ value }}</td>
+        {% field_is_html c field as html %}
+        <td>
+          {% if html %}
+            {{ value|safe }}
+          {% else %}
+            {{ value|linebreaks }}
+          {% endif %}
+        </td>
       {% endif %}
     {% endfor %}
   </tr>
